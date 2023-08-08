@@ -3,7 +3,7 @@ import { deskTool } from "sanity/desk";
 import { schemaTypes } from "./schemas";
 
 export default defineConfig({
-  name: "sanity-nextjs-site",
+  name: "almost-studio",
   title: "Sanity Next.js Site",
   projectId: "oogp23sh",
   dataset: "production",
