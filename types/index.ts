@@ -17,16 +17,16 @@ export type ProfileType = {
   skills: string[];
 };
 
-export type JobType = {
-  _id: string;
-  name: string;
-  jobTitle: string;
-  logo: string;
-  url: string;
-  description: string;
-  startDate: Date;
-  endDate: Date;
-};
+// export type JobType = {
+//   _id: string;
+//   name: string;
+//   jobTitle: string;
+//   logo: string;
+//   url: string;
+//   description: string;
+//   startDate: Date;
+//   endDate: Date;
+// };
 
 export type ProjectType = {
   _id: string;

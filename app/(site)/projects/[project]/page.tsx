@@ -18,13 +18,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${project.name} | Project`,
-    description: project.tagline,
+    description: project.name,
     openGraph: {
       images:
         project.coverImage?.image ||
         "https://res.cloudinary.com/victoreke/image/upload/v1689892912/docs/project.png",
       title: project.name,
-      description: project.tagline,
+      description: project.name,
     },
   };
 }

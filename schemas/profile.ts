@@ -3,107 +3,90 @@ import { BiUser } from "react-icons/bi";
 
 const profile = {
   name: "profile",
-  title: "Profile",
+  title: "Information",
   type: "document",
   icon: BiUser,
   fields: [
-    defineField({
-      name: "fullName",
-      title: "Full Name",
-      type: "string",
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: "headline",
-      title: "Headline",
-      type: "string",
-      description: "In one short sentence, what do you do?",
-      validation: (Rule) => Rule.required().min(40).max(50),
-    }),
     {
-      name: "profileImage",
-      title: "Profile Image",
-      type: "image",
-      description: "Upload a profile picture",
-      options: { hotspot: true },
-      fields: [
-        {
-          name: "alt",
-          title: "Alt",
-          type: "string",
-        },
-      ],
-    },
-    {
-      name: "shortBio",
-      title: "Short Bio",
-      type: "text",
-      rows: 4,
-    },
-    {
-      name: "email",
-      title: "Email Address",
-      type: "string",
-    },
-    {
-      name: "location",
-      title: "Location",
-      type: "string",
-    },
-    {
-      name: "fullBio",
-      title: "Full Bio",
-      type: "array",
-      of: [{ type: "block" }],
-    },
-    {
-      name: "resumeURL",
-      title: "Upload Resume",
-      type: "file",
-    },
-    {
-      name: "socialLinks",
-      title: "Social Links",
+      name: "studioDescription",
+      title: "Studio Description",
       type: "object",
-      description: "Add your social media links:",
       fields: [
         {
-          name: "github",
-          title: "Github URL",
-          type: "url",
-          initialValue: "https://github.com/",
+          name: "header",
+          title: "Header",
+          type: "string",
+          description: "These are the first words that appear in red.",
+          initialValue: "Almost Studio",
         },
         {
-          name: "linkedin",
-          title: "Linkedin URL",
-          type: "url",
-          initialValue: "https://linkedin.com/in/",
+          name: "description",
+          title: "Description",
+          type: "array",
+          description: "Write a description about the studio. Recommended to keep it around 150 words.",
+          of: [{ type: "block" }],
+        },
+      ]
+    },
+    // {
+    //   name: "bios",
+    //   title: "Bios",
+    //   type: "array",
+    //   description: "Add a list of team bios.",
+    //   of: [{ type: "block"}]
+    // },
+    {
+      name: "firstBio",
+      title: "Parter Bio #1",
+      type: "object",
+      fields: [
+        {
+          name: "fullName",
+          title: "Full Name",
+          type: "string",
+          description: "These are the first words that appear in red.",
         },
         {
-          name: "twitter",
-          title: "Twitter URL",
-          type: "url",
-          initialValue: "https://twitter.com/",
+          name: "description",
+          title: "Full Bio",
+          type: "array",
+          description: "Person's bio. Recommended to keep it around 150 words.",
+          of: [{ type: "block" }],
         },
-        {
-          name: "twitch",
-          title: "Twitch URL",
-          type: "url",
-          initialValue: "https://twitch.com/",
-        },
-      ],
-      options: {
-        collapsed: false,
-        collapsible: true,
-        columns: 2,
-      },
+      ]
     },
     {
-      name: "skills",
-      title: "Skills",
+      name: "secondBio",
+      title: "Parter Bio #2",
+      type: "object",
+      fields: [
+        {
+          name: "fullName",
+          title: "Full Name",
+          type: "string",
+          description: "These are the first words that appear in red.",
+        },
+        {
+          name: "description",
+          title: "Full Bio",
+          type: "array",
+          description: "Person's bio. Recommended to keep it around 150 words.",
+          of: [{ type: "block" }],
+        },
+      ]
+    },
+    {
+      name: "contact",
+      title: "Contact",
       type: "array",
-      description: "Add a list of skills",
+      description: "Add a list of contact emails",
       of: [{ type: "string" }],
+    },
+    {
+      name: "socialMedia",
+      title: "Social Media Handle",
+      type: "string",
+      description: "Enter the instagram handle. DO NOT include the '@' symbol, as that will be repeated.",
     },
   ],
 };

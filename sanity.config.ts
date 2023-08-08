@@ -4,10 +4,10 @@ import { schemaTypes } from "./schemas";
 
 export default defineConfig({
   name: "almost-studio",
-  title: "Sanity Next.js Site",
+  title: "Almost Studio",
   projectId: "oogp23sh",
   dataset: "production",
-  basePath: "/studio",
+  basePath: "/edit",
   plugins: [deskTool()],
   schema: { types: schemaTypes },
 });

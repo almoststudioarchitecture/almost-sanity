@@ -8,7 +8,7 @@ export default async function Project() {
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6">
-      <section className="max-w-2xl mb-16">
+      {/* <section className="max-w-2xl mb-16">
         <h1 className="text-3xl font-bold tracking-tight sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight">
           Featured projects I&apos;ve built over the years
         </h1>
@@ -41,7 +41,7 @@ export default async function Project() {
             </div>
           </Link>
         ))}
-      </section>
+      </section> */}
     </main>
   );
 }

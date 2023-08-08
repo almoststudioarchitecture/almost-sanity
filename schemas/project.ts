@@ -10,16 +10,10 @@ const project = {
   fields: [
     {
       name: "name",
-      title: "Name",
+      title: "Project Name",
       type: "string",
       description: "Enter the name of the project",
     },
-    defineField({
-      name: "tagline",
-      title: "Tagline",
-      type: "string",
-      validation: (rule) => rule.max(60).required(),
-    }),
     defineField({
       name: "slug",
       title: "Slug",
@@ -30,18 +24,8 @@ const project = {
       validation: (rule) => rule.required(),
     }),
     {
-      name: "logo",
-      title: "Project Logo",
-      type: "image",
-    },
-    {
-      name: "projectUrl",
-      title: "Project URL",
-      type: "url",
-    },
-    {
       name: "coverImage",
-      title: "Cover Image",
+      title: "Main Image",
       type: "image",
       description: "Upload a cover image for this project",
       options: { hotspot: true },
@@ -54,11 +38,50 @@ const project = {
       ],
     },
     {
+      name: "metadata",
+      title: "Metadata",
+      type: "array",
+      description: "Add a list of small metadata for the project such as date completed, location, and any relevant credits.",
+      of: [{ type: "string" }],
+    },
+    {
       name: "description",
       title: "Description",
       type: "array",
-      description: "Write a full description about this project",
+      description: "Write a paragraph about this project. Recommended to keep it around 150 words.",
       of: [{ type: "block" }],
+    },
+    {
+      name: 'gallery',
+      type: 'object',
+      title: 'Gallery',
+      fields: [
+        {
+          name: 'images',
+          type: 'array',
+          title: 'Images',
+          of: [
+            {
+              name: 'image',
+              type: 'image',
+              title: 'Image',
+              options: {
+                hotspot: true,
+              },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative text',
+                },
+              ],
+            },
+          ],
+          options: {
+            layout: 'grid',
+          },
+        },
+      ]
     },
   ],
 };

@@ -1,3 +1,66 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face{
+    font-family: 'Dedale';
+    font-weight: 600;
+    src: url('(site)/fonts/DedaleTrial-Bold.otf');
+}
+@font-face{
+    font-family: 'Dedale';
+    font-weight: 400;
+    src: url('(site)/fonts/DedaleTrial-Regular.otf');
+}
+@font-face{
+    font-family: 'Dedale';
+    font-weight: 300;
+    src: url('(site)/fonts/DedaleTrial-Light.otf');
+}
+
+:root{
+    --mainColor: red;
+    --primary-type: 'Dedale';
+}
+
+html{
+    font-size: 15px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased; 
+    font-family: var(--primary-type);
+}
+
+#nav{
+    border-bottom: 1px solid var(--mainColor);
+    color: var(--mainColor);
+    animation: loadNav 800ms linear;
+    overflow:hidden;
+}
+
+#nav li{
+    animation: loadNavItems 1s linear both;
+    white-space: nowrap;
+    text-transform:uppercase;
+    letter-spacing:-0.02em;
+}
+
+#nav li:first-child{
+    animation-delay: 0.2s;
+}
+#nav li:nth-child(2){
+    animation-delay: 0.4s;
+}
+#nav li:nth-child(3){
+    animation-delay: 0.6s;
+}
+
+@keyframes loadNav{
+    0%{ width:0px; }
+    100%{ width: 100%; }
+}
+
+@keyframes loadNavItems{
+    0%{ opacity:0;}
+    100%{ opacity:1; }
+}

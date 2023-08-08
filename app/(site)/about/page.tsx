@@ -9,7 +9,7 @@ export default async function About() {
 
   return (
     <main className="lg:max-w-7xl mx-auto max-w-3xl md:px-16 px-6">
-      {profile &&
+      {/* {profile &&
         profile.map((data) => (
           <div key={data._id}>
             <section className="grid lg:grid-cols-2 grid-cols-1 gap-x-6 justify-items-center">
@@ -76,7 +76,7 @@ export default async function About() {
               </ul>
             </section>
           </div>
-        ))}
+        ))} */}
     </main>
   );
 }
