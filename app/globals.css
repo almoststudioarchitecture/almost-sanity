@@ -21,6 +21,7 @@
 :root{
     --mainColor: red;
     --primary-type: 'Dedale';
+    --pad: 0.7rem;
 }
 
 html{
@@ -29,6 +30,10 @@ html{
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased; 
     font-family: var(--primary-type);
+}
+
+p{
+    line-height: 1.4;
 }
 
 #nav{
@@ -43,7 +48,20 @@ html{
     white-space: nowrap;
     text-transform:uppercase;
     letter-spacing:-0.02em;
+    position: relative;
 }
+
+/* INCLUDE FOR RIGHT BAR NEXT TO NAV ITEMS */
+/* #nav li:after{
+    content: '';
+    display: block;
+    position: absolute;
+    right: -1em;
+    top: 50%;
+    transform: translateY(-50%);
+    border-right: 1px solid red;
+    height: 2.5rem;
+} */
 
 #nav li:first-child{
     animation-delay: 0.2s;
@@ -63,4 +81,40 @@ html{
 @keyframes loadNavItems{
     0%{ opacity:0;}
     100%{ opacity:1; }
+}
+
+
+/* ABOUT PAGE */
+
+.cols {
+    display: flex;
+}
+
+.information .box {
+    border: 1px solid red;
+    font-family: var(--primary-type);
+    font-weight: 400;
+    padding: 0.5rem var(--pad);
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
+.box.half{
+    width: calc(50% + 1px);
+}
+
+.box.two-thirds{
+    width: 66.6667%;
+}
+
+.box.one-third{
+    width: 33.33334%;
+}
+
+.information strong {
+    color: var(--mainColor)
+}
+
+.information a:hover{
+    color: var(--mainColor);
 }

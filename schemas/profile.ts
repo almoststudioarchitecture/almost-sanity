@@ -8,72 +8,155 @@ const profile = {
   icon: BiUser,
   fields: [
     {
+      title: 'Page Name',
+      name: 'title',
+      type: 'string',
+      description: '(Read only)',
+      readOnly: true
+    },
+    // {
+    //   name: "studioDescription",
+    //   title: "Studio Description",
+    //   type: "object", 
+    //   fields: [
+    //     {
+    //       name: "header",
+    //       title: "Header",
+    //       type: "string",
+    //       description: "These are the first words that appear in red.",
+    //       initialValue: "Almost Studio",
+    //     },
+    //     {
+    //       name: "description",
+    //       title: "Description",
+    //       type: "array",
+    //       description: "Write a description about the studio. Recommended to keep it around 150 words.",
+    //       of: [{ type: "block" }],
+    //     },
+    //   ]
+    // },
+    {
       name: "studioDescription",
       title: "Studio Description",
-      type: "object",
-      fields: [
+      description: "Bolded words will appear in red. Recommended to use bold/red only for the first two words (e.g. the header/name).",
+      type: "array", 
+      of: [
         {
-          name: "header",
-          title: "Header",
-          type: "string",
-          description: "These are the first words that appear in red.",
-          initialValue: "Almost Studio",
-        },
+          type: 'block',
+          marks: {
+            decorators: [
+              { title: "Make Red", value: "strong" }
+            ],
+          },
+          styles: [
+            {title: 'Normal', value: 'normal'}
+          ],
+          lists: []
+        }
+      ]
+    },
+    {
+      name: "partner1",
+      title: "Partner #1",
+      description: "Bolded words will appear in red. Recommended to use bold/red only for the first two words (e.g. the header/name).",
+      type: "array", 
+      of: [
         {
-          name: "description",
-          title: "Description",
-          type: "array",
-          description: "Write a description about the studio. Recommended to keep it around 150 words.",
-          of: [{ type: "block" }],
-        },
+          type: 'block',
+          marks: {
+            decorators: [
+              { title: "Make Red", value: "strong" }
+            ],
+          },
+          styles: [
+            {title: 'Normal', value: 'normal'}
+          ],
+          lists: []
+        }
+      ]
+    },
+    {
+      name: "partner2",
+      title: "Partner #2",
+      description: "Bolded words will appear in red. Recommended to use bold/red only for the first two words (e.g. the header/name).",
+      type: "array", 
+      of: [
+        {
+          type: 'block',
+          marks: {
+            decorators: [
+              { title: "Make Red", value: "strong" }
+            ],
+          },
+          styles: [
+            {title: 'Normal', value: 'normal'}
+          ],
+          lists: []
+        }
       ]
     },
     // {
-    //   name: "bios",
-    //   title: "Bios",
-    //   type: "array",
-    //   description: "Add a list of team bios.",
-    //   of: [{ type: "block"}]
+    //   name: "partner1",
+    //   title: "Partner #1",
+    //   type: "object",
+    //   fields: [
+    //     {
+    //       name: "name",
+    //       title: "Full Name",
+    //       type: "string",
+    //       description: "These are the first words that appear in red.",
+    //     },
+    //     {
+    //       name: "description",
+    //       title: "Full Bio",
+    //       type: "array",
+    //       description: "Person's bio. Recommended to keep it around 150 words.",
+    //       of: [{ type: "block" }],
+    //     },
+    //   ]
+    // },
+    // {
+    //   name: "partner2",
+    //   title: "Partner #2",
+    //   type: "object",
+    //   fields: [
+    //     {
+    //       name: "name",
+    //       title: "Full Name",
+    //       type: "string",
+    //       description: "These are the first words that appear in red.",
+    //     },
+    //     {
+    //       name: "description",
+    //       title: "Full Bio",
+    //       type: "array",
+    //       description: "Person's bio. Recommended to keep it around 150 words.",
+    //       of: [{ type: "block" }],
+    //     },
+    //   ]
     // },
     {
-      name: "firstBio",
-      title: "Parter Bio #1",
-      type: "object",
-      fields: [
+      title: 'Current Team',
+      name: 'team',
+      type: 'array',
+      description: "Choose from the database of team members to include in the Current Team section.",
+      of: [
         {
-          name: "fullName",
-          title: "Full Name",
-          type: "string",
-          description: "These are the first words that appear in red.",
-        },
-        {
-          name: "description",
-          title: "Full Bio",
-          type: "array",
-          description: "Person's bio. Recommended to keep it around 150 words.",
-          of: [{ type: "block" }],
-        },
+          title: 'Team Member',
+          name: 'title',
+          type: 'reference',
+          to: [
+            {type: 'teamMember'},
+          ]
+        }
       ]
     },
     {
-      name: "secondBio",
-      title: "Parter Bio #2",
-      type: "object",
-      fields: [
-        {
-          name: "fullName",
-          title: "Full Name",
-          type: "string",
-          description: "These are the first words that appear in red.",
-        },
-        {
-          name: "description",
-          title: "Full Bio",
-          type: "array",
-          description: "Person's bio. Recommended to keep it around 150 words.",
-          of: [{ type: "block" }],
-        },
-      ]
+      name: "teamOld",
+      title: "Prior Team",
+      type: "array",
+      description: "Add a list of peoples' names who used to work with you.",
+      of: [{ type: "string" }],
     },
     {
       name: "contact",

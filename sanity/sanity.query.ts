@@ -5,19 +5,13 @@ export async function getProfile() {
   return client.fetch(
     groq`*[_type == "profile"]{
       _id,
-      fullName,
-      headline,
-      profileImage {
-        alt, 
-        "image": asset->url
-      },
-      shortBio,
-      location,
-      fullBio,
-      email,
-      "resumeURL": resumeURL.asset->url,
-      socialLinks,
-      skills
+      studioDescription,
+      partner1,
+      partner2,
+      "team": *[_type == "teamMember"]{title, bio},
+      teamOld,
+      contact,
+      socialMedia
     }`
   );
 }
@@ -43,6 +37,16 @@ export async function getProjects() {
       _id, 
       name,
       "slug": slug.current
+    }`
+  );
+}
+
+export async function getTeamMember() {
+  return client.fetch(
+    groq`*[_type == "teamMember"]{
+      _id,
+      title,
+      bio
     }`
   );
 }

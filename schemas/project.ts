@@ -76,6 +76,22 @@ const project = {
                 },
               ],
             },
+            { type: 'object', 
+              title: 'Vimeo Video Link',
+              fields: [
+                {
+                  type: 'string', 
+                  name: 'vimeo', 
+                  title: 'Vimeo Video Link'
+                },
+                {
+                  type: 'string',
+                  name: 'title',
+                  title: 'Title for Reference',
+                  description: "This will not show up anywhere, but use it if it's helpful to make notes"
+                }
+              ]
+            }
           ],
           options: {
             layout: 'grid',
