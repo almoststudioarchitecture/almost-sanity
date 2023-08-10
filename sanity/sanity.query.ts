@@ -64,3 +64,40 @@ export async function getSingleProject(slug: string) {
     { slug }
   );
 }
+
+const querySiteMeta = `
+*[_type=="siteMeta"][0] {
+  title,
+  description,
+  "canonical": url,
+  isGoogleAnalyticsEnabled,
+  isPwa,
+  manifest {
+    ...,
+    "background_color": background_color.hex,
+    "theme_color": theme_color.hex
+  },
+  "openGraph": {
+    "basic": { 
+    title,
+    url,
+    "image": image.asset->url
+    },
+    "optional": {
+      locale,
+      site_name,
+      description
+    }
+  }
+}
+`
+
+
+// export default async function getSiteMeta(
+//   query: string = querySiteMeta,
+//   client: SanityClientLike,
+//   mutation = "fetch"
+// ):Promise<Site> {
+//   const site: Site = await client[mutation](query)
+//   return site
+// }

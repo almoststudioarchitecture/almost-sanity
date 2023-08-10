@@ -1,9 +1,11 @@
+// 'use client'
 import Image from "next/image";
 import Link from "next/link";
 import { getProfile } from "@/sanity/sanity.query";
 import type { ProfileType } from "@/types";
 import { PortableText } from "@portabletext/react";
 import { BiEnvelope, BiFile } from "react-icons/bi";
+import Script from 'next/script';
 
 export default async function About() {
   const profile: ProfileType[] = await getProfile();
@@ -41,8 +43,8 @@ export default async function About() {
                 {/* <div className="box">
                   Team
                 </div> */}
-                {data.team.map((teamMember) => (
-                  <div className="box">
+                {data.team.map((teamMember, index) => (
+                  <div className="box"  key={index}>
                     <strong>{teamMember.title}</strong>
                   </div>
                 ))}
@@ -142,6 +144,14 @@ export default async function About() {
           //   </section>
           // </div>
         ))}
+        {/* <Script
+        src="/js/test.js"
+        strategy="lazyOnload"
+        onLoad={() =>
+          console.log(`script loaded correctly, window.FB has been populated`)
+        }
+      /> */}
     </main>
+    
   );
 }

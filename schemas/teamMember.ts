@@ -1,11 +1,11 @@
 import { defineField } from "sanity";
-import { BiUser } from "react-icons/bi";
+import { BiUserCircle } from "react-icons/bi";
 
-const profile = {
+const teamMember = {
   name: "teamMember",
   title: "Current Team Member",
   type: "document",
-  icon: BiUser,
+  icon: BiUserCircle,
   fields: [
     {
       title: 'Full Name',
@@ -20,4 +20,4 @@ const profile = {
   ],
 };
 
-export default profile;
+export default teamMember;

@@ -41,6 +41,10 @@ p{
     color: var(--mainColor);
     animation: loadNav 800ms linear;
     overflow:hidden;
+    position: sticky;
+    top:0;
+    width: 100%;
+    background: white;
 }
 
 #nav li{
@@ -82,6 +86,74 @@ p{
     0%{ opacity:0;}
     100%{ opacity:1; }
 }
+
+/* LANDING PAGE / DRAWING */
+
+
+/* CURSOR */
+
+#cursor {
+    border-radius: 50%;
+    border: 1px solid var(--mainColor);
+    width: 150px;
+    height: 150px;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+#cursor:before, #cursor:after {
+    content: '';
+    width: 14px;
+    height: 1px;
+    background: red;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+}
+#cursor:after {
+    height: 14px;
+    width: 1px;
+}
+
+#cursorPrompt {
+    color: var(--mainColor);
+    position:absolute;
+    bottom: 0px;
+    text-transform: uppercase;
+    animation: blink 1800ms linear infinite;
+}
+@keyframes blink{
+    0%{
+      opacity:0
+    }
+    50%{opacity:1}
+    100%{opacity:0}
+}
+
+/* SVGS */
+
+#svgContainer {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+#svgContainer > div {
+    width: 100vw;
+    height: 100vh;
+    transition: 400ms;
+    position: relative;
+    /* order: 40; */
+}
+
 
 
 /* ABOUT PAGE */

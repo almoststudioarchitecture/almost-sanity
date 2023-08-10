@@ -1,11 +1,11 @@
 import { defineField } from "sanity";
-import { BiUser } from "react-icons/bi";
+import { BiInfoCircle } from "react-icons/bi";
 
 const profile = {
   name: "profile",
   title: "Information",
   type: "document",
-  icon: BiUser,
+  icon: BiInfoCircle,
   fields: [
     {
       title: 'Page Name',
