@@ -49,7 +49,15 @@ const project = {
       title: "Description",
       type: "array",
       description: "Write a paragraph about this project. Recommended to keep it around 150 words.",
-      of: [{ type: "block" }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'}
+          ],
+          lists: []
+        }
+      ]
     },
     {
       name: 'gallery',
