@@ -14,8 +14,8 @@ export default async function Home() {
       <div id="cursorPrompt" className="py-2">Drag to Draw</div>
           <div id="svgContainer">
             {projects &&
-              projects.map((project) => (
-                  <div className="svgWrapper" data-href="/project" data-thumb="/img/project0.jpg" data-slug="project-name-0">
+              projects.map((project, index) => (
+                  <div key={index} className="svgWrapper" data-href="/project" data-thumb="/img/project0.jpg" data-slug="project-name-0">
                       <svg width="100%" height="100%" id="svg0">
                           <mask id="mask0">
                               <rect x="0" y="0" width="100%" height="100%" fill="black"></rect>
