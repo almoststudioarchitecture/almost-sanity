@@ -53,13 +53,13 @@ export default async function About() {
                 <div className="box">
                   <strong>Previously</strong>
                   {data.teamOld.map((oldTeamMember) => (
-                      <span> {oldTeamMember},</span>
+                      <span key={oldTeamMember._id}> {oldTeamMember},</span>
                   ))}
                 </div>
             </div>
             <div className="cols inline"> 
                 {data.contact.map((email) => (
-                  <div className="box">
+                  <div className="box" key={email._id}>
                         <Link
                           href={`mailto:${email}@almost.studio`}
                         >
