@@ -43,11 +43,11 @@ export default async function About() {
                 {/* <div className="box">
                   Team
                 </div> */}
-                {data.team.map((teamMember, index) => (
-                  <div className="box"  key={index}>
+                {/* {data.team.map((teamMember) => (
+                  <div className="box"  key={teamMember.index}>
                     <strong>{teamMember.title}</strong>
                   </div>
-                ))}
+                ))} */}
             </div>
             <div className="cols inline">
                 <div className="box">
