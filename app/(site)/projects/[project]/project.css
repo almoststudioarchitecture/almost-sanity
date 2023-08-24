@@ -1,0 +1,57 @@
+/* PROJECT PAGE */
+.section{
+    border-bottom: 1px solid var(--mainColor);
+    width: calc(100vw - var(--navHeight) * 2);
+    margin-left: var(--navHeight);
+}
+.hero{
+    height: calc(100vh - 150px);
+    /* width: 100vw; */
+    transition: margin 300ms;
+}
+
+.info{
+    padding: var(--pad);
+}
+
+.section.info h1{
+    /* font-size: 1.75rem; */
+    font-size: 1.5rem;
+    color: var(--mainColor);
+    letter-spacing: -0.02em;
+    cursor: pointer;
+}
+
+.info--header {
+    margin-bottom: 100px;
+}
+
+.info--description p {
+    width: 100%;
+    max-width: 720px;
+    margin-bottom: 1em;
+}
+
+.section.info .meta-data{
+    display: flex;
+    gap: 24px;
+    color: var(--mainColor);
+}
+
+#before, #after{
+    height: 100%;
+    background: var(--bg);
+    position: fixed;
+    top:0px;
+    width: var(--navHeight);
+    z-index: 1;
+}
+
+#before{
+    border-right: 1px solid var(--mainColor);
+    left:0px;
+}
+#after{
+    border-left: 1px solid var(--mainColor);
+    right:0px;
+}

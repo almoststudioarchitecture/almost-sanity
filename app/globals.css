@@ -22,6 +22,9 @@
     --mainColor: red;
     --primary-type: 'Dedale';
     --pad: 0.7rem;
+    --bg: #F8F8F8;
+    --transition: 600ms;
+    --navHeight: 38.5px;
 }
 
 html{
@@ -30,6 +33,10 @@ html{
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased; 
     font-family: var(--primary-type);
+}
+
+body{
+    background: var(--bg);
 }
 
 p{
@@ -44,10 +51,10 @@ p{
     position: sticky;
     top:0;
     width: 100%;
-    background: white;
+    background: var(--bg);
 }
 
-#nav li{
+#nav li, #nav button{
     animation: loadNavItems 1s linear both;
     white-space: nowrap;
     text-transform:uppercase;
@@ -56,7 +63,7 @@ p{
 }
 
 /* INCLUDE FOR RIGHT BAR NEXT TO NAV ITEMS */
-/* #nav li:after{
+#nav li:after{
     content: '';
     display: block;
     position: absolute;
@@ -65,7 +72,7 @@ p{
     transform: translateY(-50%);
     border-right: 1px solid red;
     height: 2.5rem;
-} */
+}
 
 #nav li:first-child{
     animation-delay: 0.2s;
@@ -98,8 +105,8 @@ p{
     width: 150px;
     height: 150px;
     position: fixed;
-    top: 50vh;
-    left: 50vw;
+    top: -50vh;
+    left: -50vw;
     transform: translate(-50%,-50%);
     pointer-events: none;
     z-index: 10;
@@ -129,6 +136,12 @@ p{
     text-transform: uppercase;
     animation: blink 1800ms linear infinite;
 }
+#nav:hover ~ #cursor,
+a.info:hover ~ #cursor,
+#cursor.hidden{
+  display:none;
+}
+
 @keyframes blink{
     0%{
       opacity:0
@@ -145,6 +158,7 @@ p{
     left: 0px;
     width: 100vw;
     height: 100vh;
+    /* cursor: none; */
 }
 #svgContainer > div {
     width: 100vw;
@@ -154,39 +168,196 @@ p{
     /* order: 40; */
 }
 
+#svgContainer svg{
+    position:fixed;
+    top:0px;
+    left:0px;
+    pointer-events: none;
+    transform: scale(1);
+    transition: 200ms;
+}
+
+#svgContainer .svgWrapper.hover svg{
+    filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3));
+    transform: scale(1.015);
+}
+#svgContainer .svgWrapper.hover{
+    /* filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3)); */
+    /* transform: scale(1.02); */
+}
 
 
-/* ABOUT PAGE */
+#svgContainer > div,
+#svgContainer svg,
+#svgContainer path{
+  cursor: none;
+}
 
-.cols {
+#svgContainer path{
+    stroke-width: 130px;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke: white;
+    fill: none;
+    pointer-events: all;
+  }
+  #svgContainer .shadow path{
+    stroke: #8C8C8C;
+  }
+  #svgContainer .shadow {
+    mix-blend-mode: hard-light;
+  }
+  #svgContainer image{
+    width:100vw;
+    height: 100vh;
+    position:relative;
+  }
+  #svgContainer.fullImages rect{
+    mask: none !important;
+  }
+  #svgContainer.fullImages .shadow{
+    /* mask: none !important; */
+    display:none;
+  }
+
+/* hide this svg, just save its defs */
+svg.defs,
+#svgContainer .defs,
+.grid #svgContainer .defs {
+  position: fixed;
+  opacity:0;
+  pointer-events: none;
+  top: -1000px;
+  left: -1000px;
+}
+
+
+/* GRID PROJECT STYLES */
+
+.grid #svgContainer{
     display: flex;
+    flex-wrap: wrap;
+    margin-top: var(--navHeight);
+    height: auto;
+    width: auto;
+    position: absolute;
 }
 
-.information .box {
-    border: 1px solid red;
-    font-family: var(--primary-type);
-    font-weight: 400;
-    padding: 0.5rem var(--pad);
-    margin-top: -1px;
-    margin-left: -1px;
+.grid #svgContainer > div{
+    width: 33.3333vw;
+    height: calc(33.334vh - 1px);
+    /* border-bottom:1px solid var(--mainColor); */
+    overflow:hidden;
 }
 
-.box.half{
-    width: calc(50% + 1px);
+#svgContainer path,
+#svgContainer image{
+  transform: scale(1);
+  transition: 400ms;
 }
 
-.box.two-thirds{
-    width: 66.6667%;
+#svgContainer image{
+  width:100vw;
+  height: 100vh;
+  position:relative;
 }
 
-.box.one-third{
-    width: 33.33334%;
+.grid #svgContainer svg{
+    width: 33.3333vw;
+    height: calc(33.334vh - 1px);
+    position:static;
 }
 
-.information strong {
-    color: var(--mainColor)
+.grid #svgContainer image{
+    width:33.333vw;
+    height:33.333vh;
 }
 
-.information a:hover{
-    color: var(--mainColor);
+.grid #svgContainer path{
+    transform: scale(0.3);
 }
+
+
+
+
+
+/* HOMEPAGE PROJECT LIST */
+#projectLinks{
+    color:red;
+    z-index:3;
+    display:inline-flex;
+    flex-direction: column;
+    position:fixed;
+    bottom:0px;
+    transform: translateY(100%);
+    margin-bottom: -1.5px;
+    transition: bottom 200ms;
+}
+
+#projectLinks.visible{
+    bottom: var(--navHeight);
+}
+
+#projectLinks li{
+    margin-top:-1px;
+    /* transform:translateY(100%); */
+    transition: var(--transition);
+    /* position:fixed; */
+    /* bottom:-1.5px; */
+}
+
+#projectLinks a{
+    display:inline-block;
+    border-color: var(--red);
+    text-transform: uppercase;
+    background:var(--bg);
+}
+#projectLinks li{
+    transform:translateY(0%);
+    order:1000;
+}
+#projectLinks li svg {
+    height: 0.7em;
+    display: inline-block;
+    position: relative;
+    left: 0px;
+    top: -0.07em;
+    margin-left:-1.7em;
+    opacity:0;
+    transition: 200ms;
+}
+
+#projectLinks li:hover svg,
+#projectLinks li.most-recent svg {
+    margin-left:0;
+    opacity:1;
+}
+
+.grid #projectLinks{
+    bottom: 0px !important;
+}
+
+/* HOMEPAGE LINES */
+.lines > div{
+    transition: var(--transition);
+}
+.lines .horizontal{
+    width: 100vw;
+    height: 1px;
+    background: var(--mainColor);
+    position:fixed;
+    bottom: -2px;
+    left: 0px;
+}
+.lines .vertical{
+    height: 100vh;
+    width: 1px;
+    background: var(--mainColor);
+    position:fixed;
+    right: -2px;
+    top: 0px;
+}
+.grid .lines #line-v1{right: 66.667%}
+.grid .lines #line-v2{right: 33.334%}
+.grid .lines #line-h1{bottom: calc(66.667vh - var(--navHeight))}
+.grid .lines #line-h2{bottom: calc(33.334vh - var(--navHeight))}

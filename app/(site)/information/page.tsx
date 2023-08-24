@@ -6,6 +6,7 @@ import type { ProfileType } from "@/types";
 import { PortableText } from "@portabletext/react";
 import { BiEnvelope, BiFile } from "react-icons/bi";
 import Script from 'next/script';
+import './about.css'
 
 export default async function About() {
   const profile: ProfileType[] = await getProfile();
@@ -145,12 +146,12 @@ export default async function About() {
           // </div>
         ))}
         {/* <Script
-        src="/js/test.js"
+        src="/js/home.js"
         strategy="lazyOnload"
         onLoad={() =>
           console.log(`script loaded correctly, window.FB has been populated`)
         }
-      /> */}
+        /> */}
     </main>
     
   );

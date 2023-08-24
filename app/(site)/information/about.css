@@ -1,0 +1,34 @@
+/* ABOUT PAGE */
+
+.cols {
+    display: flex;
+}
+
+.information .box {
+    border: 1px solid red;
+    font-family: var(--primary-type);
+    font-weight: 400;
+    padding: 0.5rem var(--pad);
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
+.box.half{
+    width: calc(50% + 1px);
+}
+
+.box.two-thirds{
+    width: 66.6667%;
+}
+
+.box.one-third{
+    width: 33.33334%;
+}
+
+.information strong {
+    color: var(--mainColor)
+}
+
+.information a:hover{
+    color: var(--mainColor);
+}

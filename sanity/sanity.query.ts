@@ -36,7 +36,9 @@ export async function getProjects() {
     groq`*[_type == "project"]{
       _id, 
       name,
-      "slug": slug.current
+      url,
+      "slug": slug.current,
+      coverImage { alt, "image": asset->url }
     }`
   );
 }
@@ -59,11 +61,40 @@ export async function getSingleProject(slug: string) {
       coverImage { alt, "image": asset->url },
       metadata,
       description,
-      gallery
+      "gallery": gallery.images[] {
+        _type,
+        alt,
+        "image": asset->url
+      },
+      "vimeoGallery": gallery.vimeoVideoLinks[] {
+        _type,
+        vimeo,
+        title
+      }
     }`,
     { slug }
   );
 }
+
+// "gallery": *[_type == "image"]{ alt, "image": asset->url },
+
+// export const getStaticProps = async () => {
+//   const query = groq`*[_type == "gallery" ]{
+//     "url": imgUrl.asset->url,
+// // This would work for getting image urls directly
+//     "imageUrls": images[].image.asset->url,
+
+//     title,
+//     description,
+//     projectLink,
+//     codeLink,
+//     tags
+//   }`
+//   const data = await client.fetch(query)
+//   return {
+//     props: { data },
+//   }
+// }
 
 const querySiteMeta = `
 *[_type=="siteMeta"][0] {

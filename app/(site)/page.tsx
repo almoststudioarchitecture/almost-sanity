@@ -1,39 +1,69 @@
+'use client';
+
 import { getProfile } from "@/sanity/sanity.query";
 import type { ProfileType } from "@/types";
-import HeroSvg from "./icons/HeroSvg";
+import DrawCursorSvg from "./icons/DrawCursorSvg";
+import ArrowTopRight from "./icons/ArrowTopRight";
 // import Job from "./components/Job";
 import { getProjects } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
+import Script from 'next/script';
+// import React from 'react'
+// import myConfiguredSanityClient from './sanityClient'
+// import client from './sanityClient'
+// import imageUrlBuilder from '@sanity/image-url'
+
+// const builder = imageUrlBuilder(myConfiguredSanityClient)
+
+// function urlFor(source) {
+//   return builder.image(source)
+// }
 
 export default async function Home() {
   const projects: ProjectType[] = await getProjects();
 
   return (
-    <main className="px-3 py-2">
+    // <main className="px-3 py-2">
+    <main>
       <div id="cursor"></div>
-      <div id="cursorPrompt" className="py-2">Drag to Draw</div>
+      <div className="lines">
+        <div className="horizontal" id="line-h1"></div>
+        <div className="horizontal" id="line-h2"></div>
+        <div className="vertical" id="line-v1"></div>
+        <div className="vertical" id="line-v2"></div>
+      </div>
+      <ul id="projectLinks">
+        
+      {projects &&
+              projects.map((project, index) => (
+                <li key={index} data-slug={project.slug}>
+                  <a className="px-3 py-2 border-b border-t border-r" href={`/projects/${project.slug}`}>{project.name} <ArrowTopRight /></a>
+                </li>
+        ))}
+      </ul>
+      <div id="cursorPrompt" className="py-2 px-3">Drag to Draw</div>
           <div id="svgContainer">
             {projects &&
               projects.map((project, index) => (
-                  <div key={index} className="svgWrapper" data-href="/project" data-thumb="/img/project0.jpg" data-slug="project-name-0">
-                      <svg width="100%" height="100%" id="svg0">
-                          <mask id="mask0">
+                
+                  <div key={index} className="svgWrapper" data-href={`/projects/${project.slug}`} data-slug={project.slug} data-thumb={project.coverImage.image}>
+                      <svg width="100%" height="100%" id={`svg${index}`}>
+                          <mask id={`mask${index}`}>
                               <rect x="0" y="0" width="100%" height="100%" fill="black"></rect>
                               <defs>
-                                  <pattern id="img0" patternUnits="userSpaceOnUse" width="100%" height="100%">
-                                      <image href="/img/project0.jpg" x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image>
+                                  <pattern id={`img${index}`} patternUnits="userSpaceOnUse" width="100%" height="100%">
+                                      <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image>
                                   </pattern>
                               </defs>
                               <path d=""></path>
                           </mask>  
-                          <rect className="rect" x="0" y="0" width="100%" height="100%" mask="url(#mask0)" fill="url(#img0)"></rect>
+                          <rect className="rect" x="0" y="0" width="100%" height="100%" mask={`url(#mask${index})`} fill={`url(#img${index})`}></rect>
                           <g className="shadow" filter="url(#shadowFilter)">
                               <path d=""></path>
                           </g>
                       </svg>
-                      <a className="info" href="/project">
+                      <a className="thumbnail-link" href={`/projects/${project.slug}`}>
                           <h1>{project.name}</h1>
-                          {/* <h2>New York</h2> */}
                       </a>
                   </div>
               ))}
@@ -69,10 +99,11 @@ export default async function Home() {
         <HeroSvg />
       </section>
       <Job /> */}
-      <svg className="defs">
+      <DrawCursorSvg />
+      {/* <svg className="defs">
             <defs>
-                <filter id="shadowFilter" x="0" y="0" width="1319" height="865" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                <filter id="shadowFilter" x="0" y="0" width="1319" height="865" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
                     <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
                     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
                     <feOffset dy="4"></feOffset>
@@ -100,7 +131,14 @@ export default async function Home() {
                     <feBlend mode="normal" in2="effect3_innerShadow_68_42" result="effect4_innerShadow_68_42"></feBlend>
                 </filter>
             </defs>
-        </svg>
+        </svg> */}
+        <Script
+        src="/js/home.js"
+        strategy="lazyOnload"
+        onLoad={() =>
+          console.log(`script loaded correctly, window.FB has been populated`)
+        }
+        />
     </main>
   );
 }

@@ -35,15 +35,34 @@ export type ProfileType = {
 // };
 
 export type ProjectType = {
+  // gallery: any;
   _id: string;
   name: string;
   slug: string;
   tagline: string;
   projectUrl: string;
+  metadata: string[];
   logo: string;
   coverImage: {
     alt: string | null;
     image: string;
   };
+  // gallery: string[];
+  gallery: Array<GalleryImage | VimeoVideoLink>; // Define an array of either GalleryImage or VimeoVideoLink
   description: PortableTextBlock[];
 };
+
+// Define interfaces for gallery items
+interface GalleryImage {
+  _type: 'image'; // This indicates it's an image item
+  image: {
+    alt: string | null;
+    url: string;
+  };
+}
+
+interface VimeoVideoLink {
+  _type: 'vimeoVideoLink'; // This indicates it's a Vimeo video link item
+  vimeo: string;
+  title: string;
+}

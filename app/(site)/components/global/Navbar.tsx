@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "../../icons/logo.png";
+import ProjectsBtn from "../ProjectsBtn";
 
 export default function Navbar() {
   return (
@@ -24,11 +25,13 @@ export default function Navbar() {
             </li>
             <li>
               <Link
-                href="/projects"
+                href="/projects" id="navLink_projects"
                 // className="hover:text-purple-400 duration-300"
               >
                 Projects
               </Link>
+              {/* <ProjectsBtn /> */}
+              {/* <button id="btn_grid" onClick={makeGrid}>Projects</button> */}
             </li>
           </ul>
       </nav>
