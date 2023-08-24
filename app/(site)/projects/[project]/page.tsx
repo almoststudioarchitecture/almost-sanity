@@ -143,7 +143,7 @@ export default async function Project({ params }: Props) {
     return (
       <div key={index}>
         <Image
-          src={item.image}
+          src={item.image.url}
           alt={item.image.alt || project.name}
           width={900}
           height={450}
