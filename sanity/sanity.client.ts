@@ -4,9 +4,11 @@ const config: ClientConfig = {
   projectId: "oogp23sh",
   dataset: "production",
   apiVersion: "2023-07-16",
-  // useCdn: true,
+  useCdn: false,
 };
 
 const client = createClient(config);
+
+export const revalidate = 60;
 
 export default client;

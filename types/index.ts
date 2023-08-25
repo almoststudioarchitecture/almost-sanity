@@ -54,11 +54,9 @@ export type ProjectType = {
 
 // Define interfaces for gallery items
 interface GalleryImage {
+  alt: string;
   _type: 'image'; // This indicates it's an image item
-  image: {
-    alt: string | null;
-    url: string;
-  };
+  image: string;
 }
 
 interface VimeoVideoLink {
