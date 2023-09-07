@@ -42,7 +42,7 @@ npm run dev
 ```
 
 Visit [http://localhost:3000][localhost-3000] to see your site <br />
-Visit [http://localhost:3000/studio][localhost-3000-studio] to edit content
+Visit [http://localhost:3000/edit][localhost-3000-studio] to edit content
 
 ## Next steps
 

@@ -8,6 +8,7 @@ import type { ProjectType } from "@/types";
 import { PortableText } from "@portabletext/react";
 import fallBackImage from "@/public/project.png";
 import AboutScript from "./ProjectScript";
+import ProjectGalleryImage from "../../components/ProjectGalleryImage";
 // import { Dimensions } from 'react-native';
 import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, PromiseLikeOfReactNode, Key } from "react";
 import './project.css'
@@ -25,10 +26,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.project;
   const project: ProjectType = await getSingleProject(slug);
 
-  console.log(project);
+  // console.log(project);
 
   return {
-    title: `${project.name} | Project`,
+    title: `Almost Studio – ${project.name}`,
     description: project.name,
     openGraph: {
       images:
@@ -46,7 +47,7 @@ export default async function Project({ params }: Props) {
 
   return (
     <main>
-      <div id="before"></div>
+      {/* <div id="before"></div> */}
       <div id="after"></div>
       <div className="section hero relative">
             <Image
@@ -55,6 +56,7 @@ export default async function Project({ params }: Props) {
                 objectFit='cover'
                 src={project.coverImage?.image || fallBackImage}
                 alt={project.coverImage?.alt || project.name}
+                priority
               />
             <svg width="100%" height="100%" id="svg">
                 <mask id="mask">
@@ -103,235 +105,119 @@ export default async function Project({ params }: Props) {
                 </g>
             </svg>
         </div>
-        <div className="section info">
-            <div className="info--header">
-                <h1>{project.name}</h1>
-                <div className="meta-data">
-                {project.metadata && project.metadata.map((d, index) => (
-                    <h2 key={index}>{d}</h2>
-                  ))}
-                </div>
-            </div>
-            <div className="info--description">
-              <PortableText value={project.description} />
-            </div>
-        </div>
-        <div className="section gallery">
-
-
-        {/* {project.gallery && project.gallery.map((item, index) => {
-          if (item._type === 'image') {
-            console.log(item.image);
-            return (
-              <Image
-              width={900}
-              height={460}
-              src={item.image.url}
-              alt={item.image.alt || project.name}
-            />
-            );
-          } else if (item._type === 'vimeoVideoLink') {
-            return (
-              <h1> video </h1>
-            );
-          }
-          return null;
-        })} */}
-
-{project.gallery && project.gallery.map((item, index) => {
-  if (item._type === 'image') {
-    return (
-      <div key={index}>
-        <Image
-          src={item.image}
-          alt={item.alt || project.name}
-          width={900}
-          height={450}
-          objectFit='contain'
-        />
-      </div>
-    );
-  } else if (item._type === 'vimeoVideoLink') {
-    return (
-      <div key={index}>
-        <iframe
-          src={item.vimeo}
-          title={item.title}
-          width="640"
-          height="360"
-          frameBorder="0"
-          allowFullScreen
-        ></iframe>
-      </div>
-    );
-  }
-  return null;
-})}
-
-
-
-
-
-        {/* {project.gallery && project.gallery.map((image, index) => (
-          <div key={index}>
-            <Image
-              className="rounded-xl border border-zinc-800"
-              width={900}
-              height={460}
-              src={image.image.url || fallBackImage}
-              alt={image.image.alt || project.name}
-            />
+        {/* <div className="cd-body"> */}
+          <div className="section info">
+              <div className="info--header">
+                  <h1>{project.name}</h1>
+                  <div className="meta-data">
+                  {project.metadata && project.metadata.map((d, index) => (
+                      <h2 key={index}>{d}</h2>
+                    ))}
+                  </div>
+              </div>
+              <div className="info--description">
+                <PortableText value={project.description} />
+              </div>
           </div>
-        ))} */}
+          {/* <div className="section gallery"> */}
 
-        
+              {project.gallery && project.gallery.map((item, index) => {
+                if (item._type === 'image' && item.caption) {
+                  return (
+                    <div key={index} className="image-container-outer relative">
+                      <div className="image-container-inner relative">
+                        <ProjectGalleryImage
+                            key={index}
+                            src={item.image}
+                            alt={item.alt || project.name}
+                        />
+                      </div>
+                      <div className="caption">
+                          {item.caption}
+                      </div>
+                    </div>
+                  );
+                } else if (item._type === 'image') {
+                  return (
+                    <div key={index} className="image-container-outer relative">
+                      <div className="image-container-inner relative">
+                        <ProjectGalleryImage
+                            key={index}
+                            src={item.image}
+                            alt={item.alt || project.name}
+                        />
+                      </div>
+                    </div>
+                  );
+                } else if (item._type === 'vimeoVideoLink') {
+                  return (
+                    <div key={index}>
+                      <iframe
+                        src={item.vimeo}
+                        title={item.title}
+                        width="640"
+                        height="360"
+                        frameBorder="0"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+          {/* </div> */}
 
-        {/* {project.gallery.images && project.gallery.images.map((image, index) => (
-          <div key={index}>
-            <img src={urlFor(image.image.url)} alt={image.image.alt} />
-            <Image
-              className="rounded-xl border border-zinc-800"
-              width={900}
-              height={460}
-              src={image.url || fallBackImage}
-              alt={image.alt || project.name}
-            />
+          <div id="logo">
+              <div className="a">
+                  <div></div>
+                  <div className="bottom"></div>
+              </div>
+              <div className="l">
+                  <div className="top right"></div>
+              </div>
+              <div className="m">
+                  <div className="bottom"></div>
+                  <div className="bottom"></div>
+              </div>
+              <div className="o">
+                  <div className="center"></div>
+              </div>
+              <div className="s">
+                  <div className="right"></div>
+                  <div className="left"></div>
+              </div>
+              <div className="t">
+                  <div className="bottom left"></div>
+                  <div className="bottom right"></div>
+              </div>
+              <div className="gap"></div>
+              
+              <div className="s">
+                  <div className="right"></div>
+                  <div className="left"></div>
+              </div>
+              <div className="t">
+                  <div className="bottom left"></div>
+                  <div className="bottom right"></div>
+              </div>
+              <div className="u">
+                  <div className="top"></div>
+              </div>
+              <div className="d">
+                  <div className="right top"></div>
+                  <div className="right bottom"></div>
+                  <div></div>
+              </div>
+              <div className="i">
+                  <div className="left"></div>
+                  <div className="right"></div>
+              </div>
+              <div className="o">
+                  <div className="center"></div>
+              </div>
           </div>
-        ))} */}
-
-        {/* {project.gallery.vimeoVideoLinks && project.gallery.vimeoVideoLinks.map((vimeoLink, index) => (
-          <div key={index}>
-            <iframe
-              src={vimeoLink.vimeo}
-              title={vimeoLink.title}
-              width="640"
-              height="360"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div>
-        ))} */}
-
-
-            {/* {project.gallery &&
-              project.gallery.map(() => (
-
-                <h1>Something</h1>
-                
-                  // <Image
-                  //     className="rounded-xl border border-zinc-800"
-                  //     width={900}
-                  //     height={460}
-                  //     src={image || fallBackImage}
-                  //     alt={alt || project.name}
-                  //   />
-                    
-                  ))} */}
-            {/* <img src="/img/project/SL-Runway_01.jpg" className="horizontal" alt="image"> */}
-            {/* <Image
-              className="rounded-xl border border-zinc-800"
-              width={900}
-              height={460}
-              src={project.coverImage?.image || fallBackImage}
-              alt={project.coverImage?.alt || project.name}
-            /> */}
-        </div>
-
-        <div id="logo">
-            <div className="a">
-                <div></div>
-                <div className="bottom"></div>
-            </div>
-            <div className="l">
-                <div className="top right"></div>
-            </div>
-            <div className="m">
-                <div className="bottom"></div>
-                <div className="bottom"></div>
-            </div>
-            <div className="o">
-                <div className="center"></div>
-            </div>
-            <div className="s">
-                <div className="right"></div>
-                <div className="left"></div>
-            </div>
-            <div className="t">
-                <div className="bottom left"></div>
-                <div className="bottom right"></div>
-            </div>
-            <div className="gap"></div>
-            
-            <div className="s">
-                <div className="right"></div>
-                <div className="left"></div>
-            </div>
-            <div className="t">
-                <div className="bottom left"></div>
-                <div className="bottom right"></div>
-            </div>
-            <div className="u">
-                <div className="top"></div>
-            </div>
-            <div className="d">
-                <div className="right top"></div>
-                <div className="right bottom"></div>
-                <div></div>
-            </div>
-            <div className="i">
-                <div className="left"></div>
-                <div className="right"></div>
-            </div>
-            <div className="o">
-                <div className="center"></div>
-            </div>
-        </div>
-      {/* <div className="max-w-3xl mx-auto">
-        <div className="flex items-start justify-between mb-4">
-          <h1 className="font-bold lg:text-5xl text-3xl lg:leading-tight mb-4">
-            {project.name}
-          </h1>
-
-          <a
-            href={project.projectUrl}
-            rel="noreferrer noopener"
-            className="bg-[#1d1d20] text-white hover:border-zinc-700 border border-transparent rounded-md px-4 py-2"
-          >
-            Explore
-          </a>
-        </div>
-
-        <Image
-          className="rounded-xl border border-zinc-800"
-          width={900}
-          height={460}
-          src={project.coverImage?.image || fallBackImage}
-          alt={project.coverImage?.alt || project.name}
-        />
-
-        <div className="flex flex-col gap-y-6 mt-8 leading-7 text-zinc-400">
-          <PortableText value={project.description} />
-        </div>
-      </div> */}
-      {/* <Script
-        src="/js/project.js"
-        strategy="lazyOnload"
-        onLoad={() =>
-          console.log(`script loaded correctly, window.FB has been populated`)
-        }
-        /> */}
-
-        {/* export default function Page() {
-          return (
-            <>
-              <Script src="/js/project.js" strategy="afterInteractive" />
-            </>
-          )
-        } */}
-        {/* <> */}
-              {/* <Script src="/js/project.js" strategy="afterInteractive" /> */}
-        {/* </> */}
-        <AboutScript />
+          <AboutScript />
+      {/* </div> */}
     </main>
   );
 }

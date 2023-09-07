@@ -22,13 +22,13 @@
     --mainColor: red;
     --primary-type: 'Dedale';
     --pad: 0.7rem;
-    --bg: #F8F8F8;
     --transition: 600ms;
-    --navHeight: 38.5px;
+    --navHeight: 32px;
+    --bg: #F8F8F8;
 }
 
 html{
-    font-size: 15px;
+    font-size: 16px;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased; 
@@ -52,6 +52,7 @@ p{
     top:0;
     width: 100%;
     background: var(--bg);
+    transition:background 300ms, border 300ms;
 }
 
 #nav li, #nav button{
@@ -60,6 +61,9 @@ p{
     text-transform:uppercase;
     letter-spacing:-0.02em;
     position: relative;
+    transition: padding-right 200ms;
+    line-height: 1;
+    /* background:yellow; */
 }
 
 /* INCLUDE FOR RIGHT BAR NEXT TO NAV ITEMS */
@@ -67,11 +71,13 @@ p{
     content: '';
     display: block;
     position: absolute;
-    right: -1em;
+    right: -0.8rem;
+    /* right:0px; */
     top: 50%;
     transform: translateY(-50%);
     border-right: 1px solid red;
     height: 2.5rem;
+    height:var(--navHeight);
 }
 
 #nav li:first-child{
@@ -82,6 +88,76 @@ p{
 }
 #nav li:nth-child(3){
     animation-delay: 0.6s;
+}
+
+#nav li:hover{
+    padding-right: 30px;
+}
+
+#nav .nav-icon{
+    position: absolute;
+    opacity: 0;
+    transition: 300ms;
+    pointer-events: none;
+    right: 0px;
+    top:0px;
+}
+#nav #icon-draw{
+    
+    right: 10px;
+    width: 39px;
+    top: 50%;
+    transform: translateY(-50%) translateX(1rem);
+    padding-left: 10px;
+}
+
+
+#nav #icon-grid{
+    height: calc(2px + var(--navHeight));
+    width: 0px;
+    display: block;
+    border: 1px solid var(--mainColor);
+    border-bottom: 0px;
+    position: absolute;
+    right: calc(-0.8rem + 0px);
+    top: calc(50% - 1px);
+    transform: translateY(-50%);
+    transition: width 200ms;
+}
+
+#nav #icon-grid:before {
+    content: '';
+    width: calc(33.333% + 2px);
+    height: 100%;
+    border: 1px solid var(--mainColor);
+    border-bottom: 0px;
+    left: 50%;
+    transform:translateX(-50%);
+    position: absolute;
+    top: 0px;
+}
+
+#nav #icon-grid:after {
+    content: '';
+    height: calc(33.333% + 1px);
+    width: calc(100% + 2px);
+    border: 1px solid var(--mainColor);
+    top: calc(33.333% - 0px);
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    transform:translateY(-50%);
+}
+
+:not(.draw) #nav li:hover .nav-icon{
+    pointer-events: inherit;
+    opacity: 1;
+}
+:not(.draw) #nav li:hover #icon-draw{
+    transform: translateY(-50%) translateX(1rem);
+}
+:not(.draw) #nav li:hover #icon-grid{
+    width: calc(2px + var(--navHeight));
 }
 
 @keyframes loadNav{
@@ -128,13 +204,27 @@ p{
     height: 14px;
     width: 1px;
 }
+.grid #cursor{
+    transform: translate(30%,30%);
+    transition: transform 300ms;
+}
+
+.grid #svgContainer.drawing + #cursor{
+    transform: translate(-50%,-50%);
+}
+.grid #svgContainer.drawing * {
+    cursor:none;
+}
+
 
 #cursorPrompt {
     color: var(--mainColor);
-    position:absolute;
-    bottom: 0px;
+    /* position:absolute; */
+    /* bottom: 0px; */
     text-transform: uppercase;
-    animation: blink 1800ms linear infinite;
+    animation: blink 1300ms linear infinite;
+    /* padding:0; */
+    line-height:1;
 }
 #nav:hover ~ #cursor,
 a.info:hover ~ #cursor,
@@ -168,7 +258,7 @@ a.info:hover ~ #cursor,
     /* order: 40; */
 }
 
-#svgContainer svg{
+#svgContainer .drawnSvg{
     position:fixed;
     top:0px;
     left:0px;
@@ -188,12 +278,12 @@ a.info:hover ~ #cursor,
 
 
 #svgContainer > div,
-#svgContainer svg,
-#svgContainer path{
+#svgContainer .drawnSvg,
+#svgContainer .drawnSvg path{
   cursor: none;
 }
 
-#svgContainer path{
+#svgContainer .drawnSvg path{
     stroke-width: 130px;
     stroke-linecap:round;
     stroke-linejoin:round;
@@ -231,6 +321,33 @@ svg.defs,
   left: -1000px;
 }
 
+body.page-is-changing #svgContainer .svgWrapper.page-transition-main-stroke{
+    z-index:100;
+}
+body.page-is-changing #svgContainer .svgWrapper.page-transition-main-stroke path{
+        stroke-width: 130vw !important;
+}
+
+body.page-is-changing #svgContainer .svgWrapper:not(.page-transition-main-stroke) path{
+    stroke-width: 0px !important;
+}
+body.page-is-changing #svgContainer .svgWrapper:not(.page-transition-main-stroke) svg{
+    /* opacity:0; */
+}
+
+body.page-is-changing #projectLinks li{
+    /* transform: translateY(-100%); */
+    animation: minimizeLinks var(--transition) linear both;
+}
+
+body.page-is-changing #projectLinks{
+    top: calc(var(--navHeight)) !important;
+    transition-delay:500ms;
+}
+
+body.page-is-changing .hero{
+    height: 100vh;
+}
 
 /* GRID PROJECT STYLES */
 
@@ -243,9 +360,16 @@ svg.defs,
     position: absolute;
 }
 
+.grid #svgContainer > div, 
+.grid #svgContainer svg, 
+.grid #svgContainer path{
+    cursor: pointer;
+}
+
 .grid #svgContainer > div{
     width: 33.3333vw;
-    height: calc(33.334vh - 1px);
+    /* height: calc(33.334vh - 1px); */
+    height: 33.334vh;
     /* border-bottom:1px solid var(--mainColor); */
     overflow:hidden;
 }
@@ -262,7 +386,7 @@ svg.defs,
   position:relative;
 }
 
-.grid #svgContainer svg{
+.grid #svgContainer .drawnSvg{
     width: 33.3333vw;
     height: calc(33.334vh - 1px);
     position:static;
@@ -273,11 +397,63 @@ svg.defs,
     height:33.333vh;
 }
 
-.grid #svgContainer path{
+.grid #svgContainer .drawnSvg path{
     transform: scale(0.3);
 }
 
 
+
+.thumbnail-link{
+    position:absolute;
+    bottom:1px;
+    left:0px;
+    border: 1px solid red;
+    color: red;
+    margin: 0 0px -1px -1px;
+    line-height: 1;
+    transform: translateY(100%);
+    transition: transform 300ms 600ms, padding 300ms;
+    /* transition-delay: transform 600ms; */
+    background: var(--bg);
+}
+
+.thumbnail-link svg{
+    display: inline;
+    height: 0.7em;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform:translateY(-50%);
+    opacity: 0;
+    transition: opacity 300ms;
+    transition-delay: 100ms;
+    /* pointer-events: none; */
+}
+
+.grid .thumbnail-link{
+    transform: translateY(0%);
+}
+
+.grid .svgWrapper:hover .thumbnail-link{
+    padding-right: 28px;
+}
+
+.grid .svgWrapper:hover .thumbnail-link svg{
+    opacity: 1;
+}
+
+.grid .svgWrapper.complete:not(.drawing-in-here):hover .drawnSvg path{
+    stroke-width: 130vw !important;
+}
+
+
+.grid .svgWrapper:not(.complete, .drawing-in-here, :hover) .drawnSvg rect{
+    mask: none;
+}
+
+.grid .svgWrapper:not(.drawing-in-here):hover .drawnSvg .shadow {
+    filter: none;
+}
 
 
 
@@ -288,22 +464,38 @@ svg.defs,
     display:inline-flex;
     flex-direction: column;
     position:fixed;
-    bottom:0px;
-    transform: translateY(100%);
-    margin-bottom: -1.5px;
-    transition: bottom 200ms;
+    top:calc(var(--navHeight));
+    transform: translateY(-100%);
+    /* margin-top: -1.5px; */
+    transition: top 200ms;
 }
 
 #projectLinks.visible{
-    bottom: var(--navHeight);
+    /* top: var(--navHeight); */
 }
 
 #projectLinks li{
     margin-top:-1px;
     /* transform:translateY(100%); */
-    transition: var(--transition);
+    transition: transform var(--transition);
+    line-height: 1;
     /* position:fixed; */
     /* bottom:-1.5px; */
+}
+
+@keyframes minimizeLinks{
+    0%{
+        /* opacity:1; */
+        transform: translateY(0%);
+    }
+    80%{
+        /* opacity:1; */
+        transform: translateY(-300%);
+    }
+    100%{
+        /* opacity:0; */
+        transform: translateY(-300%);
+    }
 }
 
 #projectLinks a{
@@ -314,7 +506,7 @@ svg.defs,
 }
 #projectLinks li{
     transform:translateY(0%);
-    order:1000;
+    order:-1000;
 }
 #projectLinks li svg {
     height: 0.7em;
@@ -331,6 +523,11 @@ svg.defs,
 #projectLinks li.most-recent svg {
     margin-left:0;
     opacity:1;
+}
+
+#projectLinks:hover li.most-recent:not(:hover) svg {
+    opacity:0;
+    margin-left:-1.7em;
 }
 
 .grid #projectLinks{

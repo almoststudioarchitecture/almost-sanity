@@ -1,6 +1,6 @@
-'use client';
+// 'use client';
 
-import { getProfile } from "@/sanity/sanity.query";
+import * as sanityQuery from "@/sanity/sanity.query";
 import type { ProfileType } from "@/types";
 import DrawCursorSvg from "./icons/DrawCursorSvg";
 import ArrowTopRight from "./icons/ArrowTopRight";
@@ -25,7 +25,6 @@ export default async function Home() {
   return (
     // <main className="px-3 py-2">
     <main>
-      <div id="cursor"></div>
       <div className="lines">
         <div className="horizontal" id="line-h1"></div>
         <div className="horizontal" id="line-h2"></div>
@@ -37,17 +36,17 @@ export default async function Home() {
       {projects &&
               projects.map((project, index) => (
                 <li key={index} data-slug={project.slug}>
-                  <a className="px-3 py-2 border-b border-t border-r" href={`/projects/${project.slug}`}>{project.name} <ArrowTopRight /></a>
+                  <a className="px-2 py-2 border-b border-t border-r" data-type="page-transition" href={`/projects/${project.slug}`}>{project.name} <ArrowTopRight /></a>
                 </li>
         ))}
       </ul>
-      <div id="cursorPrompt" className="py-2 px-3">Drag to Draw</div>
+      <div id="cursorPrompt" className="py-2 px-2">Drag to Draw</div>
           <div id="svgContainer">
             {projects &&
               projects.map((project, index) => (
                 
                   <div key={index} className="svgWrapper" data-href={`/projects/${project.slug}`} data-slug={project.slug} data-thumb={project.coverImage.image}>
-                      <svg width="100%" height="100%" id={`svg${index}`}>
+                      <svg className="drawnSvg" width="100%" height="100%" id={`svg${index}`}>
                           <mask id={`mask${index}`}>
                               <rect x="0" y="0" width="100%" height="100%" fill="black"></rect>
                               <defs>
@@ -62,13 +61,14 @@ export default async function Home() {
                               <path d=""></path>
                           </g>
                       </svg>
-                      <a className="thumbnail-link" href={`/projects/${project.slug}`}>
-                          <h1>{project.name}</h1>
+                      <a className="thumbnail-link py-2 px-2" data-type="page-transition" href={`/projects/${project.slug}`}>
+                          <h1>{project.name}<ArrowTopRight /></h1>
                       </a>
                   </div>
               ))}
             </div>
-    
+            <div id="cursor"></div>
+
       {/* <section className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-center justify-between gap-x-12 lg:mt-32 mt-20 mb-16">
         {profile &&
           profile.map((data) => (
@@ -135,9 +135,16 @@ export default async function Home() {
         <Script
         src="/js/home.js"
         strategy="lazyOnload"
-        onLoad={() =>
-          console.log(`script loaded correctly, window.FB has been populated`)
-        }
+        // onLoad={() =>
+        //   console.log(`script loaded correctly, window.FB has been populated`)
+        // }
+        />
+        <Script
+        src="/js/load.js"
+        strategy="lazyOnload"
+        // onLoad={() =>
+        //   console.log(`script loaded correctly, window.FB has been populated`)
+        // }
         />
     </main>
   );

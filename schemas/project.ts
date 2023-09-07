@@ -82,6 +82,11 @@ const project = {
                   type: 'string',
                   title: 'Alternative text',
                 },
+                {
+                  name: 'caption',
+                  type: 'string',
+                  title: 'Caption (optional)',
+                },
               ],
             },
             { type: 'object', 
@@ -97,7 +102,12 @@ const project = {
                   name: 'title',
                   title: 'Title for Reference',
                   description: "This will not show up anywhere, but use it if it's helpful to make notes"
-                }
+                },
+                {
+                  name: 'caption',
+                  type: 'string',
+                  title: 'Caption (optional)',
+                },
               ]
             }
           ],

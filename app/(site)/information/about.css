@@ -2,6 +2,13 @@
 
 .cols {
     display: flex;
+    flex-wrap:wrap;
+}
+
+.information {
+    /* margin-top:var(--navHeight);
+    position:absolute;
+    top:0px; */
 }
 
 .information .box {
@@ -31,4 +38,58 @@
 
 .information a:hover{
     color: var(--mainColor);
+}
+
+/* #teamSection button strong{
+    color: black;
+    font-weight: 400;
+} */
+
+
+.icon {
+    position: absolute;
+    opacity: 0;
+    transition: 300ms;
+    pointer-events: none;
+    right: 0px;
+    top: 0px;
+}
+
+
+#teamSection button{
+    transition: padding 300ms;
+    position: relative;
+}
+
+#teamSection button:hover{
+    color: red;
+    padding-right: 30px;
+}
+
+#teamSection button:hover .icon {
+    pointer-events: inherit;
+    opacity: 1;
+}
+
+@media screen and (max-width: 1050px){
+    .box.one-third{
+        width: calc(50% + 1px);
+    }
+    .box.one-third:last-child{
+        border-right:transparent;
+    }
+}
+
+@media screen and (max-width: 880px){
+    .box.half{
+        width: calc(100% + 2px);
+        border-right:transparent;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .box.one-third{
+        width: calc(100% + 1px);
+        border-right:transparent;
+    }
 }

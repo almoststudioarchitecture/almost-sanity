@@ -16,21 +16,6 @@ export async function getProfile() {
   );
 }
 
-// export async function getJob() {
-//   return client.fetch(
-//     groq`*[_type == "job"]{
-//       _id,
-//       name,
-//       jobTitle,
-//       "logo": logo.asset->url,
-//       url,
-//       description,
-//       startDate,
-//       endDate,
-//     }`
-//   );
-// }
-
 export async function getProjects() {
   return client.fetch(
     groq`*[_type == "project"]{
@@ -64,37 +49,20 @@ export async function getSingleProject(slug: string) {
       "gallery": gallery.images[] {
         _type,
         alt,
-        "image": asset->url
+        "image": asset->url,
+        caption
       },
       "vimeoGallery": gallery.vimeoVideoLinks[] {
         _type,
         vimeo,
-        title
+        title,
+        caption
       }
     }`,
     { slug }
   );
 }
 
-// "gallery": *[_type == "image"]{ alt, "image": asset->url },
-
-// export const getStaticProps = async () => {
-//   const query = groq`*[_type == "gallery" ]{
-//     "url": imgUrl.asset->url,
-// // This would work for getting image urls directly
-//     "imageUrls": images[].image.asset->url,
-
-//     title,
-//     description,
-//     projectLink,
-//     codeLink,
-//     tags
-//   }`
-//   const data = await client.fetch(query)
-//   return {
-//     props: { data },
-//   }
-// }
 
 const querySiteMeta = `
 *[_type=="siteMeta"][0] {

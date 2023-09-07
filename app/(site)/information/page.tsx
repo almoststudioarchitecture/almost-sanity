@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getProfile } from "@/sanity/sanity.query";
 import type { ProfileType } from "@/types";
+import InfoIcon from "../icons/info-icon.png";
 import { PortableText } from "@portabletext/react";
 import { BiEnvelope, BiFile } from "react-icons/bi";
 import Script from 'next/script';
@@ -40,15 +41,23 @@ export default async function About() {
                   <PortableText value={data.partner2} />
                 </div>
             </div>
-            <div className="cols inline">
-                {/* <div className="box">
-                  Team
-                </div> */}
-                {/* {data.team.map((teamMember) => (
-                  <div className="box"  key={teamMember.index}>
-                    <strong>{teamMember.title}</strong>
-                  </div>
-                ))} */}
+            <div className="cols inline" id="teamSection">
+                <div className="box">
+                  <strong>Team</strong>
+                </div>
+                {data.team.map((teamMember, index) => (
+                  <button className="box"  key={index}>
+                    {teamMember.title}
+                    <Image className="icon" src={InfoIcon} width={16} height={16} alt="info" />
+                  </button>
+                ))}
+            </div>
+            <div className="cols" id="teamBios">
+                {data.team.map((teamMember, index) => (
+                    <div className="box one-third" key={index} data-member={teamMember.title}>
+                      <p><strong>{teamMember.title} </strong>{teamMember.bio}</p>
+                    </div>
+                ))}
             </div>
             <div className="cols inline">
                 <div className="box">

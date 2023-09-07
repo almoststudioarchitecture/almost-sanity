@@ -17,7 +17,7 @@ export type ProfileType = {
   studioDescription: PortableTextBlock[];
   partner1: PortableTextBlock[];
   partner2: PortableTextBlock[];
-  team: string[];
+  team: Array<TeamMember>
   teamOld: string[];
   contact: string[];
   socialMedia: string;
@@ -57,10 +57,18 @@ interface GalleryImage {
   alt: string;
   _type: 'image'; // This indicates it's an image item
   image: string;
+  caption: string;
 }
 
 interface VimeoVideoLink {
   _type: 'vimeoVideoLink'; // This indicates it's a Vimeo video link item
   vimeo: string;
   title: string;
+  caption: string;
+}
+
+interface TeamMember {
+  _type: 'teamMember'; // This indicates it's a Vimeo video link item
+  title: string;
+  bio: string;
 }
