@@ -73,6 +73,7 @@
 main{
     height: calc(100vh - var(--navHeight));
     overflow-y: scroll;
+    margin-top: var(--navHeight);
 }
 
 main{

@@ -76,7 +76,7 @@ p{
     /* right:0px; */
     top: 50%;
     transform: translateY(-50%);
-    border-right: 1px solid red;
+    border-right: 1px solid var(--mainColor);
     height: 2.5rem;
     height:var(--navHeight);
 }
@@ -133,7 +133,7 @@ p{
 
 #nav #icon-grid:before {
     content: '';
-    width: calc(33.333% + 2px);
+    width: calc(50% + 2px);
     height: 100%;
     border: 1px solid var(--mainColor);
     border-bottom: 0px;
@@ -145,10 +145,10 @@ p{
 
 #nav #icon-grid:after {
     content: '';
-    height: calc(33.333% + 1px);
+    height: calc(50% + 1px);
     width: calc(100% + 2px);
     border: 1px solid var(--mainColor);
-    top: calc(33.333% - 0px);
+    top: calc(50% - 0px);
     position: absolute;
     left: -1px;
     top: 50%;
@@ -199,7 +199,7 @@ p{
     content: '';
     width: 14px;
     height: 1px;
-    background: red;
+    background: var(--mainColor);
     display: block;
     position: absolute;
     top: 50%;
@@ -393,6 +393,10 @@ body.page-is-changing .hero{
     position: absolute;
 }
 
+/* .grid {
+    --mainColor: ;
+} */
+
 .grid #svgContainer > div, 
 .grid #svgContainer svg, 
 .grid #svgContainer path{
@@ -400,9 +404,11 @@ body.page-is-changing .hero{
 }
 
 .grid #svgContainer > div{
-    width: 33.3333vw;
+    /* width: 33.3333vw; */
+    width: 50vw;
     /* height: calc(33.334vh - 1px); */
-    height: 33.334vh;
+    /* height: 33.334vh; */
+    height: 50vh;
     border-bottom:1px solid var(--mainColor);
     overflow:hidden;
     /* transition: border-bottom 0s 1000ms; */
@@ -431,19 +437,19 @@ body.page-is-changing .hero{
 }
 
 .grid #svgContainer .drawnSvg{
-    width: 33.3333vw;
-    height: calc(33.334vh - 1px);
+    width: 50vw;
+    height: calc(50vh - 1px);
     /* position:absolute; */
     position:static;
 }
 
 .grid #svgContainer image{
-    width:33.333vw;
-    height:33.333vh;
+    width:50vw;
+    height:50vh;
 }
 
 .grid #svgContainer .drawnSvg path{
-    transform: scale(0.3);
+    transform: scale(0.5);
 }
 
 .extra-div{
@@ -487,8 +493,8 @@ body.page-is-changing .hero{
     position:absolute;
     bottom:0px;
     left:0px;
-    border: 1px solid red;
-    color: red;
+    border: 1px solid var(--mainColor);
+    color: var(--mainColor);
     margin: 0 0px -1px -1px;
     line-height: 1;
     transform: translateY(100%);
@@ -581,7 +587,7 @@ body.page-is-changing .hero{
 
 /* HOMEPAGE PROJECT LIST */
 #projectLinks{
-    color:red;
+    color:var(--mainColor);
     z-index:3;
     display:inline-flex;
     flex-direction: column;
@@ -629,7 +635,7 @@ body.page-is-changing .hero{
 
 #projectLinks a{
     display:inline-block;
-    border-color: var(--red);
+    border-color: var(--mainColor);
     text-transform: uppercase;
     background:var(--bg);
 }
@@ -696,7 +702,10 @@ body.page-is-changing .hero{
     z-index:2;
     z-index: 10;
 }
-.grid .lines #line-v1{right: 66.667%}
+/* .grid .lines #line-v1{right: 66.667%}
 .grid .lines #line-v2{right: 33.334%}
 .grid .lines #line-h1{bottom: calc(66.667vh - var(--navHeight))}
-.grid .lines #line-h2{bottom: calc(33.334vh - var(--navHeight))}
+.grid .lines #line-h2{bottom: calc(33.334vh - var(--navHeight))} */
+
+.grid .lines .vertical{right: 50%}
+.grid .lines .horizontal{bottom: calc(50vh - var(--navHeight))}

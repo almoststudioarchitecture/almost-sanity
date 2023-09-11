@@ -4,7 +4,7 @@ let drawingCount = 0;
 // let visibleDrawings = 0;
 let startPathWeight = window.innerWidth * 0.1;
 let drawPathWeight = startPathWeight;
-let gridPathWeight = 30;
+let gridPathWeight = 40;
 let pathWeight;
 if (grid){
   pathWeight = gridPathWeight;
@@ -39,6 +39,8 @@ document.addEventListener("mousemove", function(e){
     cursor.style.top = e.clientY + "px";
 })
 
+
+document.body.classList.remove("inverted");
 
 // Make sure it's always left click not right click
 var rightMouseClicked = false;
@@ -212,8 +214,10 @@ function startDrawing(event) {
 
           } else {
 
-              // everything is a third the size
-              pathWeight = gridPathWeight*3.333;
+            console.log("drawing in grid")
+
+              // everything is a half the size
+              pathWeight = gridPathWeight/0.5;
               
               newSvg = currentSvgWrapper.querySelector("svg");
               paths = newSvg.querySelectorAll('path');
@@ -221,9 +225,9 @@ function startDrawing(event) {
                 path.setAttribute("d", "");
                 path.style.strokeWidth = pathWeight + "px";
               }
-              pathData = `M${event.offsetX*3.333},${event.offsetY*3.333}`;
+              pathData = `M${event.offsetX/0.5},${event.offsetY/0.5}`;
 
-              points = [[event.offsetX*3.333, event.offsetY*3.333]]
+              points = [[event.offsetX/0.5, event.offsetY/0.5]]
               // pastPoints.push(points);
 
               // if it's click or draw
@@ -439,6 +443,7 @@ function showFullImage(){
 function transition_GridToProject(targetElement, cursorY) {
   console.log("transition to project");
   let items = document.querySelectorAll('.svgWrapper');
+  targetElement = targetElement.closest()
   let index = Array.from(items).indexOf(targetElement);
 
   // If the target element is not a grid-item, return
