@@ -38,7 +38,7 @@ export default function Navbar() {
                 // className="hover:text-purple-400 duration-300"
               >
                 Profile
-                <Image className="nav-icon" src={InfoIcon} width={16} height={16} alt="info" />
+                <Image className="nav-icon icon-info" src={InfoIcon} width={16} height={16} alt="info" />
               </Link>
             </li>
             {/* <div id="cursorPrompt">Drag Below to Draw</div> */}

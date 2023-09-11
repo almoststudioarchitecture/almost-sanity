@@ -22,7 +22,7 @@
     --mainColor: red;
     --primary-type: 'Dedale';
     --pad: 0.7rem;
-    --transition: 600ms;
+    --transition: 600ms linear;
     --navHeight: 32px;
     --bg: #F8F8F8;
 }
@@ -49,6 +49,7 @@ p{
     animation: loadNav 800ms linear;
     overflow:hidden;
     position: sticky;
+    position:fixed;
     top:0;
     width: 100%;
     background: var(--bg);
@@ -109,6 +110,11 @@ p{
     top: 50%;
     transform: translateY(-50%) translateX(1rem);
     padding-left: 10px;
+}
+
+.icon-info{
+    border-radius: 50%;
+    border: 1px solid var(--mainColor);
 }
 
 
@@ -181,11 +187,12 @@ p{
     width: 150px;
     height: 150px;
     position: fixed;
-    top: -50vh;
-    left: -50vw;
+    top: 50vh;
+    left: 50vw;
     transform: translate(-50%,-50%);
     pointer-events: none;
     z-index: 10;
+    transition: width 300ms, height 300ms, transform 300ms;
 }
 
 #cursor:before, #cursor:after {
@@ -205,26 +212,42 @@ p{
     width: 1px;
 }
 .grid #cursor{
-    transform: translate(30%,30%);
-    transition: transform 300ms;
+    /* transform: translate(30%,30%); */
+    transform: translate(50%,-20%);
+    /* transition: transform 300ms; */
 }
 
-.grid #svgContainer.drawing + #cursor{
+.grid #svgContainer.drawing ~ #cursor{
     transform: translate(-50%,-50%);
 }
 .grid #svgContainer.drawing * {
     cursor:none;
 }
+.grid #nav{
+    /* position: fixed; */
+}
 
+/* .drawnSvg  * {
+    transition: var(--transition);
+} */
 
 #cursorPrompt {
     color: var(--mainColor);
     /* position:absolute; */
     /* bottom: 0px; */
     text-transform: uppercase;
-    animation: blink 1300ms linear infinite;
+    animation: blink 1300ms linear infinite both;
     /* padding:0; */
     line-height:1;
+    animation-delay: 800ms;
+    opacity: 0;
+}
+
+.page-projects #cursorPrompt{
+    display:none;
+}
+.page-projects .lines .horizontal{
+    display:none;
 }
 #nav:hover ~ #cursor,
 a.info:hover ~ #cursor,
@@ -253,7 +276,7 @@ a.info:hover ~ #cursor,
 #svgContainer > div {
     width: 100vw;
     height: 100vh;
-    transition: 400ms;
+    transition: width var(--transition), height var(--transition), border-bottom 0s 1000ms;
     position: relative;
     /* order: 40; */
 }
@@ -264,7 +287,7 @@ a.info:hover ~ #cursor,
     left:0px;
     pointer-events: none;
     transform: scale(1);
-    transition: 200ms;
+    transition: var(--transition);
 }
 
 #svgContainer .svgWrapper.hover svg{
@@ -291,6 +314,15 @@ a.info:hover ~ #cursor,
     fill: none;
     pointer-events: all;
   }
+#svgContainer .svgWrapper.hidden {
+    opacity: 0;
+}
+.grid #svgContainer .svgWrapper.hidden {
+    opacity: 1;
+}
+  /* #svgContainer .svgWrapper.hidden path{
+    stroke-width: 150px !important;
+  } */
   #svgContainer .shadow path{
     stroke: #8C8C8C;
   }
@@ -370,25 +402,37 @@ body.page-is-changing .hero{
     width: 33.3333vw;
     /* height: calc(33.334vh - 1px); */
     height: 33.334vh;
-    /* border-bottom:1px solid var(--mainColor); */
+    border-bottom:1px solid var(--mainColor);
     overflow:hidden;
+    /* transition: border-bottom 0s 1000ms; */
 }
+
 
 #svgContainer path,
 #svgContainer image{
   transform: scale(1);
-  transition: 400ms;
 }
 
+#svgContainer path{
+    transition: var(--transition);
+}
+#projectLinks:hover ~ #svgContainer .svgWrapper .drawnSvg{
+    transition: 200ms;
+}
+.grid #svgContainer .svgWrapper:hover path{
+    transition: 200ms;
+}
 #svgContainer image{
   width:100vw;
   height: 100vh;
   position:relative;
+  transition: var(--transition);
 }
 
 .grid #svgContainer .drawnSvg{
     width: 33.3333vw;
     height: calc(33.334vh - 1px);
+    /* position:absolute; */
     position:static;
 }
 
@@ -401,21 +445,40 @@ body.page-is-changing .hero{
     transform: scale(0.3);
 }
 
+:not(.grid) .extra-div{
+    display:none;
+}
 
+.extra-div{
+    background:blue;
+}
 
 .thumbnail-link{
     position:absolute;
-    bottom:1px;
+    bottom:0px;
     left:0px;
     border: 1px solid red;
     color: red;
     margin: 0 0px -1px -1px;
     line-height: 1;
     transform: translateY(100%);
-    transition: transform 300ms 600ms, padding 300ms;
+    transition: transform 300ms 0ms, padding 300ms;
     /* transition-delay: transform 600ms; */
     background: var(--bg);
 }
+
+.grid .thumbnail-link{
+    transition: transform 300ms 1200ms, padding 300ms;
+}
+
+/* @keyframes fadeInThumbnailLinks {
+    0%{
+        transform: translateY(100%);
+    }
+    100%{
+
+    }
+} */
 
 .thumbnail-link svg{
     display: inline;
@@ -442,6 +505,12 @@ body.page-is-changing .hero{
     opacity: 1;
 }
 
+#svgContainer .svgWrapper .drawnSvg{
+/* .grid #svgContainer > div { */
+    /* border: 5px solid yellow; */
+    transition: var(--transition);
+}
+
 .grid .svgWrapper.complete:not(.drawing-in-here):hover .drawnSvg path{
     stroke-width: 130vw !important;
 }
@@ -449,6 +518,19 @@ body.page-is-changing .hero{
 
 .grid .svgWrapper:not(.complete, .drawing-in-here, :hover) .drawnSvg rect{
     mask: none;
+}
+
+.grid .svgWrapper:not(.complete) .drawnSvg{
+    animation: fadeInProjects 500ms 1000ms linear both;
+}
+
+@keyframes fadeInProjects{
+    0%{
+        opacity:0;
+    }
+    100%{
+        opacity: 1;
+    }
 }
 
 .grid .svgWrapper:not(.drawing-in-here):hover .drawnSvg .shadow {
@@ -468,6 +550,7 @@ body.page-is-changing .hero{
     transform: translateY(-100%);
     /* margin-top: -1.5px; */
     transition: top 200ms;
+    /* opacity:0; */
 }
 
 #projectLinks.visible{
@@ -479,8 +562,14 @@ body.page-is-changing .hero{
     /* transform:translateY(100%); */
     transition: transform var(--transition);
     line-height: 1;
+    opacity: 0;
+    /* transform:translateY(-50%); */
     /* position:fixed; */
     /* bottom:-1.5px; */
+}
+
+#projectLinks li.visible{
+    opacity: 1;
 }
 
 @keyframes minimizeLinks{
@@ -536,15 +625,20 @@ body.page-is-changing .hero{
 
 /* HOMEPAGE LINES */
 .lines > div{
-    transition: var(--transition);
+    transition: bottom var(--transition), right var(--transition), opacity 0s 1000ms;
 }
 .lines .horizontal{
     width: 100vw;
     height: 1px;
-    background: var(--mainColor);
+    background: var(--mainColor);   
     position:fixed;
     bottom: -2px;
     left: 0px;
+    z-index:2;
+}
+.grid .lines .horizontal{
+    opacity: 0;
+    /* transition: opacity 0s 800ms; */
 }
 .lines .vertical{
     height: 100vh;
@@ -553,6 +647,8 @@ body.page-is-changing .hero{
     position:fixed;
     right: -2px;
     top: 0px;
+    z-index:2;
+    z-index: 10;
 }
 .grid .lines #line-v1{right: 66.667%}
 .grid .lines #line-v2{right: 33.334%}

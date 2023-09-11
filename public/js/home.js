@@ -1,10 +1,17 @@
 let grid = document.body.classList.contains("grid") ? true : false;
 
 let drawingCount = 0;
-let visibleDrawings = 0;
+// let visibleDrawings = 0;
 let startPathWeight = window.innerWidth * 0.1;
-let pathWeight = startPathWeight;
-let maxPathCount = 8;
+let drawPathWeight = startPathWeight;
+let gridPathWeight = 30;
+let pathWeight;
+if (grid){
+  pathWeight = gridPathWeight;
+} else {
+  pathWeight = drawPathWeight;
+}
+let maxPathCount = 4; //8
 
 // variables for simplifying path
 const inputTolerance = 200;
@@ -48,8 +55,14 @@ function handleMouseUp(e) {
   if (e.button === 2) {
     rightMouseClicked = false;
   }
-  console.log(rightMouseClicked);
+  // console.log(rightMouseClicked);
 }
+
+
+// document.body.addEventListener("load", function(){
+//   console.log("loaded");
+// })
+
 
 document.addEventListener('mousedown', handleMouseDown);
 document.addEventListener('mouseup', handleMouseUp);
@@ -64,7 +77,7 @@ const svgContainer = document.getElementById('svgContainer');
 // shuffle the svg elements
 shuffleNodes(svgContainer);
 
-const svgWrappers = document.querySelectorAll('#svgContainer > div');
+const svgWrappers = document.querySelectorAll('#svgContainer > div:not(.extra-div)');
 const projectCount = svgWrappers.length;
 const links = document.querySelectorAll('#projectLinks li');
 
@@ -151,8 +164,16 @@ svgContainer.addEventListener('mouseup', function(event){
 // Function to start the drawing
 function startDrawing(event) {
 
+  if (grid){
+    currentSvgWrapper = event.target.closest(".svgWrapper");
+  }
+
   // currentSvgWrapper = event.target.closest(".svgWrapper");
-  currentSvgWrapper.classList.add("drawing-in-here");
+  if (currentSvgWrapper){
+    
+    currentSvgWrapper.classList.add("drawing-in-here");
+    currentSvgWrapper.classList.remove("hidden");
+  }
 
       // make sure cursor is targeting right areas
       const targetTag = event.target.tagName;
@@ -160,14 +181,20 @@ function startDrawing(event) {
           if (!grid){
 
               // if user has reached the max number of path, start over
+              console.log(drawingCount, maxPathCount);
               if (drawingCount%maxPathCount == 0){
+                console.log("max path count reached");
                 resetSvgs();
               }
 
-              // if it's the first time user is drawing, change the nav
-              if(drawingCount==0){
-                  nav.classList.remove("pre-drawing");
+              else {
+                currentSvgWrapper.classList.remove("hidden");
               }
+
+              // if it's the first time user is drawing, change the nav
+              // if(drawingCount==0){
+              //     nav.classList.remove("pre-drawing");
+              // }
 
               // for each of the two paths in each svg
               for (let path of paths){
@@ -187,7 +214,7 @@ function startDrawing(event) {
           } else {
 
               // everything is a third the size
-              pathWeight = 30*3.333;
+              pathWeight = gridPathWeight*3.333;
               
               newSvg = currentSvgWrapper.querySelector("svg");
               paths = newSvg.querySelectorAll('path');
@@ -271,15 +298,18 @@ function stopDrawing(event) {
   currentSvgWrapper.classList.add("complete");
 
   if (projectNamesElem.querySelector(".most-recent")!= null){
-    console.log("something with most recent exists")
+    // console.log("something with most recent exists")
     projectNamesElem.querySelector(".most-recent").classList.remove("most-recent");
   }
   let nameElem = projectNamesElem.querySelector(`[data-slug="${currentSvgWrapper.getAttribute("data-slug")}"]`);
   projectNamesElem.classList.add("visible");
-  projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount+2} + ${drawingCount+2}px)`
+  projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
   nameElem.classList.add("most-recent");
   nameElem.style.order = 1 - drawingCount;
+  nameElem.classList.add("visible");
   nameElem.style.zIndex = drawingCount;
+  console.log(nameElem);
+  console.log("changed z index, " + drawingCount);
   nameElem.style.animationDelay = 150 * drawingCount + "ms";
 //   let simplifiedPath = simplifySvgPath(points, { tolerance: inputTolerance, precision: inputPrecision });
 //   cookieLength += simplifiedPath.length;
@@ -292,14 +322,17 @@ function stopDrawing(event) {
   }
 
   drawingCount++;
-  visibleDrawings++;
-  if (!grid){
-    pathWeight *= 0.85;
-  }
+  // visibleDrawings++;
+  // if (!grid){
+    drawPathWeight *= 0.85;
+  // }
 
   if (drawingCount%maxPathCount == 0){
-    visibleDrawings = 0;
-    pathWeight = startPathWeight;
+    // visibleDrawings = 0;
+    drawPathWeight = startPathWeight;
+  }
+  if (!grid){
+    pathWeight = drawPathWeight;
   }
 
     assignNewSvg();
@@ -309,19 +342,30 @@ function stopDrawing(event) {
 function resetSvgs(){
   for (let div of document.querySelectorAll(".complete")){
     div.classList.add("hidden");
+    div.classList.remove("complete");
   }
+  for (let li of document.querySelectorAll("#projectLinks li.visible")){
+    li.classList.remove("visible");
+    li.removeAttribute("style");
+  }
+  projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
 }
 
 function assignNewSvg(){
 
   if (!grid){
     currentSvgWrapper = svgWrappers[drawingCount%projectCount];
+    currentSvgWrapper.style.zIndex = drawingCount;
     // console.log("new current svg wrapper")
     // console.log(currentSvgWrapper)
-    currentSvgWrapper.classList.remove("hidden");
+    // currentSvgWrapper.classList.remove("hidden");
     currentSvgWrapper.classList.remove("complete");
 
+   
+
     newSvg = currentSvgWrapper.querySelector("svg");
+
+    console.log(currentSvgWrapper, newSvg)
 
     paths = newSvg.querySelectorAll('path');
     for (let path of paths){
@@ -329,7 +373,7 @@ function assignNewSvg(){
     }
 
   } else {
-    pathWeight = 30;
+    pathWeight = gridPathWeight;
   }
 
   cursor.style.width = pathWeight + "px";
@@ -356,10 +400,10 @@ drawButton.addEventListener("click", function(e){
 function makeGrid(){
     document.body.classList.add("grid");
     // turn this back on
-    // window.history.pushState({"pageTitle":"Projects"},"", "/projects/");
+    window.history.pushState({"pageTitle":"Projects"},"", "/projects/");
     grid = true;
 
-    pathWeight = 30;
+    pathWeight = gridPathWeight;
     cursor.style.width = pathWeight + "px";
     cursor.style.height = pathWeight + "px";
 
@@ -369,10 +413,19 @@ function makeGrid(){
     }
 }
 
+if (document.querySelector("main.page-projects")){
+  makeGrid();
+}
+
 function makeDraw(){
     document.body.classList.remove("grid");
     window.history.pushState({"pageTitle":"Home"},"", "/");
     grid = false;
+
+    pathWeight = drawPathWeight;
+    cursor.style.width = pathWeight + "px";
+    cursor.style.height = pathWeight + "px";
+
     for (let image of document.querySelectorAll("image")){
       image.setAttribute("width", window.innerWidth + "px");
       image.setAttribute("height", window.innerHeight + "px");
@@ -384,9 +437,9 @@ function showFullImage(){
     document.body.classList.toggle("showingFullImages");
 }
 
-// function transitionToProject(){
-//   document.body.classList.remove("grid");
-// }
+function transitionToProject(){
+  document.body.classList.remove("grid");
+}
 
 
 

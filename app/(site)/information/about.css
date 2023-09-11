@@ -55,6 +55,10 @@
     top: 0px;
 }
 
+#teamSection button .icon {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 
 #teamSection button{
     transition: padding 300ms;
@@ -63,12 +67,23 @@
 
 #teamSection button:hover{
     color: red;
-    padding-right: 30px;
+    /* padding-right: 30px; */
 }
 
 #teamSection button:hover .icon {
     pointer-events: inherit;
     opacity: 1;
+}
+
+.box.one-third.bio:last-child{
+    border-right: 1px solid var(--mainColor);
+}
+
+.bio{
+    display:none;
+}
+.bio.visible{
+    display:block;
 }
 
 @media screen and (max-width: 1050px){
@@ -77,6 +92,9 @@
     }
     .box.one-third:last-child{
         border-right:transparent;
+    }
+    .box.one-third.bio:last-child{
+        border-right: 1px solid var(--mainColor);
     }
 }
 

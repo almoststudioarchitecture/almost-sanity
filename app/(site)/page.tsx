@@ -24,7 +24,7 @@ export default async function Home() {
 
   return (
     // <main className="px-3 py-2">
-    <main>
+    <main className="page-draw">
       <div className="lines">
         <div className="horizontal" id="line-h1"></div>
         <div className="horizontal" id="line-h2"></div>
@@ -41,33 +41,43 @@ export default async function Home() {
         ))}
       </ul>
       <div id="cursorPrompt" className="py-2 px-2">Drag to Draw</div>
-          <div id="svgContainer">
-            {projects &&
+      <div id="svgContainer">
+          {projects &&
               projects.map((project, index) => (
-                
-                  <div key={index} className="svgWrapper" data-href={`/projects/${project.slug}`} data-slug={project.slug} data-thumb={project.coverImage.image}>
-                      <svg className="drawnSvg" width="100%" height="100%" id={`svg${index}`}>
-                          <mask id={`mask${index}`}>
-                              <rect x="0" y="0" width="100%" height="100%" fill="black"></rect>
-                              <defs>
-                                  <pattern id={`img${index}`} patternUnits="userSpaceOnUse" width="100%" height="100%">
-                                      <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image>
-                                  </pattern>
-                              </defs>
-                              <path d=""></path>
-                          </mask>  
-                          <rect className="rect" x="0" y="0" width="100%" height="100%" mask={`url(#mask${index})`} fill={`url(#img${index})`}></rect>
-                          <g className="shadow" filter="url(#shadowFilter)">
-                              <path d=""></path>
-                          </g>
-                      </svg>
-                      <a className="thumbnail-link py-2 px-2" data-type="page-transition" href={`/projects/${project.slug}`}>
-                          <h1>{project.name}<ArrowTopRight /></h1>
-                      </a>
-                  </div>
+                <div key={index} className="svgWrapper" data-href={`/projects/${project.slug}`} data-slug={project.slug} data-thumb={project.coverImage.image}>
+                    <svg className="drawnSvg" width="100%" height="100%" id={`svg${index}`}>
+                        <mask id={`mask${index}`}>
+                            <rect x="0" y="0" width="100%" height="100%" fill="black"></rect>
+                            <defs>
+                                <pattern id={`img${index}`} patternUnits="userSpaceOnUse" width="100%" height="100%">
+                                    <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image>
+                                </pattern>
+                            </defs>
+                            <path d=""></path>
+                        </mask>  
+                        <rect className="rect" x="0" y="0" width="100%" height="100%" mask={`url(#mask${index})`} fill={`url(#img${index})`}></rect>
+                        <g className="shadow" filter="url(#shadowFilter)">
+                            <path d=""></path>
+                        </g>
+                    </svg>
+                    <a className="thumbnail-link py-2 px-2" data-type="page-transition" href={`/projects/${project.slug}`}>
+                        <h1>{project.name}<ArrowTopRight /></h1>
+                    </a>
+                </div>
               ))}
-            </div>
-            <div id="cursor"></div>
+          {projects && projects.length % 3 === 1 && (
+              <>
+                  <div className="svgWrapper extra-div"></div>
+                  <div className="svgWrapper extra-div"></div>
+                  {/* {console.log('Added 2 extra divs')} */}
+              </>
+          )}
+          {projects && projects.length % 3 === 2 && (
+              <div className="svgWrapper extra-div"></div>
+              // {console.log('Added 1 extra divs')}
+          )}
+      </div>
+      <div id="cursor"></div>
 
       {/* <section className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-center justify-between gap-x-12 lg:mt-32 mt-20 mb-16">
         {profile &&
