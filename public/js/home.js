@@ -271,10 +271,10 @@ function draw(event) {
           }
           
         } else {
-          pathData += ` L${x*3.333},${y*3.333}`;
+          pathData += ` L${x/0.5},${y/0.5}`;
 
           if (x%2 == 0){
-            points.push([x*3.333, y*3.333])
+            points.push([x/0.5, y/0.5])
           }
         }
     }
