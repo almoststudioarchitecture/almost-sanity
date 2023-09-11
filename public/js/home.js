@@ -443,7 +443,7 @@ function showFullImage(){
 function transition_GridToProject(targetElement, cursorY) {
   console.log("transition to project");
   let items = document.querySelectorAll('.svgWrapper');
-  targetElement = targetElement.closest()
+  targetElement = targetElement.closest('.svgWrapper')
   let index = Array.from(items).indexOf(targetElement);
 
   // If the target element is not a grid-item, return
