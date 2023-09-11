@@ -464,6 +464,8 @@ body.page-is-changing .hero{
         #cccccc 11px  /* Line thickness */
     );
     cursor:default; 
+    opacity: 0;
+    transition: opacity var(--transition);
 }
 .extra-div:nth-child(odd){
     background: repeating-linear-gradient(
@@ -477,6 +479,7 @@ body.page-is-changing .hero{
 
 .grid .extra-div{
     display:block;
+    opacity: 1;
 }
 
 .thumbnail-link{
@@ -495,6 +498,16 @@ body.page-is-changing .hero{
 
 .grid .thumbnail-link{
     transition: transform 300ms 1200ms, padding 300ms;
+}
+
+.grid.transition-to-project .thumbnail-link{
+    transition: transform 300ms 0ms, padding 300ms;
+    transform: translateY(100%);
+}
+
+.grid.transition-to-project .svgWrapper{
+    transition: opacity 300ms;
+    opacity: 0 !important;
 }
 
 /* @keyframes fadeInThumbnailLinks {
@@ -664,6 +677,12 @@ body.page-is-changing .hero{
 }
 .grid .lines .horizontal{
     opacity: 0;
+    /* transition: opacity 0s 800ms; */
+}
+.grid.transition-to-project .lines .horizontal{
+    opacity: 1;
+    display:block;
+    transition: opacity 0s 0s, bottom var(--transition);
     /* transition: opacity 0s 800ms; */
 }
 .lines .vertical{

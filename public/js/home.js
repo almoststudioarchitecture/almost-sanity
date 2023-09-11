@@ -156,9 +156,8 @@ svgContainer.addEventListener('mouseup', function(event){
     stopDrawing()
   } else if (grid){
     console.log(event.target);
-    transitionToProject();
+    transition_GridToProject(event.target, event.clientY);
   }
-
 });
 
 // Function to start the drawing
@@ -437,12 +436,77 @@ function showFullImage(){
     document.body.classList.toggle("showingFullImages");
 }
 
-function transitionToProject(){
-  document.body.classList.remove("grid");
+function transition_GridToProject(targetElement, cursorY) {
+  console.log("transition to project");
+  let items = document.querySelectorAll('.svgWrapper');
+  let index = Array.from(items).indexOf(targetElement);
+
+  // If the target element is not a grid-item, return
+  if (index === -1) return;
+
+  let column = (index % 3) + 1; // Assuming you have 3 columns
+  console.log('This item is in column ' + column);
+
+  document.body.classList.add("transition-to-project");
+
+  targetElement.classList.add("transfer-target-thumb");
+
+  // Check the row in relation to the horizontal lines
+  let line1Top = document.getElementById('line-h1').getBoundingClientRect().top;
+  let line2Top = document.getElementById('line-h2').getBoundingClientRect().top;
+
+  setTimeout(function(){
+    
+    if (column == 1){
+      document.getElementById("line-v1").style.right = "-1px";
+      document.getElementById("line-v2").style.right = "-1px";
+    } else if (column == 2){
+      document.getElementById("line-v1").style.right = "100vw";
+      document.getElementById("line-v2").style.right = "-1px";
+    } else if (column == 3){
+      document.getElementById("line-v1").style.right = "100vw";
+      document.getElementById("line-v2").style.right = "100vw";
+    }
+
+    if (cursorY < line1Top) {
+        console.log('Cursor is above the first line');
+        document.getElementById("line-h1").style.bottom = "-1px";
+        document.getElementById("line-h2").style.bottom = "-1px";
+    } else if (cursorY < line2Top) {
+        console.log('Cursor is between the two lines');
+        document.getElementById("line-h1").style.bottom = "100vh";
+        document.getElementById("line-h2").style.bottom = "-1px";
+    } else {
+        console.log('Cursor is below the second line');
+        document.getElementById("line-h1").style.bottom = "100vh";
+        document.getElementById("line-h2").style.bottom = "100vh";
+    }
+
+  }, 400)
+
+  setTimeout(function(){
+    let urlExtension = targetElement.getAttribute("data-href"); // This is just a placeholder; replace with your actual URL extension
+        // Ensure there's no trailing slash
+    // let currentPath = window.location.pathname;
+    // if (currentPath.endsWith('/')) {
+    //     currentPath = currentPath.slice(0, -1);
+    // }
+
+    // console.log(window.location.origin, currentPath, urlExtension);
+
+    window.location.href = window.location.origin + urlExtension;
+  },1000)
+
+  
+
+  
+
+// If the target element is not a grid-item, return
+if (index === -1) return;
+  
+  
+  // ... any other transition code you have
 }
-
-
-
 
 
 //////////////////////////////////////

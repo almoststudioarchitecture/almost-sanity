@@ -15,8 +15,8 @@ export default async function Home() {
   return (
     <main className="page-projects">
       <div className="lines">
-        {/* <div className="horizontal" id="line-h1"></div> */}
-        {/* <div className="horizontal" id="line-h2"></div> */}
+        <div className="horizontal" id="line-h1"></div>
+        <div className="horizontal" id="line-h2"></div>
         <div className="vertical" id="line-v1"></div>
         <div className="vertical" id="line-v2"></div>
       </div>
