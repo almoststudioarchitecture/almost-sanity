@@ -11,7 +11,7 @@ if (grid){
 } else {
   pathWeight = drawPathWeight;
 }
-let maxPathCount = 4; //8
+let maxPathCount = 8; //4 for debugging
 
 // variables for simplifying path
 const inputTolerance = 200;
