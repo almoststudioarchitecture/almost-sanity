@@ -445,12 +445,38 @@ body.page-is-changing .hero{
     transform: scale(0.3);
 }
 
-:not(.grid) .extra-div{
+.extra-div{
     display:none;
 }
 
 .extra-div{
-    background:blue;
+    /* background:blue; */
+}
+
+.extra-div{
+    width: 300px; /* Adjust to your desired width */
+    height: 300px; /* Adjust to your desired height */
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 10px,
+        #cccccc 10px, /* Line color */
+        #cccccc 11px  /* Line thickness */
+    );
+    cursor:default; 
+}
+.extra-div:nth-child(odd){
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        #cccccc 10px, /* Line color */
+        #cccccc 11px  /* Line thickness */
+    );
+}
+
+.grid .extra-div{
+    display:block;
 }
 
 .thumbnail-link{
