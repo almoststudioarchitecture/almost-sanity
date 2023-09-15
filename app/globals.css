@@ -35,6 +35,18 @@ html{
     font-family: var(--primary-type);
 }
 
+body::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+
+
 body{
     background: var(--bg);
 }
@@ -277,10 +289,17 @@ a.info:hover ~ #cursor,
 #svgContainer > div {
     width: 100vw;
     height: 100vh;
-    transition: width var(--transition), height var(--transition), border-bottom 0s 1000ms;
+    /* transition: width var(--transition), height var(--transition), border-bottom 0s 1000ms; */
     position: relative;
     /* order: 40; */
 }
+
+.grid.transition-complete #svgContainer > div,
+.grid.transition-complete #svgContainer .svgWrapper .drawnSvg,
+.grid.transition-complete #svgContainer image{
+    transition: 0s;
+}
+
 
 #svgContainer .drawnSvg{
     position:fixed;
@@ -428,6 +447,10 @@ body.page-is-changing .hero{
 }
 .grid #svgContainer .svgWrapper:hover path{
     transition: 200ms;
+}
+
+.grid #projectLinks{
+    display:none;
 }
 #svgContainer image{
   width:100vw;

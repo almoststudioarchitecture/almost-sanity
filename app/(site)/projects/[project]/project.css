@@ -43,9 +43,12 @@
 
 .section.info .meta-data{
     display: flex;
+    flex-wrap: wrap;
     gap: 24px;
     color: var(--mainColor);
 }
+
+/* @media screen and max-width:  */
 
 /* #before, #after{
     height: 100%;

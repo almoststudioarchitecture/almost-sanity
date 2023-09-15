@@ -402,6 +402,9 @@ drawButton.addEventListener("click", function(e){
 
 function makeGrid(){
     document.body.classList.add("grid");
+    setTimeout(function(){
+      document.body.classList.add("transition-complete")
+    }, 1000)
     // turn this back on
     window.history.pushState({"pageTitle":"Projects"},"", "/projects/");
     grid = true;
