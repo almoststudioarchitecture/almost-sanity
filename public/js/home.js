@@ -173,6 +173,7 @@ function startDrawing(event) {
   if (currentSvgWrapper){
     
     currentSvgWrapper.classList.add("drawing-in-here");
+    document.body.classList.add("drawing");
     currentSvgWrapper.classList.remove("hidden");
   }
 
@@ -297,6 +298,7 @@ function stopDrawing(event) {
 
 
   svgContainer.classList.remove("drawing");
+  document.body.classList.remove("drawing");
   document.querySelector(".drawing-in-here").classList.remove("drawing-in-here")
   currentSvgWrapper.classList.add("complete");
 

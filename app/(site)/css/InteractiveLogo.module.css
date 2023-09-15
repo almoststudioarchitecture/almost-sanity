@@ -41,6 +41,10 @@
     z-index:-1;
 }
 
+#logo > div:hover > div{
+    background: red;
+}
+
 #logo > div > div{
     width: var(--unit);
     height: var(--unit);

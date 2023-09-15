@@ -232,6 +232,9 @@ p{
 .grid #svgContainer.drawing ~ #cursor{
     transform: translate(-50%,-50%);
 }
+body.drawing #projectLinks{
+    pointer-events: none;
+}
 .grid #svgContainer.drawing * {
     cursor:none;
 }
@@ -239,9 +242,9 @@ p{
     /* position: fixed; */
 }
 
-/* .drawnSvg  * {
+.drawnSvg  * {
     transition: var(--transition);
-} */
+}
 
 #cursorPrompt {
     color: var(--mainColor);
@@ -307,13 +310,25 @@ a.info:hover ~ #cursor,
     left:0px;
     pointer-events: none;
     transform: scale(1);
-    transition: var(--transition);
+    /* transition: var(--transition); */
+    transition: filter var(--transition);
 }
 
 #svgContainer .svgWrapper.hover svg{
     filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3));
-    transform: scale(1.015);
+    /* transform: scale(1.015); */
+    animation: zoomSvg 200ms linear both;
 }
+
+@keyframes zoomSvg{
+    0%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(1.015)
+    }
+}
+
 #svgContainer .svgWrapper.hover{
     /* filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3)); */
     /* transform: scale(1.02); */
@@ -443,7 +458,7 @@ body.page-is-changing .hero{
     transition: var(--transition);
 }
 #projectLinks:hover ~ #svgContainer .svgWrapper .drawnSvg{
-    transition: 200ms;
+    /* transition: 200ms; */
 }
 .grid #svgContainer .svgWrapper:hover path{
     transition: 200ms;
@@ -577,7 +592,7 @@ body.page-is-changing .hero{
 #svgContainer .svgWrapper .drawnSvg{
 /* .grid #svgContainer > div { */
     /* border: 5px solid yellow; */
-    transition: var(--transition);
+    /* transition: var(--transition); */
 }
 
 .grid .svgWrapper.complete:not(.drawing-in-here):hover .drawnSvg path{
