@@ -38,15 +38,13 @@ export type ProjectType = {
   // gallery: any;
   _id: string;
   name: string;
+  location: string;
   slug: string;
   tagline: string;
   projectUrl: string;
   metadata: string[];
   logo: string;
-  coverImage: {
-    alt: string | null;
-    image: string;
-  };
+  coverImage: CoverImage;
   // gallery: string[];
   gallery: Array<GalleryImage | VimeoVideoLink>; // Define an array of either GalleryImage or VimeoVideoLink
   description: PortableTextBlock[];
@@ -72,3 +70,14 @@ interface TeamMember {
   title: string;
   bio: string;
 }
+
+export type FocalPoint = {
+  x: 'xMin' | 'xMid' | 'xMax';
+  y: 'yMin' | 'yMid' | 'yMax';
+};
+
+export type CoverImage = {
+  alt: string | null;
+  image: string;
+  focalpoint?: FocalPoint;
+};

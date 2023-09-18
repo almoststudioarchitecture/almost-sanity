@@ -43,14 +43,21 @@ export default async function Home() {
       <div id="cursorPrompt" className="py-2 px-2">Drag to Draw</div>
       <div id="svgContainer">
           {projects &&
-              projects.map((project, index) => (
+              projects.slice(0, 8).map((project, index) => (
                 <div key={index} className="svgWrapper" data-href={`/projects/${project.slug}`} data-slug={project.slug} data-thumb={project.coverImage.image}>
                     <svg className="drawnSvg" width="100%" height="100%" id={`svg${index}`}>
                         <mask id={`mask${index}`}>
                             <rect x="0" y="0" width="100%" height="100%" fill="black"></rect>
                             <defs>
                                 <pattern id={`img${index}`} patternUnits="userSpaceOnUse" width="100%" height="100%">
-                                    <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image>
+                                    {/* <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image> */}
+                                    {project.coverImage.focalpoint ? (
+                                      <>
+                                        <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio={`${project.coverImage.focalpoint.x}${project.coverImage.focalpoint.y} slice`}></image>
+                                      </>
+                                    ) : (
+                                      <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image>
+                                    )}
                                 </pattern>
                             </defs>
                             <path d=""></path>
@@ -61,18 +68,18 @@ export default async function Home() {
                         </g>
                     </svg>
                     <a className="thumbnail-link py-2 px-2" data-type="page-transition" href={`/projects/${project.slug}`}>
-                        <h1>{project.name}<ArrowTopRight /></h1>
+                        <h1>{project.name}{project.location?.trim().length > 0 ? `, ${project.location}` : ''}<ArrowTopRight /></h1>
                     </a>
                 </div>
               ))}
-          {projects && projects.length % 3 === 1 && (
+          {projects && projects.slice(0, 8).length % 3 === 1 && (
               <>
                   <div className="svgWrapper extra-div"></div>
                   <div className="svgWrapper extra-div"></div>
                   {/* {console.log('Added 2 extra divs')} */}
               </>
           )}
-          {projects && projects.length % 3 === 2 && (
+          {projects && projects.slice(0, 8).length % 3 === 2 && (
               <div className="svgWrapper extra-div"></div>
               // {console.log('Added 1 extra divs')}
           )}

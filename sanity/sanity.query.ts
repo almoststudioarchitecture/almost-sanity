@@ -21,9 +21,14 @@ export async function getProjects() {
     groq`*[_type == "project"]{
       _id, 
       name,
+      location,
       url,
       "slug": slug.current,
-      coverImage { alt, "image": asset->url }
+      coverImage { 
+        alt, 
+        "image": asset->url,
+        focalpoint
+      }
     }`
   );
 }
@@ -43,6 +48,7 @@ export async function getSingleProject(slug: string) {
     groq`*[_type == "project" && slug.current == $slug][0]{
       _id,
       name,
+      location,
       coverImage { alt, "image": asset->url },
       metadata,
       description,

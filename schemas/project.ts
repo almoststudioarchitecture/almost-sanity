@@ -24,6 +24,12 @@ const project = {
       validation: (rule) => rule.required(),
     }),
     {
+      name: "location",
+      title: "Location (or other secondary line)",
+      type: "string",
+      description: "This will show up alongside the project thumbnail, after the project title",
+    },
+    {
       name: "coverImage",
       title: "Main Image",
       type: "image",
@@ -35,6 +41,40 @@ const project = {
           title: "Alt",
           type: "string",
         },
+        {
+          name: "focalpoint",
+          title: "Focal Point",
+          type: 'object',
+          description: 'Defaults to center/center',
+          fields: [
+            {
+              name: 'x', 
+              type: 'string', 
+              title: 'X', 
+              options: {
+                list: [
+                  {title: 'Left', value: 'xMin'}, 
+                  {title: 'Middle', value: 'xMid'}, 
+                  {title: 'Right', value: 'xMax'}
+                ],
+                layout: 'dropdown'
+              },
+            },
+            {
+              name: 'y', 
+              type: 'string', 
+              title: 'Y', 
+              options: {
+                list: [
+                  {title: 'Top', value: 'yMin'}, 
+                  {title: 'Center', value: 'yMid'}, 
+                  {title: 'Bottom', value: 'yMax'}
+                ],
+                layout: 'dropdown',
+              },
+            },
+          ]
+        }
       ],
     },
     {

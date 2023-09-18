@@ -86,12 +86,12 @@ const links = document.querySelectorAll('#projectLinks li');
 
 // hover function
 for (let link of links){
-  link.addEventListener("mouseenter", function(){
+  link.querySelector("a").addEventListener("mouseenter", function(){
     cursor.classList.add("hidden");
     let projectSlug = link.getAttribute("data-slug");
     svgContainer.querySelector(`[data-slug="${projectSlug}"]`).classList.add("hover");
   })
-  link.addEventListener("mouseleave", function(){
+  link.querySelector("a").addEventListener("mouseleave", function(){
     cursor.classList.remove("hidden");
     let projectSlug = link.getAttribute("data-slug");
     svgContainer.querySelector(`[data-slug="${projectSlug}"]`).classList.remove("hover");

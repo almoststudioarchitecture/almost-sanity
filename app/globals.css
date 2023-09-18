@@ -225,7 +225,7 @@ p{
 }
 .grid #cursor{
     /* transform: translate(30%,30%); */
-    transform: translate(50%,-20%);
+    /* transform: translate(50%,-20%); */
     /* transition: transform 300ms; */
 }
 
@@ -318,6 +318,7 @@ a.info:hover ~ #cursor,
     filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3));
     /* transform: scale(1.015); */
     animation: zoomSvg 200ms linear both;
+    
 }
 
 @keyframes zoomSvg{
@@ -600,7 +601,7 @@ body.page-is-changing .hero{
 }
 
 
-.grid .svgWrapper:not(.complete, .drawing-in-here, :hover) .drawnSvg rect{
+.grid .svgWrapper:not(.complete, .drawing-in-here) .drawnSvg rect{
     mask: none;
 }
 
@@ -676,6 +677,7 @@ body.page-is-changing .hero{
     border-color: var(--mainColor);
     text-transform: uppercase;
     background:var(--bg);
+    letter-spacing: -0.02em;
 }
 #projectLinks li{
     transform:translateY(0%);
@@ -692,7 +694,7 @@ body.page-is-changing .hero{
     transition: 200ms;
 }
 
-#projectLinks li:hover svg,
+#projectLinks li a:hover svg,
 #projectLinks li.most-recent svg {
     margin-left:0;
     opacity:1;
@@ -701,6 +703,16 @@ body.page-is-changing .hero{
 #projectLinks:hover li.most-recent:not(:hover) svg {
     opacity:0;
     margin-left:-1.7em;
+}
+
+#projectLinks li:not(.most-recent) a{
+    opacity: 0;
+}
+#projectLinks li a{
+    transition: opacity 400ms;
+}
+#projectLinks:hover li a{
+    opacity: 1;
 }
 
 .grid #projectLinks{
@@ -722,13 +734,12 @@ body.page-is-changing .hero{
 }
 .grid .lines .horizontal{
     opacity: 0;
-    /* transition: opacity 0s 800ms; */
+    transition: opacity 0s 800ms;
 }
 .grid.transition-to-project .lines .horizontal{
     opacity: 1;
     display:block;
     transition: opacity 0s 0s, bottom var(--transition);
-    /* transition: opacity 0s 800ms; */
 }
 .lines .vertical{
     height: 100vh;
