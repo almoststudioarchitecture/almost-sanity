@@ -1,35 +1,85 @@
 'use client'
 
+// import Image from 'next/image';
+// import React from 'react';
+
+// interface ProjectGalleryImageProps {
+//       src: string; // Specify the type for src as a string
+//       alt: string; // Specify the type for alt as a string
+//       fit?: 'cover' | 'contain';
+// }
+    
+
+// // function ProjectGalleryImage({ src, alt }) {
+// function ProjectGalleryImage({ src, alt, fit }: ProjectGalleryImageProps) {
+      
+//       const handleLoadingComplete = (img: HTMLImageElement) => {
+//         // console.log('natural width:', img.naturalWidth, img.naturalHeight);
+//         if (img.naturalWidth > img.naturalHeight){
+//             img.style.objectFit = "cover";
+//         }
+//       };
+
+//       // const handleLoadingComplete = (img: HTMLImageElement) => {
+//       //   if (!fit) {
+//       //     if (img.naturalWidth > img.naturalHeight) {
+//       //       img.style.objectFit = "cover";
+//       //     } else {
+//       //       img.style.objectFit = "contain";
+//       //     }
+//       //   }
+//       // };
+    
+//       return (
+//           <Image 
+//             src={src}
+//             alt={alt}
+//             fill
+//             objectFit={fit || 'contain'}
+//             // onLoadingComplete={handleLoadingComplete}
+//           />
+//       );
+// }
+
+// export default ProjectGalleryImage;
+
+
+
 import Image from 'next/image';
 import React from 'react';
 
 interface ProjectGalleryImageProps {
-      src: string; // Specify the type for src as a string
-      alt: string; // Specify the type for alt as a string
+  src: string;
+  alt: string;
+  fit?: 'cover' | 'contain';
 }
-    
 
-// function ProjectGalleryImage({ src, alt }) {
-function ProjectGalleryImage({ src, alt }: ProjectGalleryImageProps) {
-      
-      const handleLoadingComplete = (img: HTMLImageElement) => {
-        // console.log('natural width:', img.naturalWidth, img.naturalHeight);
-        if (img.naturalWidth > img.naturalHeight){
-            img.style.objectFit = "cover";
-        }
-      };
-    
-      return (
-          <Image 
-            src={src}
-            alt={alt}
-            fill
-            objectFit="contain"
-            onLoadingComplete={handleLoadingComplete}
-          />
-      );
+function ProjectGalleryImage({ src, alt, fit }: ProjectGalleryImageProps) {
+
+  const handleLoadingComplete = (img: HTMLImageElement) => {
+    if (!fit) {
+      if (img.naturalWidth > img.naturalHeight) {
+        img.style.objectFit = "cover";
+      } else {
+        img.style.objectFit = "contain";
+      }
+    }
+  };
+
+  return (
+    <Image 
+      src={src}
+      alt={alt}
+      fill
+      objectFit={fit || 'contain'}
+      onLoadingComplete={fit ? undefined : handleLoadingComplete}
+    />
+  );
 }
-    
+
+export default ProjectGalleryImage;
+
+     
 
 
 
@@ -73,5 +123,5 @@ function ProjectGalleryImage({ src, alt }: ProjectGalleryImageProps) {
 //       )
 // }
 
-export default ProjectGalleryImage;
+// export default ProjectGalleryImage;
  

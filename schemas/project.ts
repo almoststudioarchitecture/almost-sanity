@@ -66,9 +66,9 @@ const project = {
               title: 'Y', 
               options: {
                 list: [
-                  {title: 'Top', value: 'yMin'}, 
-                  {title: 'Center', value: 'yMid'}, 
-                  {title: 'Bottom', value: 'yMax'}
+                  {title: 'Top', value: 'YMin'}, 
+                  {title: 'Center', value: 'YMid'}, 
+                  {title: 'Bottom', value: 'YMax'}
                 ],
                 layout: 'dropdown',
               },
@@ -126,6 +126,19 @@ const project = {
                   name: 'caption',
                   type: 'string',
                   title: 'Caption (optional)',
+                },
+                {
+                  name: 'fit', 
+                  type: 'string', 
+                  title: 'Size', 
+                  description: 'Defaults to vertical images fitting the space and horizontal images filling the space.',
+                  options: {
+                    list: [
+                      {title: 'Fill', value: 'cover', description: 'Image fills the given dimension'}, 
+                      {title: 'Fit', value: 'contain', description: 'Image fits within the given dimension'}, 
+                    ],
+                    layout: 'dropdown',
+                  },
                 },
               ],
             },

@@ -25,7 +25,7 @@ heroElem.addEventListener("mouseenter", function(){
 mainElem.addEventListener("scroll", function(){
     scrolled = true;
 
-    console.log(mainElem.scrollTop, infoElem.offsetTop, infoElem.offsetHeight)
+    // console.log(mainElem.scrollTop, infoElem.offsetTop, infoElem.offsetHeight)
     if (infoElem.offsetTop + infoElem.offsetHeight - 100 < mainElem.scrollTop){
         document.body.classList.add("inverted")
     } else {
@@ -34,3 +34,32 @@ mainElem.addEventListener("scroll", function(){
 })
 
 
+
+
+const scrollContainer = document.querySelector('main');
+const targetElement = document.querySelector('.info');
+
+scrollContainer.addEventListener('scroll', function() {
+  // Get position of the element relative to the viewport
+//   console.log("scrolling");
+  const rect = targetElement.getBoundingClientRect();
+  
+  // If the element is at the top of the viewport (with some tolerance for floating point inaccuracies)
+  if (Math.abs(rect.top) < 35) {
+    // Element is snapped to the top, enable its internal scrolling
+    targetElement.style.overflowY = 'scroll';
+  } else {
+    // Element is not at the top, disable its internal scrolling
+    targetElement.style.overflowY = 'hidden';
+  }
+});
+
+const rect = targetElement.getBoundingClientRect();
+  // If the element is at the top of the viewport (with some tolerance for floating point inaccuracies)
+  if (Math.abs(rect.top) < 35) {
+    // Element is snapped to the top, enable its internal scrolling
+    targetElement.style.overflowY = 'scroll';
+  } else {
+    // Element is not at the top, disable its internal scrolling
+    targetElement.style.overflowY = 'hidden';
+  }

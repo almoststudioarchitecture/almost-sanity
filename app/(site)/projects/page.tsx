@@ -2,7 +2,7 @@
 
 import * as sanityQuery from "@/sanity/sanity.query";
 import type { ProfileType } from "@/types";
-// import DrawCursorSvg from "./icons/DrawCursorSvg";
+import DrawCursorSvg from "../icons/DrawCursorSvg";
 import ArrowTopRight from "../icons/ArrowTopRight";
 // import Job from "./components/Job";
 import { getProjects } from "@/sanity/sanity.query";
@@ -14,11 +14,11 @@ export default async function Home() {
 
   return (
     <main className="page-projects">
-      <div className="lines">
+<div className="lines">
         <div className="horizontal" id="line-h1"></div>
-        {/* <div className="horizontal" id="line-h2"></div> */}
+        <div className="horizontal" id="line-h2"></div>
         <div className="vertical" id="line-v1"></div>
-        {/* <div className="vertical" id="line-v2"></div> */}
+        <div className="vertical" id="line-v2"></div>
       </div>
       <ul id="projectLinks">
         
@@ -32,14 +32,21 @@ export default async function Home() {
       <div id="cursorPrompt" className="py-2 px-2">Drag to Draw</div>
       <div id="svgContainer">
           {projects &&
-              projects.map((project, index) => (
+              projects.slice(0, 7).map((project, index) => (
                 <div key={index} className="svgWrapper" data-href={`/projects/${project.slug}`} data-slug={project.slug} data-thumb={project.coverImage.image}>
                     <svg className="drawnSvg" width="100%" height="100%" id={`svg${index}`}>
                         <mask id={`mask${index}`}>
                             <rect x="0" y="0" width="100%" height="100%" fill="black"></rect>
                             <defs>
                                 <pattern id={`img${index}`} patternUnits="userSpaceOnUse" width="100%" height="100%">
-                                    <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image>
+                                    {/* <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image> */}
+                                    {project.coverImage.focalpoint ? (
+                                      <>
+                                        <image href={project.coverImage.image} data-focalpoint={project.coverImage.focalpoint.y} x="0" y="0" width="100%" height="100%" preserveAspectRatio={`${project.coverImage.focalpoint.x}${project.coverImage.focalpoint.y} slice`}></image>
+                                      </>
+                                    ) : (
+                                      <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image>
+                                    )}
                                 </pattern>
                             </defs>
                             <path d=""></path>
@@ -50,23 +57,70 @@ export default async function Home() {
                         </g>
                     </svg>
                     <a className="thumbnail-link py-2 px-2" data-type="page-transition" href={`/projects/${project.slug}`}>
-                        <h1>{project.name}<ArrowTopRight /></h1>
+                        <h1>{project.name}{project.location?.trim().length > 0 ? `, ${project.location}` : ''}<ArrowTopRight /></h1>
                     </a>
                 </div>
               ))}
-
-          {/* Additional divs to make total count divisible by three */}
-          {projects && projects.length % 3 === 1 && (
+          {/* {projects && projects.slice(0, 8).length % 3 === 1 && (
               <>
                   <div className="svgWrapper extra-div"></div>
                   <div className="svgWrapper extra-div"></div>
               </>
-          )}
-          {projects && projects.length % 3 === 2 && (
-              <div className="svgWrapper extra-div"></div>
+          )} */}
+          {projects && projects.slice(0, 7).length % 2 === 1 && (
+              <div className="svgWrapper extra-div">
+                <svg className="drawnSvg" width="100%" height="100%">
+                        <mask>
+                            <rect x="0" y="0" width="100%" height="100%" fill="black"></rect>
+                            <defs>
+   
+                            </defs>
+                            <path d=""></path>
+                        </mask>  
+                        {/* <rect className="rect" x="0" y="0" width="100%" height="100%" mask={`url(#maskExtra)`} fill={`url(#imgExtra)`}></rect> */}
+                        <rect className="rect" x="0" y="0" width="100%" height="100%" fill='white'></rect>
+                        <g className="shadow" filter="url(#shadowFilter)">
+                            <path d=""></path>
+                        </g>
+                    </svg>
+              </div>
+              // {console.log('Added 1 extra divs')}
           )}
       </div>
-      <svg className="defs">
+      <div id="cursor"></div>
+
+      {/* <section className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-center justify-between gap-x-12 lg:mt-32 mt-20 mb-16">
+        {profile &&
+          profile.map((data) => (
+            <div key={data._id} className="lg:max-w-2xl max-w-2xl">
+              <h1 className="text-3xl font-bold tracking-tight sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
+                {data.headline}
+              </h1>
+              <p className="text-base text-zinc-400 leading-relaxed">
+                {data.shortBio}
+              </p>
+              <ul className="flex items-center gap-x-6 my-10">
+                {Object.entries(data.socialLinks)
+                  .sort()
+                  .map(([key, value], id) => (
+                    <li key={id}>
+                      <a
+                        href={value}
+                        rel="noreferer noopener"
+                        className="flex items-center gap-x-3 mb-5 hover:text-purple-400 duration-300"
+                      >
+                        {key[0].toUpperCase() + key.toLowerCase().slice(1)}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          ))}
+        <HeroSvg />
+      </section>
+      <Job /> */}
+      <DrawCursorSvg />
+      {/* <svg className="defs">
             <defs>
                 <filter id="shadowFilter" x="0" y="0" width="1319" height="865" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
                     <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
@@ -97,15 +151,20 @@ export default async function Home() {
                     <feBlend mode="normal" in2="effect3_innerShadow_68_42" result="effect4_innerShadow_68_42"></feBlend>
                 </filter>
             </defs>
-        </svg>
-      <div id="cursor"></div>
+        </svg> */}
         <Script
         src="/js/home.js"
         strategy="lazyOnload"
+        // onLoad={() =>
+        //   console.log(`script loaded correctly, window.FB has been populated`)
+        // }
         />
         <Script
         src="/js/load.js"
         strategy="lazyOnload"
+        // onLoad={() =>
+        //   console.log(`script loaded correctly, window.FB has been populated`)
+        // }
         />
     </main>
   );

@@ -56,7 +56,8 @@ export async function getSingleProject(slug: string) {
         _type,
         alt,
         "image": asset->url,
-        caption
+        caption,
+        fit
       },
       "vimeoGallery": gallery.vimeoVideoLinks[] {
         _type,

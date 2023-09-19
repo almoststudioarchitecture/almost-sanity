@@ -1,5 +1,7 @@
 let grid = document.body.classList.contains("grid") ? true : false;
 
+console.log("LOADED");
+
 let drawingCount = 0;
 // let visibleDrawings = 0;
 let startPathWeight = window.innerWidth * 0.1;
@@ -309,6 +311,8 @@ function stopDrawing(event) {
   let nameElem = projectNamesElem.querySelector(`[data-slug="${currentSvgWrapper.getAttribute("data-slug")}"]`);
   projectNamesElem.classList.add("visible");
   projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
+  if (nameElem != null){
+    
   nameElem.classList.add("most-recent");
   nameElem.style.order = 1 - drawingCount;
   nameElem.classList.add("visible");
@@ -316,6 +320,8 @@ function stopDrawing(event) {
   console.log(nameElem);
   console.log("changed z index, " + drawingCount);
   nameElem.style.animationDelay = 150 * drawingCount + "ms";
+
+}
 //   let simplifiedPath = simplifySvgPath(points, { tolerance: inputTolerance, precision: inputPrecision });
 //   cookieLength += simplifiedPath.length;
 

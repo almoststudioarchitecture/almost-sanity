@@ -122,14 +122,16 @@ export default async function Project({ params }: Props) {
           {/* <div className="section gallery"> */}
 
               {project.gallery && project.gallery.map((item, index) => {
+                const randomStyleNumber = Math.floor(Math.random() * 11) + 1;
                 if (item._type === 'image' && item.caption) {
                   return (
                     <div key={index} className="image-container-outer relative">
-                      <div className="image-container-inner relative">
+                      <div className={`image-container-inner relative style${randomStyleNumber}`}>
                         <ProjectGalleryImage
                             key={index}
                             src={item.image}
                             alt={item.alt || project.name}
+                            fit={item.fit}
                         />
                       </div>
                       <div className="caption">
@@ -140,11 +142,12 @@ export default async function Project({ params }: Props) {
                 } else if (item._type === 'image') {
                   return (
                     <div key={index} className="image-container-outer relative">
-                      <div className="image-container-inner relative">
+                      <div className={`image-container-inner relative style${randomStyleNumber}`}>
                         <ProjectGalleryImage
                             key={index}
                             src={item.image}
                             alt={item.alt || project.name}
+                            fit={item.fit}
                         />
                       </div>
                     </div>

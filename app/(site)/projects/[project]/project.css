@@ -89,16 +89,196 @@ main{
 main > *{
     scroll-snap-align: start;
 }
-/* .info{
-    scroll-snap-align: inherit;
-} */
+.info{
+    /* scroll-snap-align: none; */
+    max-height: calc(100vh - var(--pad));
+    overflow-y:scroll;
+}
+
+main::-webkit-scrollbar,
+.info::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  main, .info {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+.spacer {
+    flex: 0 0 auto;
+    width: 1px; /* Very thin so it's essentially invisible */
+    scroll-snap-align: start;
+}
+
 
 .image-container-inner{
+    --stripesFg: #444444;
+    --stripesBg: #000000;
     border-bottom:1px solid #555555;
     height:calc(100vh - var(--navHeight));
     width:100%;
     background:black;
 }
+
+.image-container-inner.style1{
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--stripesBg),
+        var(--stripesBg) 10px,
+        var(--stripesFg) 10px, /* Line color */
+        var(--stripesFg) 11px  /* Line thickness */
+    );
+}
+.image-container-inner.style2{
+    background: repeating-linear-gradient(
+        45deg,
+        var(--stripesBg),
+        var(--stripesBg) 10px,
+        var(--stripesFg) 10px, /* Line color */
+        var(--stripesFg) 11px  /* Line thickness */
+    );
+}
+.image-container-inner.style3{
+    background: repeating-linear-gradient(
+        0deg,
+        var(--stripesBg),
+        var(--stripesBg) 10px,
+        var(--stripesFg) 10px, /* Line color */
+        var(--stripesFg) 11px  /* Line thickness */
+    );
+}
+.image-container-inner.style4{
+    background: repeating-linear-gradient(
+        0deg,
+        var(--stripesBg),
+        var(--stripesBg) 30px,
+        var(--stripesFg) 30px, /* Line color */
+        var(--stripesFg) 31px  /* Line thickness */
+    );
+}
+.image-container-inner.style5{
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripesBg),
+        var(--stripesBg) 30px,
+        var(--stripesFg) 30px, /* Line color */
+        var(--stripesFg) 31px  /* Line thickness */
+    );
+}
+.image-container-inner.style6{
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripesBg),
+        var(--stripesBg) 60px,
+        var(--stripesFg) 60px, /* Line color */
+        var(--stripesFg) 61px  /* Line thickness */
+    );
+}
+.image-container-inner.style7{
+    background: repeating-linear-gradient(
+        60deg,
+        var(--stripesBg),
+        var(--stripesBg) 60px,
+        var(--stripesFg) 60px, /* Line color */
+        var(--stripesFg) 61px  /* Line thickness */
+    )
+}
+.image-container-inner.style7:before{
+    content:'';
+    width:100%;
+    height:100%;
+    position: absolute;
+    mix-blend-mode: lighten;
+    background: repeating-linear-gradient(
+        -60deg,
+        var(--stripesBg),
+        var(--stripesBg) 60px,
+        var(--stripesFg) 60px,  /* Line color */
+        var(--stripesFg) 61px   /* Line thickness */
+    );
+}
+.image-container-inner.style8{
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripesBg),
+        var(--stripesBg) 90px,
+        var(--stripesFg) 90px, /* Line color */
+        var(--stripesFg) 91px  /* Line thickness */
+    )
+}
+.image-container-inner.style8:before{
+    content:'';
+    width:100%;
+    height:100%;
+    position: absolute;
+    mix-blend-mode: lighten;
+    background: repeating-linear-gradient(
+        0deg,
+        var(--stripesBg),
+        var(--stripesBg) 90px,
+        var(--stripesFg) 90px,  /* Line color */
+        var(--stripesFg) 91px   /* Line thickness */
+    );
+}
+.image-container-inner.style9{
+    background: repeating-linear-gradient(
+        45deg,
+        var(--stripesBg),
+        var(--stripesBg) 40px,
+        var(--stripesFg) 40px, /* Line color */
+        var(--stripesFg) 41px  /* Line thickness */
+    );
+}
+
+.image-container-inner.style10{
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripesBg),
+        var(--stripesBg) 30px,
+        var(--stripesFg) 30px, /* Line color */
+        var(--stripesFg) 31px  /* Line thickness */
+    )
+}
+.image-container-inner.style10:before{
+    content:'';
+    width:100%;
+    height:100%;
+    position: absolute;
+    mix-blend-mode: lighten;
+    background: repeating-linear-gradient(
+        0deg,
+        var(--stripesBg),
+        var(--stripesBg) 30px,
+        var(--stripesFg) 30px,  /* Line color */
+        var(--stripesFg) 31px   /* Line thickness */
+    );
+}
+.image-container-inner.style11{
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripesBg),
+        var(--stripesBg) 120px,
+        var(--stripesFg) 120px, /* Line color */
+        var(--stripesFg) 121px  /* Line thickness */
+    )
+}
+.image-container-inner.style11:before{
+    content:'';
+    width:100%;
+    height:100%;
+    position: absolute;
+    mix-blend-mode: lighten;
+    background: repeating-linear-gradient(
+        0deg,
+        var(--stripesBg),
+        var(--stripesBg) 120px,
+        var(--stripesFg) 120px,  /* Line color */
+        var(--stripesFg) 121px   /* Line thickness */
+    );
+}
+
 /* .image-container-inner-has-caption{
     height:calc(100vh - var(--navHeight) - var(--pad)*3 - 1rem);
 } */

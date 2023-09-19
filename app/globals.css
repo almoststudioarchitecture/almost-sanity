@@ -522,6 +522,13 @@ body.page-is-changing .hero{
         #cccccc 11px  /* Line thickness */
     );
 }
+.extra-div svg{
+    mix-blend-mode: hard-light;
+}
+
+#svgContainer .extra-div .drawnSvg  path{
+    stroke: #555555;
+}
 
 .grid .extra-div{
     display:block;

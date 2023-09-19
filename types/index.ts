@@ -55,8 +55,11 @@ interface GalleryImage {
   alt: string;
   _type: 'image'; // This indicates it's an image item
   image: string;
-  caption: string;
+  caption?: string; // Since caption is optional
+  fit?: 'cover' | 'contain'; // Since fit is optional
 }
+
+// export type ImageFit = 'cover' | 'contain';
 
 interface VimeoVideoLink {
   _type: 'vimeoVideoLink'; // This indicates it's a Vimeo video link item
@@ -73,7 +76,7 @@ interface TeamMember {
 
 export type FocalPoint = {
   x: 'xMin' | 'xMid' | 'xMax';
-  y: 'yMin' | 'yMid' | 'yMax';
+  y: 'YMin' | 'YMid' | 'YMax';
 };
 
 export type CoverImage = {

@@ -72,15 +72,28 @@ export default async function Home() {
                     </a>
                 </div>
               ))}
-          {projects && projects.slice(0, 8).length % 3 === 1 && (
+          {/* {projects && projects.slice(0, 8).length % 3 === 1 && (
               <>
                   <div className="svgWrapper extra-div"></div>
                   <div className="svgWrapper extra-div"></div>
-                  {/* {console.log('Added 2 extra divs')} */}
               </>
-          )}
-          {projects && projects.slice(0, 8).length % 3 === 2 && (
-              <div className="svgWrapper extra-div"></div>
+          )} */}
+          {projects && projects.slice(0, 8).length % 2 === 1 && (
+              <div className="svgWrapper extra-div">
+                <svg className="drawnSvg" width="100%" height="100%">
+                        <mask>
+                            <rect x="0" y="0" width="100%" height="100%" fill="black"></rect>
+                            <defs>
+   
+                            </defs>
+                            <path d=""></path>
+                        </mask>  
+                        <rect className="rect" x="0" y="0" width="100%" height="100%" mask={`url(#mask${index})`} fill={`url(#img${index})`}></rect>
+                        <g className="shadow" filter="url(#shadowFilter)">
+                            <path d=""></path>
+                        </g>
+                    </svg>
+              </div>
               // {console.log('Added 1 extra divs')}
           )}
       </div>
