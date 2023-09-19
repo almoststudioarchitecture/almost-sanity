@@ -88,7 +88,7 @@ export default async function Home() {
                             </defs>
                             <path d=""></path>
                         </mask>  
-                        <rect className="rect" x="0" y="0" width="100%" height="100%" mask={`url(#mask${index})`} fill={`url(#img${index})`}></rect>
+                        <rect className="rect" x="0" y="0" width="100%" height="100%" mask={`url(#maskExtra)`} fill={`url(#imgExtra)`}></rect>
                         <g className="shadow" filter="url(#shadowFilter)">
                             <path d=""></path>
                         </g>
