@@ -11,6 +11,8 @@ import Script from 'next/script';
 
 export default async function Home() {
   const projects: ProjectType[] = await getProjects();
+  projects.sort((a, b) => a.order - b.order);
+  
 
   return (
     <main className="page-projects">
@@ -32,7 +34,7 @@ export default async function Home() {
       <div id="cursorPrompt" className="py-2 px-2">Drag to Draw</div>
       <div id="svgContainer">
           {projects &&
-              projects.slice(0, 7).map((project, index) => (
+              projects.slice(0, 15).map((project, index) => (
                 <div key={index} className="svgWrapper" data-href={`/projects/${project.slug}`} data-slug={project.slug} data-thumb={project.coverImage.image}>
                     <svg className="drawnSvg" width="100%" height="100%" id={`svg${index}`}>
                         <mask id={`mask${index}`}>
@@ -42,7 +44,7 @@ export default async function Home() {
                                     {/* <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image> */}
                                     {project.coverImage.focalpoint ? (
                                       <>
-                                        <image href={project.coverImage.image} data-focalpoint={project.coverImage.focalpoint.y} x="0" y="0" width="100%" height="100%" preserveAspectRatio={`${project.coverImage.focalpoint.x}${project.coverImage.focalpoint.y} slice`}></image>
+                                        <image href={project.coverImage.image} data-focalpoint={project.coverImage.focalpoint.y} x="0" y="0" width="100%" height="100%" preserveAspectRatio={`${project.coverImage.focalpoint.x}${project.coverImage.focalpoint.y.charAt(0).toUpperCase() + project.coverImage.focalpoint.y.slice(1)} slice`}></image>
                                       </>
                                     ) : (
                                       <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image>
@@ -57,7 +59,9 @@ export default async function Home() {
                         </g>
                     </svg>
                     <a className="thumbnail-link py-2 px-2" data-type="page-transition" href={`/projects/${project.slug}`}>
-                        <h1>{project.name}{project.location?.trim().length > 0 ? `, ${project.location}` : ''}<ArrowTopRight /></h1>
+                        {/* <h1>{project.name}{project.location?.trim().length > 0 ? `, ${project.location}` : ''}<ArrowTopRight /></h1> */}
+                        <h2>{project.name}<ArrowTopRight /></h2>
+                        <h3>{project.location}</h3>
                     </a>
                 </div>
               ))}
@@ -67,7 +71,7 @@ export default async function Home() {
                   <div className="svgWrapper extra-div"></div>
               </>
           )} */}
-          {projects && projects.slice(0, 7).length % 2 === 1 && (
+          {projects && projects.slice(0, 15).length % 2 === 1 && (
               <div className="svgWrapper extra-div">
                 <svg className="drawnSvg" width="100%" height="100%">
                         <mask>
@@ -159,13 +163,13 @@ export default async function Home() {
         //   console.log(`script loaded correctly, window.FB has been populated`)
         // }
         />
-        <Script
+        {/* <Script
         src="/js/load.js"
         strategy="lazyOnload"
         // onLoad={() =>
         //   console.log(`script loaded correctly, window.FB has been populated`)
         // }
-        />
+        /> */}
     </main>
   );
 }

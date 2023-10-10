@@ -53,7 +53,7 @@ export default async function Home() {
                                     {/* <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image> */}
                                     {project.coverImage.focalpoint ? (
                                       <>
-                                        <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio={`${project.coverImage.focalpoint.x}${project.coverImage.focalpoint.y} slice`}></image>
+                                        <image href={project.coverImage.image} data-focalpoint={project.coverImage.focalpoint.y} x="0" y="0" width="100%" height="100%" preserveAspectRatio={`${project.coverImage.focalpoint.x}${project.coverImage.focalpoint.y.charAt(0).toUpperCase() + project.coverImage.focalpoint.y.slice(1)} slice`}></image>
                                       </>
                                     ) : (
                                       <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image>
@@ -169,13 +169,13 @@ export default async function Home() {
         //   console.log(`script loaded correctly, window.FB has been populated`)
         // }
         />
-        <Script
+        {/* <Script
         src="/js/load.js"
         strategy="lazyOnload"
         // onLoad={() =>
         //   console.log(`script loaded correctly, window.FB has been populated`)
         // }
-        />
+        /> */}
     </main>
   );
 }

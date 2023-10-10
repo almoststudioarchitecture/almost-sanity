@@ -11,27 +11,31 @@ export default function Navbar() {
       <nav>      
           <ul className="flex items-center gap-x-6">
             <li>
-              <Link href="/" className="logo" id="navLink_draw">
+              {/* <Link href="/" className="logo" id="navLink_draw">
                 Almost Studio
                 <Image className="nav-icon" id="icon-draw" src={LogoGif} width={25} height={25} alt="logo" />
-              </Link>
+              </Link> */}
+              <a href="/" className="logo" id="navLink_draw">
+                Almost Studio
+                <Image className="nav-icon" id="icon-draw" src={LogoGif} width={25} height={25} alt="logo" />
+              </a>
             </li>
             
             <li>
-              <Link
+              <a
                 href="/projects" id="navLink_projects"
               >
                 Projects
                 <span id="icon-grid" className="nav-icon"></span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link
+              <a
                 href="/information"
               >
                 Profile
                 <Image className="nav-icon icon-info" src={InfoIcon} width={16} height={16} alt="info" />
-              </Link>
+              </a>
             </li>
           </ul>
       </nav>

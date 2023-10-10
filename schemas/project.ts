@@ -9,6 +9,12 @@ const project = {
   icon: BiPackage,
   fields: [
     {
+      name: "order",
+      title: "Project Order",
+      type: "number",
+      description: "Write a number here that defines the order",
+    },
+    {
       name: "name",
       title: "Project Name",
       type: "string",
@@ -171,6 +177,15 @@ const project = {
       ]
     },
   ],
+  orderings: [
+    {
+      title: 'Order',
+      name: 'orderDesk',
+      by: [
+        {field: 'order', direction: 'asc'}
+      ]
+    }
+  ]
 };
 
 export default project;

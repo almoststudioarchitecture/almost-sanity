@@ -20,6 +20,7 @@ export async function getProjects() {
   return client.fetch(
     groq`*[_type == "project"]{
       _id, 
+      order,
       name,
       location,
       url,

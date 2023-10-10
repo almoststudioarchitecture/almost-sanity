@@ -79,7 +79,7 @@ document.addEventListener('mouseup', handleMouseUp);
 const svgContainer = document.getElementById('svgContainer');
 
 // shuffle the svg elements
-shuffleNodes(svgContainer);
+// shuffleNodes(svgContainer);
 
 const svgWrappers = document.querySelectorAll('#svgContainer > div:not(.extra-div)');
 const projectCount = svgWrappers.length;

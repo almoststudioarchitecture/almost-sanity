@@ -500,6 +500,7 @@ body.page-is-changing .hero{
 }
 
 .extra-div{
+    cursor:none;
     width: 300px; /* Adjust to your desired width */
     height: 300px; /* Adjust to your desired height */
     background: repeating-linear-gradient(
@@ -547,6 +548,13 @@ body.page-is-changing .hero{
     transition: transform 300ms 0ms, padding 300ms;
     /* transition-delay: transform 600ms; */
     background: var(--bg);
+    text-transform: uppercase;
+}
+
+.thumbnail-link h3{
+    font-size: 10px;
+    text-transform: uppercase;
+    margin-top: 0.5em;
 }
 
 .grid .thumbnail-link{

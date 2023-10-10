@@ -1,25 +1,25 @@
-    var animating = false;
-    var firstLoad = false;
+    // var animating = false;
+    // var firstLoad = false;
 
-    var main = document.querySelector("main");
-    main.addEventListener("click", function (event) {
-        if (!event.target.matches('[data-type="page-transition"]')) return;
-        event.preventDefault();
-        var newPage = event.target.getAttribute("href");
-        // if (!animating) changePage(newPage, true);
-        // firstLoad = true;
+    // var main = document.querySelector("main");
+    // main.addEventListener("click", function (event) {
+    //     if (!event.target.matches('[data-type="page-transition"]')) return;
+    //     event.preventDefault();
+    //     var newPage = event.target.getAttribute("href");
+    //     // if (!animating) changePage(newPage, true);
+    //     // firstLoad = true;
 
-        // let urlExtension = targetElement.getAttribute("data-href"); // This is just a placeholder; replace with your actual URL extension
-        // Ensure there's no trailing slash
-    // let currentPath = window.location.pathname;
-    // if (currentPath.endsWith('/')) {
-    //     currentPath = currentPath.slice(0, -1);
-    // }
+    //     // let urlExtension = targetElement.getAttribute("data-href"); // This is just a placeholder; replace with your actual URL extension
+    //     // Ensure there's no trailing slash
+    // // let currentPath = window.location.pathname;
+    // // if (currentPath.endsWith('/')) {
+    // //     currentPath = currentPath.slice(0, -1);
+    // // }
 
-    // console.log(window.location.origin, currentPath, urlExtension);
+    // // console.log(window.location.origin, currentPath, urlExtension);
 
-    window.location.href = window.location.origin + newPage;
-    });
+    // window.location.href = window.location.origin + newPage;
+    // });
 
     // window.addEventListener("popstate", function () {
     //     if (firstLoad) {

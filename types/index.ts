@@ -37,6 +37,7 @@ export type ProfileType = {
 export type ProjectType = {
   // gallery: any;
   _id: string;
+  order: number;
   name: string;
   location: string;
   slug: string;
