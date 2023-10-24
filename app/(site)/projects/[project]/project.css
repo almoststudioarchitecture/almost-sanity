@@ -9,7 +9,7 @@
     transition:background 300ms, border 300ms;
 }
 .hero{
-    height: calc(100vh - 150px);
+    height: calc(100vh - 160px);
     /* width: 100vw; */
     transition: margin 300ms, height 300ms;
     margin-top: calc(var(--navHeight)*-1)
@@ -20,6 +20,7 @@
 
 .info{
     padding: var(--pad);
+    padding-top: 0.4em;
 }
 
 .section.info h1{

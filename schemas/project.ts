@@ -1,13 +1,18 @@
 import { BiPackage } from "react-icons/bi";
 import { defineField } from "sanity";
 
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
+
+
 const project = {
   name: "project",
   title: "Project",
   description: "Project Schema",
   type: "document",
+  orderings: [orderRankOrdering],
   icon: BiPackage,
   fields: [
+    orderRankField({ type: "project" }),
     {
       name: "order",
       title: "Project Order",
@@ -177,15 +182,15 @@ const project = {
       ]
     },
   ],
-  orderings: [
-    {
-      title: 'Order',
-      name: 'orderDesk',
-      by: [
-        {field: 'order', direction: 'asc'}
-      ]
-    }
-  ]
+  // orderings: [
+  //   {
+  //     title: 'Order',
+  //     name: 'orderDesk',
+  //     by: [
+  //       {field: 'order', direction: 'asc'}
+  //     ]
+  //   }
+  // ]
 };
 
 export default project;

@@ -9,6 +9,7 @@ import { PortableText } from "@portabletext/react";
 import { BiEnvelope, BiFile } from "react-icons/bi";
 import Script from 'next/script';
 import './about.css'
+import  CopyEmailBtn from "../components/Email"; 
 
 export default async function About() {
   const profile: ProfileType[] = await getProfile();
@@ -20,6 +21,7 @@ export default async function About() {
   //     strong: ({children}) => <strong>{children}</strong>,
   //   },
   // }
+
 
   return (
     <main>
@@ -70,14 +72,18 @@ export default async function About() {
                     ))}
                 </div>
             </div>
-            <div className="cols inline"> 
+            <div className="cols inline" id="emails"> 
                 {data.contact.map((email, index) => (
-                  <div className="box" key={index}>
-                        <Link
-                          href={`mailto:${email}@almost.studio`}
-                        >
-                          <strong>{email}</strong>@almost.studio
-                        </Link>
+                  <div className="flex" key={index}>
+                    <div className="box">
+                          {/* <button onClick={handleClick} data-href={`mailto:${email}@almost.studio`}>
+                            <strong>{email}</strong>@almost.studio
+                          </button> */}
+                          <CopyEmailBtn email={email} />
+                    </div>
+                    <div className="box copiedNotification">
+                          Copied
+                    </div>
                   </div>
                 ))}
             </div>

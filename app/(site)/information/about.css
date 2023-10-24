@@ -39,7 +39,7 @@
     color: var(--mainColor)
 }
 
-.information a:hover{
+.information button:hover{
     color: var(--mainColor);
 }
 
@@ -72,6 +72,32 @@
     color: red;
     /* padding-right: 30px; */
 }
+
+.information .box.copiedNotification{
+    color: red;
+    /* display:none; */
+    overflow:hidden;
+    padding-left:0 !important;
+    padding-right:0 !important;
+    max-width: 0px;
+    transition: padding 300ms, max-width 300ms !important;
+    border-left:0px;
+    /* opacity: 0; */
+}
+
+.information .copied + .copiedNotification{
+    display:block;
+    /* animation: shrink 2s linear both; */
+    padding: 0.5rem var(--pad) !important;
+    max-width: 200px;
+    border-left:1px solid red;
+    /* opacity: 1; */
+}
+
+#emails .flex .box:first-child{
+    border-right:0px;
+}
+
 
 #teamSection button:hover .icon {
     pointer-events: inherit;

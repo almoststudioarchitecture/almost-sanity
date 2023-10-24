@@ -144,7 +144,7 @@ svgContainer.addEventListener('mousedown', function(){
 });
 
 svgContainer.addEventListener('mousemove', function(event){
-  if (mouseIsDown){
+  if (mouseIsDown && !rightMouseClicked){
     dragging = true;
     if (!newProjectDragCreated){startDrawing(event)}
     draw(event);

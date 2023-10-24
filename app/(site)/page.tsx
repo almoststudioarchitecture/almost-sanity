@@ -68,7 +68,7 @@ export default async function Home() {
                         </g>
                     </svg>
                     <a className="thumbnail-link py-2 px-2" data-type="page-transition" href={`/projects/${project.slug}`}>
-                        <h1>{project.name}{project.location?.trim().length > 0 ? `, ${project.location}` : ''}<ArrowTopRight /></h1>
+                        <h1>{project.name}<span className="location">{project.location?.trim().length > 0 ? ` ${project.location}` : ''}</span><ArrowTopRight /></h1>
                     </a>
                 </div>
               ))}

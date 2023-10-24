@@ -85,3 +85,7 @@ export type CoverImage = {
   image: string;
   focalpoint?: FocalPoint;
 };
+
+type CopyEmailBtnProps = {
+  email: string;
+};

@@ -313,6 +313,10 @@ a.info:hover ~ #cursor,
     /* transition: var(--transition); */
     transition: filter var(--transition);
 }
+#svgContainer .svgWrapper.hover{
+    z-index:1000 !important;
+
+}
 
 #svgContainer .svgWrapper.hover svg{
     filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3));
@@ -549,6 +553,13 @@ body.page-is-changing .hero{
     /* transition-delay: transform 600ms; */
     background: var(--bg);
     text-transform: uppercase;
+}
+
+.thumbnail-link span{
+    font-size: 10px;
+    transform:translateY(-40%);
+    display: inline-block;
+    margin-left: 5px;
 }
 
 .thumbnail-link h3{
