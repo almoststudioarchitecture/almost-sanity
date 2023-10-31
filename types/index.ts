@@ -37,7 +37,7 @@ export type ProfileType = {
 export type ProjectType = {
   // gallery: any;
   _id: string;
-  order: number;
+  // order: number;
   name: string;
   location: string;
   slug: string;
@@ -83,9 +83,6 @@ export type FocalPoint = {
 export type CoverImage = {
   alt: string | null;
   image: string;
+  white: boolean;
   focalpoint?: FocalPoint;
-};
-
-type CopyEmailBtnProps = {
-  email: string;
 };

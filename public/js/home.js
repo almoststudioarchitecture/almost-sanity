@@ -6,7 +6,7 @@ let drawingCount = 0;
 // let visibleDrawings = 0;
 let startPathWeight = window.innerWidth * 0.1;
 let drawPathWeight = startPathWeight;
-let gridPathWeight = 40;
+let gridPathWeight = 30;
 let pathWeight;
 if (grid){
   pathWeight = gridPathWeight;
@@ -143,11 +143,34 @@ svgContainer.addEventListener('mousedown', function(){
   }
 });
 
-svgContainer.addEventListener('mousemove', function(event){
-  if (mouseIsDown && !rightMouseClicked){
+// svgContainer.addEventListener('mousemove', function(event){
+//   if (mouseIsDown){
+//     dragging = true;
+//     if (!newProjectDragCreated){startDrawing(event)}
+//     draw(event);
+//   }
+// });
+
+let isDrawingScheduled = false;
+let lastEvent = null;
+
+svgContainer.addEventListener('mousemove', function(event) {
+  if (mouseIsDown) {
     dragging = true;
-    if (!newProjectDragCreated){startDrawing(event)}
-    draw(event);
+    lastEvent = event; // Store the latest event
+    if (!newProjectDragCreated) {
+      startDrawing(event);
+    }
+    if (!isDrawingScheduled) {
+      isDrawingScheduled = true; // Mark that drawing has been scheduled
+      requestAnimationFrame(function() {
+        isDrawingScheduled = false; // Reset the scheduled flag
+        if (lastEvent && dragging) {
+          draw(lastEvent); // Call the draw function with the last known event
+          lastEvent = null; // Reset the last event
+        }
+      });
+    }
   }
 });
 
@@ -249,7 +272,8 @@ function draw(event) {
 
   dragging = true;
 
-  cursorPrompt.style.display = "none";
+    // cursorPrompt.style.display = "none";
+  
   svgContainer.classList.add("drawing");
 
   if (!pathData) return;
@@ -269,21 +293,29 @@ function draw(event) {
         if (!grid){
           pathData += ` L${x},${y}`;
           
-          if (x%2 == 0){
+          if (x%4 == 0 && y%4 == 0){
             points.push([x, y])
           }
           
         } else {
           pathData += ` L${x/0.5},${y/0.5}`;
 
-          if (x%2 == 0){
+          if (x%4 == 0 && y%4 == 0){
             points.push([x/0.5, y/0.5])
           }
         }
     }
 
-    for (let path of paths){
-      path.setAttribute('d', pathData);
+    if (document.body.classList.contains("grid")){
+      for (let path of newSvg.closest(".svg-group").querySelectorAll('path')){
+        path.setAttribute('d', pathData);
+        path.style.strokeWidth = pathWeight + "px";
+      }
+    } else {
+      for (let path of paths){
+        path.setAttribute('d', pathData);
+        path.style.strokeWidth = pathWeight + "px";
+      }
     }
 
 }

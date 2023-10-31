@@ -18,9 +18,10 @@ export async function getProfile() {
 
 export async function getProjects() {
   return client.fetch(
-    groq`*[_type == "project"]{
+    // groq`*[_type == "project"]{
+    groq`*[_type == "project"]|order(orderRank){
+
       _id, 
-      order,
       name,
       location,
       url,
@@ -28,6 +29,7 @@ export async function getProjects() {
       coverImage { 
         alt, 
         "image": asset->url,
+        white,
         focalpoint
       }
     }`

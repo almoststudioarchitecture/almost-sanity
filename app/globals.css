@@ -227,6 +227,8 @@ p{
     /* transform: translate(30%,30%); */
     /* transform: translate(50%,-20%); */
     /* transition: transform 300ms; */
+    --mainColor:white;
+    mix-blend-mode: exclusion;
 }
 
 .grid #svgContainer.drawing ~ #cursor{
@@ -240,6 +242,7 @@ body.drawing #projectLinks{
 }
 .grid #nav{
     /* position: fixed; */
+    position:static;
 }
 
 .drawnSvg  * {
@@ -366,7 +369,7 @@ a.info:hover ~ #cursor,
   #svgContainer .shadow path{
     stroke: #8C8C8C;
   }
-  #svgContainer .shadow {
+  body:not(.grid) #svgContainer .shadow {
     mix-blend-mode: hard-light;
   }
   #svgContainer image{
@@ -608,18 +611,305 @@ body.page-is-changing .hero{
     transform: translateY(0%);
 }
 
+.grid .svgWrapper{
+    mix-blend-mode:multiply
+}
+.grid > div{
+    z-index: 0;
+}
+.grid .svgWrapper + img{
+    object-fit:cover;
+    width: 100%;
+    height:100%;
+    object-position: center;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:-1;
+} 
+.grid .svgWrapper img.white{
+    object-fit:contain;
+    background:white;
+} 
+
+.grid #svgContainer .drawnSvg{
+    mix-blend-mode:screen;
+    z-index:2;
+    position:relative;
+}
+
+.grid #svgContainer .drawnSvg.shadowSvg{
+    mix-blend-mode:hard-light;
+}
+
+.grid #svgContainer .drawnSvg.patternSvg path{
+    stroke: black;
+}
+.grid .svgWrapper{
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+.grid img{
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:-2;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.grid img.white{
+    object-fit: contain;
+    background: white;
+}
+
+.grid #svgContainer .drawnSvg.whiteSvg{
+    z-index:-1;
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.grid #svgContainer > div{
+    /* border-color: var(--bg); */
+}
+
+.grid .lines .vertical{
+    /* background: var(--bg); */
+}
+
+.grid{
+    --mainColor: grey;
+}
+
+:root{
+    /* --stripesFg: #929292; */
+    --stripesFg: #929292;
+    --stripesBg: var(--bg);
+}
+
+.style1{
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--stripesBg),
+        var(--stripesBg) 10px,
+        var(--stripesFg) 10px, /* Line color */
+        var(--stripesFg) 11px  /* Line thickness */
+    );
+}
+.style2{
+    background: repeating-linear-gradient(
+        45deg,
+        var(--stripesBg),
+        var(--stripesBg) 10px,
+        var(--stripesFg) 10px, /* Line color */
+        var(--stripesFg) 11px  /* Line thickness */
+    );
+}
+.style3{
+    background: repeating-linear-gradient(
+        0deg,
+        var(--stripesBg),
+        var(--stripesBg) 10px,
+        var(--stripesFg) 10px, /* Line color */
+        var(--stripesFg) 11px  /* Line thickness */
+    );
+}
+.style4{
+    background: repeating-linear-gradient(
+        0deg,
+        var(--stripesBg),
+        var(--stripesBg) 30px,
+        var(--stripesFg) 30px, /* Line color */
+        var(--stripesFg) 31px  /* Line thickness */
+    );
+}
+.style5{
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripesBg),
+        var(--stripesBg) 30px,
+        var(--stripesFg) 30px, /* Line color */
+        var(--stripesFg) 31px  /* Line thickness */
+    );
+}
+.style6{
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripesBg),
+        var(--stripesBg) 60px,
+        var(--stripesFg) 60px, /* Line color */
+        var(--stripesFg) 61px  /* Line thickness */
+    );
+}
+.style7{
+    background: repeating-linear-gradient(
+        60deg,
+        var(--stripesBg),
+        var(--stripesBg) 60px,
+        var(--stripesFg) 60px, /* Line color */
+        var(--stripesFg) 61px  /* Line thickness */
+    )
+}
+.style7:before{
+    content:'';
+    width:100%;
+    height:100%;
+    position: absolute;
+    mix-blend-mode: darken;
+    background: repeating-linear-gradient(
+        -60deg,
+        var(--stripesBg),
+        var(--stripesBg) 60px,
+        var(--stripesFg) 60px, 
+        var(--stripesFg) 61px 
+    );
+}
+.style8{
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripesBg),
+        var(--stripesBg) 90px,
+        var(--stripesFg) 90px, /* Line color */
+        var(--stripesFg) 91px  /* Line thickness */
+    )
+}
+.style8:before{
+    content:'';
+    width:100%;
+    height:100%;
+    position: absolute;
+    mix-blend-mode: darken;
+    background: repeating-linear-gradient(
+        0deg,
+        var(--stripesBg),
+        var(--stripesBg) 90px,
+        var(--stripesFg) 90px,  /* Line color */
+        var(--stripesFg) 91px   /* Line thickness */
+    );
+}
+.style9{
+    background: repeating-linear-gradient(
+        45deg,
+        var(--stripesBg),
+        var(--stripesBg) 40px,
+        var(--stripesFg) 40px, /* Line color */
+        var(--stripesFg) 41px  /* Line thickness */
+    );
+}
+
+.style10{
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripesBg),
+        var(--stripesBg) 30px,
+        var(--stripesFg) 30px, /* Line color */
+        var(--stripesFg) 31px  /* Line thickness */
+    )
+}
+.style10:before{
+    content:'';
+    width:100%;
+    height:100%;
+    position: absolute;
+    mix-blend-mode: darken;
+    background: repeating-linear-gradient(
+        0deg,
+        var(--stripesBg),
+        var(--stripesBg) 30px,
+        var(--stripesFg) 30px,  /* Line color */
+        var(--stripesFg) 31px   /* Line thickness */
+    );
+}
+
+.stripey-style{
+    width: 100%;
+    height: 100%;
+
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:0;
+    /* mix-blend-mode:multiply; */
+    /* background: repeating-linear-gradient(45deg, black, black 10px, white 10px, white 20px); width:100%; height:100%; */
+    /* clip-path: url(#mask0); */
+    /* You may need vendor prefixes for cross-browser compatibility */
+    /* -webkit-clip-path: url(#mask0);
+    -moz-clip-path: url(#mask0); */
+}
+
+.grid .project-title{
+    position:absolute;
+    top:0px;
+    left:0px;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.grid h2, .grid h3{
+    z-index:3;
+    border: 1px solid var(--mainColor);
+    /* border-top:0px; */
+    border-left:0px;
+    color: var(--mainColor);
+    background: var(--bg);
+    padding: 0.2em 0.5rem;
+    margin-top:-1px;
+    position:relative;
+    color: #232323;
+}
+
+.grid h2{
+    transition: padding 300ms;
+}
+.grid h3{
+    font-size: 11px;
+    display:none;
+}
+
+.grid h2 svg{
+    display: inline-block;
+    width: 12px;
+    margin-left: 10px;
+    transform:translateY(-2px) translateX(-5px);
+    margin-bottom:-3px;
+    position:absolute;
+    transition: transform 300ms, opacity 200ms;
+    opacity: 0;
+}
+.grid h2 svg path{
+
+    fill: #232323;
+}
+
+.grid #svgContainer > div:hover h2{
+    padding-right: 34px;
+}
+
+.grid #svgContainer > div:hover h2 svg{
+    transform: translateY(-2px) translateX(0px);
+    opacity: 1;
+}
+
+/* .grid .svgWrapper{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: white;
+}
+.grid .svgWrapper.white{
+    background-size:cover;
+} */
+/* 
 .grid .svgWrapper:hover .thumbnail-link{
     padding-right: 28px;
 }
 
 .grid .svgWrapper:hover .thumbnail-link svg{
     opacity: 1;
-}
-
-#svgContainer .svgWrapper .drawnSvg{
-/* .grid #svgContainer > div { */
-    /* border: 5px solid yellow; */
-    /* transition: var(--transition); */
 }
 
 .grid .svgWrapper.complete:not(.drawing-in-here):hover .drawnSvg path{
@@ -633,7 +923,7 @@ body.page-is-changing .hero{
 
 .grid .svgWrapper:not(.complete) .drawnSvg{
     animation: fadeInProjects 500ms 1000ms linear both;
-}
+} */
 
 @keyframes fadeInProjects{
     0%{
@@ -644,9 +934,9 @@ body.page-is-changing .hero{
     }
 }
 
-.grid .svgWrapper:not(.drawing-in-here):hover .drawnSvg .shadow {
+/* .grid .svgWrapper:not(.drawing-in-here):hover .drawnSvg .shadow {
     filter: none;
-}
+} */
 
 
 

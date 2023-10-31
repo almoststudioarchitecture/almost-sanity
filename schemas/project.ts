@@ -13,12 +13,12 @@ const project = {
   icon: BiPackage,
   fields: [
     orderRankField({ type: "project" }),
-    {
-      name: "order",
-      title: "Project Order",
-      type: "number",
-      description: "Write a number here that defines the order",
-    },
+    // {
+    //   name: "order",
+    //   title: "Project Order",
+    //   type: "number",
+    //   description: "Write a number here that defines the order",
+    // },
     {
       name: "name",
       title: "Project Name",
@@ -51,6 +51,11 @@ const project = {
           name: "alt",
           title: "Alt",
           type: "string",
+        },
+        {
+          name: "white",
+          title: "Does this image have a white background?",
+          type: 'boolean',
         },
         {
           name: "focalpoint",
