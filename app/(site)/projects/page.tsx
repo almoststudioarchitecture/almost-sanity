@@ -45,7 +45,7 @@ export default async function Home() {
                 // 
                 // stroke only, white, "screen"
                 // image on bottom
-                <div>
+                <div key={index}>
 
                 <div className="svg-group">
                     
@@ -65,7 +65,7 @@ export default async function Home() {
                             </g>
                         </svg>
 
-                        <div key={index} className="svgWrapper" data-href={`/projects/${project.slug}`} data-slug={project.slug} data-thumb={project.coverImage.image}>
+                        <div className="svgWrapper" data-href={`/projects/${project.slug}`} data-slug={project.slug} data-thumb={project.coverImage.image}>
 
                         <svg className="drawnSvg patternSvg" width="100%" height="100%">
                             <mask>
