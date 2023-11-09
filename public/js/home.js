@@ -39,6 +39,8 @@ const cursor = document.getElementById("cursor");
 document.addEventListener("mousemove", function(e){
     cursor.style.left = e.clientX + "px";
     cursor.style.top = e.clientY + "px";
+    cursorPrompt.style.left = e.clientX + "px";
+    cursorPrompt.style.top = e.clientY + "px";
 })
 
 
@@ -272,7 +274,7 @@ function draw(event) {
 
   dragging = true;
 
-    // cursorPrompt.style.display = "none";
+    cursorPrompt.style.display = "none";
   
   svgContainer.classList.add("drawing");
 
@@ -341,8 +343,8 @@ function stopDrawing(event) {
     projectNamesElem.querySelector(".most-recent").classList.remove("most-recent");
   }
   let nameElem = projectNamesElem.querySelector(`[data-slug="${currentSvgWrapper.getAttribute("data-slug")}"]`);
-  projectNamesElem.classList.add("visible");
-  projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
+  // projectNamesElem.classList.add("visible");
+  // projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
   if (nameElem != null){
     
   nameElem.classList.add("most-recent");
@@ -391,7 +393,7 @@ function resetSvgs(){
     li.classList.remove("visible");
     li.removeAttribute("style");
   }
-  projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
+  // projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
 }
 
 function assignNewSvg(){
