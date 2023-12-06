@@ -68,13 +68,14 @@ export default async function Home() {
           <DrawCursor />
           
 
-          <script
+          <Script
             // type="module" 
             src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"
             />
-            <script
+            <Script
             // type="module" 
             // async 
+            strategy='lazyOnload'
             src="/js/sketch.js"
             />
         </>
