@@ -10,7 +10,7 @@ import { BiEnvelope, BiFile } from "react-icons/bi";
 import Script from 'next/script';
 import './profile.css'
 import  CopyEmailBtn from "../components/Email"; 
-import Layout, { siteTitle } from '../layout';
+// import Layout, { siteTitle } from '../layout';
 import Head from 'next/head';
 
 export default async function About() {
@@ -28,7 +28,7 @@ export default async function About() {
   return (
     <>
         <Head>
-          <title>{siteTitle}</title>
+          <title>ALMOST STUDIO</title>
           {/* <script src="../scripts/draw.js"></script> */}
         </Head>
         <main>
