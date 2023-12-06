@@ -70,11 +70,12 @@ export default async function Home() {
 
           <Script
             // type="module" 
+            async
             src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"
             />
             <Script
             // type="module" 
-            // async 
+            async 
             strategy='lazyOnload'
             src="/js/sketch.js"
             />
