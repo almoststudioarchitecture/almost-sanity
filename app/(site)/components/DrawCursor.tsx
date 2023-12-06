@@ -5,7 +5,9 @@ import styles from '../css/Cursor.module.css';
 
 export default function DrawCursor() {
     
-    const [cursorPosition, setCursorPosition] = useState({ x: "50vw", y: "50vh" });
+    // const [cursorPosition, setCursorPosition] = useState({ x: "50vw", y: "50vh" });
+    const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+
     const [isCursorVisible, setIsCursorVisible] = useState(true);
 
     useEffect(() => {
