@@ -1,0 +1,108 @@
+.projectLinks{
+    position: absolute;
+    left:0px;
+    /* top: var(--nav-height); */
+    top:0px;
+    min-height: calc(100vh - var(--nav-height));
+    width: calc(var(--profile-width) + var(--projects-width) + calc(var(--pad_x)*4) + 2px);
+    /* pointer-events:none; */
+    /* animation: listEnter 600ms 1200ms  ease-in-out both; */
+    display:flex;
+    flex-direction:column;
+    z-index:99;
+    transition: transform 400ms ease-in-out;
+    transform: translateX(-100%);
+  }
+  .projectLinks:first-child{
+    mix-blend-mode:multiply;
+    border-right: 1px solid var(--grey);
+    pointer-events: none;
+  }
+  .projectLinks:first-child a{
+    /* color: transparent; */
+    color: rgba(255,0,0,0.4);
+  }
+  
+  .projectLinks+.projectLinks{
+    /* opacity:0.5; */
+    /* background:red; */
+  }
+
+  .projectLinks+.projectLinks .li a{
+    /* background: var(--bg); */
+    /* color: transparent; */
+  }
+
+  @keyframes listEnter {
+      /* 0%{transform:translateX(100%)}
+      100%{transform:translateX(0%)} */
+      0%{opacity:0;}
+      100%{opacity:1;}
+  }
+  
+  
+  
+  .li{
+    
+    border-bottom: 1px dotted rgba(255,255,255,0);
+    position:relative;
+    width: calc(100% - 1px);
+    overflow:hidden;
+    /* pointer-events: none; */
+    order: 100000;
+  }
+
+  .lined .li{
+    border-bottom: 1px dotted var(--grey);
+    pointer-events:none;
+  }
+  
+  .a{
+    color: var(--main-color);
+    width: 600px;
+    display: block;
+    opacity:0;
+    pointer-events: none;
+    padding: var(--pad_y) var(--pad_x);
+  }
+  
+  .a svg{
+    display:none;
+    margin-right:3px;
+    vertical-align: inherit;
+    height: 11px;
+  }
+
+  
+
+  /* .visible{
+    opacity: 1;
+    pointer-events:inherit;
+  }
+
+  .visible:hover, .mostRecent{
+    width: 100%;
+    background: var(--bg);
+  } */
+  
+  /* .a {
+    display: inline-block; 
+  } */
+
+  .a span{
+    /* display: inline-flex; */
+    /* align-items: center; */
+    /* white-space: nowrap; */
+  }
+
+  
+  
+  @media screen and (max-width: 420px){
+    .projectLinks{
+      width:100%;
+      border-left:0px;
+      top: calc(var(--nav-height) + 1px);
+      opacity: 0;
+    }
+  }
+  

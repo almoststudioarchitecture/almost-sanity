@@ -1,4 +1,4 @@
-export default function DrawCursorSvg() {
+export default function ShadowFilter() {
   return (
     // <svg viewBox="0 0 1273 906" fill="none" xmlns="http://www.w3.org/2000/svg">
     //   <g>

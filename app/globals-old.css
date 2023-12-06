@@ -19,12 +19,15 @@
 }
 
 :root{
-    --mainColor: red;
+    --main-color: red;
     --primary-type: 'Dedale';
     --pad: 0.7rem;
     --transition: 600ms linear;
-    --navHeight: 32px;
+    --nav-height: 32px;
     --bg: #F8F8F8;
+    --logo-width: 141.906px;
+    --projects-width: 89.414px;
+    --profile-width: 73.602px;
 }
 
 html{
@@ -56,8 +59,8 @@ p{
 }
 
 #nav{
-    border-bottom: 1px solid var(--mainColor);
-    color: var(--mainColor);
+    border-bottom: 1px solid var(--main-color);
+    color: var(--main-color);
     animation: loadNav 800ms linear;
     overflow:hidden;
     position: sticky;
@@ -78,7 +81,7 @@ p{
     transition: padding-right 200ms;
     line-height: 1;
     /* background:yellow; */
-    border-right:1px solid var(--mainColor);
+    border-right:1px solid var(--main-color);
 }
 
 /* INCLUDE FOR RIGHT BAR NEXT TO NAV ITEMS */
@@ -89,9 +92,9 @@ p{
     right: -0.8rem;
     top: 50%;
     transform: translateY(-50%);
-    border-right: 1px solid var(--mainColor);
+    border-right: 1px solid var(--main-color);
     height: 2.5rem;
-    height:var(--navHeight);
+    height:var(--nav-height);
 } */
 
 #nav li:first-child,
@@ -99,8 +102,8 @@ p{
     /* --letter-spacing: calc((100vw - 197px)/14.51); */
     /* animation-delay: 0.2s; */
     /* letter-spacing: var(--letter-spacing); */
-    animation: extendLogo 1s 2s linear both;
-    width: calc(100vw - 196.953px);
+    animation: extendLogo 700ms 1.5s ease-in-out both;
+    /* width: calc(100vw - 196.953px); */
 }
 
 
@@ -124,9 +127,10 @@ p{
 #nav li:nth-child(3){
     animation-delay: 0.6s;
 }
-
-#nav li:hover{
-    padding-right: 30px;
+@media (pointer:fine) {
+    #nav li:hover{
+        padding-right: 30px;
+    }
 }
 
 #nav li:first-child:hover{
@@ -152,7 +156,7 @@ p{
 
 .icon-info{
     border-radius: 50%;
-    border: 1px solid var(--mainColor);
+    border: 1px solid var(--main-color);
 }
 
 #nav li a, #nav li button{
@@ -161,10 +165,10 @@ p{
 
 
 #nav #icon-grid{
-    height: calc(2px + var(--navHeight));
+    height: calc(2px + var(--nav-height));
     width: 0px;
     display: block;
-    border: 1px solid var(--mainColor);
+    border: 1px solid var(--main-color);
     border-bottom: 0px;
     position: absolute;
     right: -1px;
@@ -177,7 +181,7 @@ p{
     content: '';
     width: calc(50% + 2px);
     height: 100%;
-    border: 1px solid var(--mainColor);
+    border: 1px solid var(--main-color);
     border-bottom: 0px;
     left: 50%;
     transform:translateX(-50%);
@@ -189,7 +193,7 @@ p{
     content: '';
     height: calc(50% + 1px);
     width: calc(100% + 2px);
-    border: 1px solid var(--mainColor);
+    border: 1px solid var(--main-color);
     top: calc(50% - 0px);
     position: absolute;
     left: -1px;
@@ -197,16 +201,18 @@ p{
     transform:translateY(-50%);
 }
 
-:not(.draw) #nav li:hover .nav-icon{
-    pointer-events: inherit;
-    opacity: 1;
-}
-:not(.draw) #nav li:hover #icon-draw{
-    /* transform: translateY(-50%) translateX(0rem) */
-    right: 10px;
-}
-:not(.draw) #nav li:hover #icon-grid{
-    width: calc(2px + var(--navHeight));
+@media (pointer:fine) {
+    :not(.draw) #nav li:hover .nav-icon{
+        pointer-events: inherit;
+        opacity: 1;
+    }
+    :not(.draw) #nav li:hover #icon-draw{
+        /* transform: translateY(-50%) translateX(0rem) */
+        right: 10px;
+    }
+    :not(.draw) #nav li:hover #icon-grid{
+        width: calc(2px + var(--nav-height));
+    }
 }
 
 @keyframes loadNav{
@@ -220,8 +226,9 @@ p{
 }
 
 @keyframes extendLogo{
-    0%{ width: auto}
-    100%{ opacity:calc(100vw - 196.953px);}
+    0%{ width: calc(var(--logo-width) + 1rem)}
+    /* 100%{ width: var(--logo-width)} */
+    100%{ width:calc(100vw - 196.953px);}
 }
 
 /* LANDING PAGE / DRAWING */
@@ -248,7 +255,7 @@ p{
     content: '';
     width: 14px;
     height: 1px;
-    /* background: var(--mainColor); */
+    /* background: var(--main-color); */
     background: white;
     display: block;
     position: absolute;
@@ -265,17 +272,17 @@ p{
     /* transform: translate(30%,30%); */
     /* transform: translate(50%,-20%); */
     /* transition: transform 300ms; */
-    --mainColor:white;
+    --main-color:white;
     mix-blend-mode: exclusion;
 }
 
-.grid #svgContainer.drawing ~ #cursor{
+.grid #drawInHere.drawing ~ #cursor{
     transform: translate(-50%,-50%);
 }
 body.drawing #projectLinks{
     pointer-events: none;
 }
-.grid #svgContainer.drawing * {
+.grid #drawInHere.drawing * {
     cursor:none;
 }
 .grid #nav{
@@ -288,7 +295,7 @@ body.drawing #projectLinks{
 }
 
 #cursorPrompt {
-    color: var(--mainColor);
+    color: var(--main-color);
     color: #bcbcbc;
     position:absolute;
     bottom: 0px;
@@ -329,7 +336,7 @@ a.info:hover ~ #cursor,
 
 /* SVGS */
 
-#svgContainer {
+#drawInHere {
     position: fixed;
     top: 0px;
     left: 0px;
@@ -337,10 +344,10 @@ a.info:hover ~ #cursor,
     height: 100vh;
     /* cursor: none; */
 }
-body.drawing #svgContainer {
+body.drawing #drawInHere {
     z-index:99;
 }
-#svgContainer > div {
+#drawInHere > div {
     width: 100vw;
     height: 100vh;
     /* transition: width var(--transition), height var(--transition), border-bottom 0s 1000ms; */
@@ -348,14 +355,14 @@ body.drawing #svgContainer {
     /* order: 40; */
 }
 
-.grid.transition-complete #svgContainer > div,
-.grid.transition-complete #svgContainer .svgWrapper .drawnSvg,
-.grid.transition-complete #svgContainer image{
+.grid.transition-complete #drawInHere > div,
+.grid.transition-complete #drawInHere .svgWrapper .drawnSvg,
+.grid.transition-complete #drawInHere image{
     transition: 0s;
 }
 
 
-#svgContainer .drawnSvg{
+#drawInHere .drawnSvg{
     position:fixed;
     top:0px;
     left:0px;
@@ -364,12 +371,12 @@ body.drawing #svgContainer {
     /* transition: var(--transition); */
     transition: filter var(--transition);
 }
-#svgContainer .svgWrapper.hover{
+#drawInHere .svgWrapper.hover{
     z-index:1000 !important;
 
 }
 
-#svgContainer .svgWrapper.hover svg{
+#drawInHere .svgWrapper.hover svg{
     filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3));
     /* transform: scale(1.015); */
     animation: zoomSvg 200ms linear both;
@@ -385,19 +392,19 @@ body.drawing #svgContainer {
     }
 }
 
-#svgContainer .svgWrapper.hover{
+#drawInHere .svgWrapper.hover{
     /* filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3)); */
     /* transform: scale(1.02); */
 }
 
 
-#svgContainer > div,
-#svgContainer .drawnSvg,
-#svgContainer .drawnSvg path{
+#drawInHere > div,
+#drawInHere .drawnSvg,
+#drawInHere .drawnSvg path{
   cursor: none;
 }
 
-#svgContainer .drawnSvg path{
+#drawInHere .drawnSvg path{
     stroke-width: 130px;
     stroke-linecap:round;
     stroke-linejoin:round;
@@ -405,38 +412,38 @@ body.drawing #svgContainer {
     fill: none;
     pointer-events: all;
   }
-#svgContainer .svgWrapper.hidden {
+#drawInHere .svgWrapper.hidden {
     opacity: 0;
 }
-.grid #svgContainer .svgWrapper.hidden {
+.grid #drawInHere .svgWrapper.hidden {
     opacity: 1;
 }
-  /* #svgContainer .svgWrapper.hidden path{
+  /* #drawInHere .svgWrapper.hidden path{
     stroke-width: 150px !important;
   } */
-  #svgContainer .shadow path{
+  #drawInHere .shadow path{
     stroke: #8C8C8C;
   }
-  body:not(.grid) #svgContainer .shadow {
+  body:not(.grid) #drawInHere .shadow {
     mix-blend-mode: hard-light;
   }
-  #svgContainer image{
+  #drawInHere image{
     width:100vw;
     height: 100vh;
     position:relative;
   }
-  #svgContainer.fullImages rect{
+  #drawInHere.fullImages rect{
     mask: none !important;
   }
-  #svgContainer.fullImages .shadow{
+  #drawInHere.fullImages .shadow{
     /* mask: none !important; */
     display:none;
   }
 
 /* hide this svg, just save its defs */
 svg.defs,
-#svgContainer .defs,
-.grid #svgContainer .defs {
+#drawInHere .defs,
+.grid #drawInHere .defs {
   position: fixed;
   opacity:0;
   pointer-events: none;
@@ -444,17 +451,17 @@ svg.defs,
   left: -1000px;
 }
 
-body.page-is-changing #svgContainer .svgWrapper.page-transition-main-stroke{
+body.page-is-changing #drawInHere .svgWrapper.page-transition-main-stroke{
     z-index:100;
 }
-body.page-is-changing #svgContainer .svgWrapper.page-transition-main-stroke path{
+body.page-is-changing #drawInHere .svgWrapper.page-transition-main-stroke path{
         stroke-width: 130vw !important;
 }
 
-body.page-is-changing #svgContainer .svgWrapper:not(.page-transition-main-stroke) path{
+body.page-is-changing #drawInHere .svgWrapper:not(.page-transition-main-stroke) path{
     stroke-width: 0px !important;
 }
-body.page-is-changing #svgContainer .svgWrapper:not(.page-transition-main-stroke) svg{
+body.page-is-changing #drawInHere .svgWrapper:not(.page-transition-main-stroke) svg{
     /* opacity:0; */
 }
 
@@ -464,7 +471,7 @@ body.page-is-changing #projectLinks li{
 }
 
 body.page-is-changing #projectLinks{
-    top: calc(var(--navHeight)) !important;
+    top: calc(var(--nav-height)) !important;
     transition-delay:500ms;
 }
 
@@ -474,75 +481,75 @@ body.page-is-changing .hero{
 
 /* GRID PROJECT STYLES */
 
-.grid #svgContainer{
+.grid #drawInHere{
     display: flex;
     flex-wrap: wrap;
-    margin-top: var(--navHeight);
+    margin-top: var(--nav-height);
     height: auto;
     width: auto;
     position: absolute;
 }
 
 /* .grid {
-    --mainColor: ;
+    --main-color: ;
 } */
 
-.grid #svgContainer > div, 
-.grid #svgContainer svg, 
-.grid #svgContainer path{
+.grid #drawInHere > div, 
+.grid #drawInHere svg, 
+.grid #drawInHere path{
     cursor: pointer;
 }
 
-.grid #svgContainer > div{
+.grid #drawInHere > div{
     /* width: 33.3333vw; */
     width: 50vw;
     /* height: calc(33.334vh - 1px); */
     /* height: 33.334vh; */
     height: 50vh;
-    border-bottom:1px solid var(--mainColor);
+    border-bottom:1px solid var(--main-color);
     overflow:hidden;
     /* transition: border-bottom 0s 1000ms; */
 }
 
 
-#svgContainer path,
-#svgContainer image{
+#drawInHere path,
+#drawInHere image{
   transform: scale(1);
 }
 
-#svgContainer path{
+#drawInHere path{
     transition: var(--transition);
 }
-#projectLinks:hover ~ #svgContainer .svgWrapper .drawnSvg{
+#projectLinks:hover ~ #drawInHere .svgWrapper .drawnSvg{
     /* transition: 200ms; */
 }
-.grid #svgContainer .svgWrapper:hover path{
+.grid #drawInHere .svgWrapper:hover path{
     transition: 200ms;
 }
 
 .grid #projectLinks{
     display:none;
 }
-#svgContainer image{
+#drawInHere image{
   width:100vw;
   height: 100vh;
   position:relative;
   transition: var(--transition);
 }
 
-.grid #svgContainer .drawnSvg{
+.grid #drawInHere .drawnSvg{
     width: 50vw;
     height: calc(50vh - 1px);
     /* position:absolute; */
     position:static;
 }
 
-.grid #svgContainer image{
+.grid #drawInHere image{
     width:50vw;
     height:50vh;
 }
 
-.grid #svgContainer .drawnSvg path{
+.grid #drawInHere .drawnSvg path{
     transform: scale(0.5);
 }
 
@@ -582,7 +589,7 @@ body.page-is-changing .hero{
     mix-blend-mode: hard-light;
 }
 
-#svgContainer .extra-div .drawnSvg  path{
+#drawInHere .extra-div .drawnSvg  path{
     stroke: #555555;
 }
 
@@ -595,8 +602,8 @@ body.page-is-changing .hero{
     position:absolute;
     bottom:0px;
     left:0px;
-    border: 1px solid var(--mainColor);
-    color: var(--mainColor);
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
     margin: 0 0px -1px -1px;
     line-height: 1;
     transform: translateY(100%);
@@ -681,17 +688,17 @@ body.page-is-changing .hero{
     background:white;
 } 
 
-.grid #svgContainer .drawnSvg{
+.grid #drawInHere .drawnSvg{
     mix-blend-mode:screen;
     z-index:2;
     position:relative;
 }
 
-.grid #svgContainer .drawnSvg.shadowSvg{
+.grid #drawInHere .drawnSvg.shadowSvg{
     mix-blend-mode:hard-light;
 }
 
-.grid #svgContainer .drawnSvg.patternSvg path{
+.grid #drawInHere .drawnSvg.patternSvg path{
     stroke: black;
 }
 .grid .svgWrapper{
@@ -714,14 +721,14 @@ body.page-is-changing .hero{
     background: white;
 }
 
-.grid #svgContainer .drawnSvg.whiteSvg{
+.grid #drawInHere .drawnSvg.whiteSvg{
     z-index:-1;
     position:absolute;
     top:0;
     left:0;
 }
 
-.grid #svgContainer > div{
+.grid #drawInHere > div{
     /* border-color: var(--bg); */
 }
 
@@ -730,7 +737,7 @@ body.page-is-changing .hero{
 }
 
 .grid{
-    --mainColor: grey;
+    --main-color: grey;
 }
 
 :root{
@@ -900,10 +907,10 @@ body.page-is-changing .hero{
 
 .grid h2, .grid h3{
     z-index:3;
-    border: 1px solid var(--mainColor);
+    border: 1px solid var(--main-color);
     /* border-top:0px; */
     border-left:0px;
-    color: var(--mainColor);
+    color: var(--main-color);
     background: var(--bg);
     padding: 0.2em 0.5rem;
     margin-top:-1px;
@@ -934,11 +941,11 @@ body.page-is-changing .hero{
     fill: #232323;
 }
 
-.grid #svgContainer > div:hover h2{
+.grid #drawInHere > div:hover h2{
     padding-right: 34px;
 }
 
-.grid #svgContainer > div:hover h2 svg{
+.grid #drawInHere > div:hover h2 svg{
     transform: translateY(-2px) translateX(0px);
     opacity: 1;
 }
@@ -990,17 +997,17 @@ body.page-is-changing .hero{
 
 /* HOMEPAGE PROJECT LIST */
 #projectLinks{
-    color:var(--mainColor);
+    color:var(--main-color);
     z-index:3;
     display:inline-flex;
     flex-direction: column;
     position:fixed;
-    top:calc(var(--navHeight));
+    top:calc(var(--nav-height));
     /* transform: translateY(-100%); */
     /* margin-top: -1.5px; */
     transition: right 200ms;
     right: 0px;
-    height: calc(100vh - var(--navHeight));
+    height: calc(100vh - var(--nav-height));
     /* opacity:0; */
     width: 198px;
     border-left: 1px solid #c6c6c6;
@@ -1008,7 +1015,7 @@ body.page-is-changing .hero{
 }
 
 #projectLinks.visible{
-    /* top: var(--navHeight); */
+    /* top: var(--nav-height); */
 }
 
 #projectLinks li{
@@ -1047,7 +1054,7 @@ body.page-is-changing .hero{
 
 #projectLinks a{
     display:inline-block;
-    border-color: var(--mainColor);
+    border-color: var(--main-color);
     text-transform: uppercase;
     background:var(--bg);
     letter-spacing: -0.02em;
@@ -1124,7 +1131,7 @@ body.page-is-changing .hero{
 .lines .horizontal{
     width: 100vw;
     height: 1px;
-    background: var(--mainColor);   
+    background: var(--main-color);   
     position:fixed;
     bottom: -2px;
     left: 0px;
@@ -1142,7 +1149,7 @@ body.page-is-changing .hero{
 .lines .vertical{
     height: 100vh;
     width: 1px;
-    background: var(--mainColor);
+    background: var(--main-color);
     position:fixed;
     right: -2px;
     top: 0px;
@@ -1151,8 +1158,67 @@ body.page-is-changing .hero{
 }
 /* .grid .lines #line-v1{right: 66.667%}
 .grid .lines #line-v2{right: 33.334%}
-.grid .lines #line-h1{bottom: calc(66.667vh - var(--navHeight))}
-.grid .lines #line-h2{bottom: calc(33.334vh - var(--navHeight))} */
+.grid .lines #line-h1{bottom: calc(66.667vh - var(--nav-height))}
+.grid .lines #line-h2{bottom: calc(33.334vh - var(--nav-height))} */
 
 .grid .lines .vertical{right: 50%}
-.grid .lines .horizontal{bottom: calc(50vh - var(--navHeight))}
+.grid .lines .horizontal{bottom: calc(50vh - var(--nav-height))}
+
+
+@media screen and (max-width: 420px){
+    #nav{
+        border: 0;
+    }
+    #nav ul.flex{
+        display: block;
+    }
+    #nav li, #nav button{
+        border-bottom: 1px solid red;
+        border-right:0px;
+    }
+    #nav li:first-child{
+        text-align: center;
+        margin:auto;
+    }
+    #projectLinks{
+        /* display: none; */
+        width: 100%;
+        border-left:0px;
+        pointer-events: none;
+    }
+    #projectLinks li{
+        border:0px;
+    }
+    #projectLinks li.most-recent svg{
+        display:inline-block;
+    }
+    #projectLinks li.visible{
+        border-right:0px;
+        border-bottom:1px solid red;
+    }
+    #projectLinks li:not(.most-recent){
+        display:none;
+    }
+    #nav li:first-child, .grid #nav li:nth-child(2){
+        width: 100%;
+    }
+    #nav li:not(:first-child){
+        display: none;
+        transition:0s;
+        animation: none;
+    }
+    #nav.open li:not(:first-child){
+        display:block;
+    }
+    #nav.open li:first-child a{
+        width: var(--logo-width);
+        animation:none;
+        text-align:left;
+        margin:0px;
+    }
+    @keyframes extendLogo{
+        0%{ width: calc(var(--logo-width) + 1rem)}
+        /* 100%{ width: var(--logo-width)} */
+        100%{ width:100%;}
+    }
+}

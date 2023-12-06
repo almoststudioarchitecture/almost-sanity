@@ -1,52 +1,57 @@
-let grid = document.body.classList.contains("grid") ? true : false;
+let grid = window.location.pathname == "/projects" ? true : false;
 
 console.log("LOADED");
+console.log(grid) 
 
 let drawingCount = 0;
-// let visibleDrawings = 0;
-let startPathWeight = window.innerWidth * 0.1;
-let drawPathWeight = startPathWeight;
-let gridPathWeight = 30;
-let pathWeight;
-if (grid){
-  pathWeight = gridPathWeight;
-} else {
-  pathWeight = drawPathWeight;
+// // let visibleDrawings = 0;
+// let startPathWeight = window.innerWidth * 0.1;
+let startPathWeight = 150;
+if (window.innerWidth > 1100){
+  startPathWeight = 200;
 }
+let drawPathWeight = startPathWeight;
+// let gridPathWeight = 30;
+let pathWeight;
+// if (grid){
+//   pathWeight = gridPathWeight;
+// } else {
+//   pathWeight = drawPathWeight;
+// }
 let maxPathCount = 8; //4 for debugging
 
-// variables for simplifying path
-const inputTolerance = 200;
-const inputPrecision = 0;
-function round(value) {
-  return value.toFixed(inputPrecision.valueAsNumber)
-}
-function pointsToPath(points) {
-  return 'M' + points.map(function (p) { return round(p.x || p[0] || 0) + ',' + round(p.y || p[1] || 0) }).join('L')
-}
-const pastPoints = [];
+// // variables for simplifying path
+// const inputTolerance = 200;
+// const inputPrecision = 0;
+// function round(value) {
+//   return value.toFixed(inputPrecision.valueAsNumber)
+// }
+// function pointsToPath(points) {
+//   return 'M' + points.map(function (p) { return round(p.x || p[0] || 0) + ',' + round(p.y || p[1] || 0) }).join('L')
+// }
+// const pastPoints = [];
 let points;
-let originalPath;
-let simplifySvgPathPath;
+// let originalPath;
+// let simplifySvgPathPath;
 let x, y, prevX, prevY;
 let dragging = false;
 let mouseIsDown = false;
 
 let newProjectDragCreated = false;
 
-//Cursor
+// //Cursor
 const cursor = document.getElementById("cursor");
-document.addEventListener("mousemove", function(e){
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
-    cursorPrompt.style.left = e.clientX + "px";
-    cursorPrompt.style.top = e.clientY + "px";
-})
+// document.addEventListener("mousemove", function(e){
+//     cursor.style.left = e.clientX + "px";
+//     cursor.style.top = e.clientY + "px";
+//     cursorPrompt.style.left = e.clientX + "px";
+//     cursorPrompt.style.top = e.clientY + "px";
+// })
 
 
-document.body.classList.remove("inverted");
+// document.body.classList.remove("inverted");
 
-// Make sure it's always left click not right click
+// // Make sure it's always left click not right click
 var rightMouseClicked = false;
 
 function handleMouseDown(e) {
@@ -61,13 +66,8 @@ function handleMouseUp(e) {
   if (e.button === 2) {
     rightMouseClicked = false;
   }
-  // console.log(rightMouseClicked);
 }
 
-
-// document.body.addEventListener("load", function(){
-//   console.log("loaded");
-// })
 
 
 document.addEventListener('mousedown', handleMouseDown);
@@ -78,49 +78,50 @@ document.addEventListener('mouseup', handleMouseUp);
 
 
 // Create the SVG element and set its attributes
-const svgContainer = document.getElementById('svgContainer');
+const drawInHere = document.getElementById('drawInHere');
 
 // shuffle the svg elements
-// shuffleNodes(svgContainer);
+shuffleNodes(drawInHere);
 
-const svgWrappers = document.querySelectorAll('#svgContainer > div:not(.extra-div)');
+const svgWrappers = document.querySelectorAll('#drawInHere > div:not(.extra-div)');
 const projectCount = svgWrappers.length;
 const links = document.querySelectorAll('#projectLinks li');
 
 
-// hover function
-for (let link of links){
-  link.querySelector("a").addEventListener("mouseenter", function(){
-    cursor.classList.add("hidden");
-    let projectSlug = link.getAttribute("data-slug");
-    svgContainer.querySelector(`[data-slug="${projectSlug}"]`).classList.add("hover");
-  })
-  link.querySelector("a").addEventListener("mouseleave", function(){
-    cursor.classList.remove("hidden");
-    let projectSlug = link.getAttribute("data-slug");
-    svgContainer.querySelector(`[data-slug="${projectSlug}"]`).classList.remove("hover");
-  })
-}
-
-// reading cookie data
-// for (let svgWrapper of svgWrappers){
-//   let slug = svgWrapper.getAttribute("data-slug");
-//   let dVal = getCookie(slug);
-//   for (let path of svgWrapper.querySelectorAll("path")){
-//     path.setAttribute("d", dVal)
-//   }
+// // hover function
+// for (let link of links){
+//   link.querySelector("a").addEventListener("mouseenter", function(){
+//     cursor.classList.add("hidden");
+//     let projectSlug = link.getAttribute("data-slug");
+//     drawInHere.querySelector(`[data-slug="${projectSlug}"]`).classList.add("hover");
+//   })
+//   link.querySelector("a").addEventListener("mouseleave", function(){
+//     cursor.classList.remove("hidden");
+//     let projectSlug = link.getAttribute("data-slug");
+//     drawInHere.querySelector(`[data-slug="${projectSlug}"]`).classList.remove("hover");
+//   })
 // }
+
+// // reading cookie data
+// // for (let svgWrapper of svgWrappers){
+// //   let slug = svgWrapper.getAttribute("data-slug");
+// //   let dVal = getCookie(slug);
+// //   for (let path of svgWrapper.querySelectorAll("path")){
+// //     path.setAttribute("d", dVal)
+// //   }
+// // }
 
 // Save model SVG
 const svgNS = 'http://www.w3.org/2000/svg';
 
-// I don't think we need this but keeping just in case it bugs:
-// const modelSvg = document.getElementById('modelSvg');
-// modelSvg.setAttribute('width', window.innerWidth);
-// modelSvg.setAttribute('height', window.innerHeight);
+// // I don't think we need this but keeping just in case it bugs:
+// // const modelSvg = document.getElementById('modelSvg');
+// // modelSvg.setAttribute('width', window.innerWidth);
+// // modelSvg.setAttribute('height', window.innerHeight);
 
 // change the size of the shadow to the full width of the browser
 const shadowFilter = document.getElementById('shadowFilter');
+// console.log(shadowFilter);
 shadowFilter.setAttribute('width', window.innerWidth);
 shadowFilter.setAttribute('height', window.innerHeight);
 
@@ -134,18 +135,18 @@ let cookieLength = 0;
 let cookieProjectNames = [];
 
 // Event listeners for mouse events
-// svgContainer.addEventListener('mousedown', startDrawing);
-// svgContainer.addEventListener('mousemove', draw);
+// drawInHere.addEventListener('mousedown', startDrawing);
+// drawInHere.addEventListener('mousemove', draw);
 
 assignNewSvg();
 
-svgContainer.addEventListener('mousedown', function(){
+drawInHere.addEventListener('mousedown', function(){
   if (!rightMouseClicked){
     mouseIsDown = true;
   }
 });
 
-// svgContainer.addEventListener('mousemove', function(event){
+// drawInHere.addEventListener('mousemove', function(event){
 //   if (mouseIsDown){
 //     dragging = true;
 //     if (!newProjectDragCreated){startDrawing(event)}
@@ -156,7 +157,7 @@ svgContainer.addEventListener('mousedown', function(){
 let isDrawingScheduled = false;
 let lastEvent = null;
 
-svgContainer.addEventListener('mousemove', function(event) {
+drawInHere.addEventListener('mousemove', function(event) {
   if (mouseIsDown) {
     dragging = true;
     lastEvent = event; // Store the latest event
@@ -176,7 +177,7 @@ svgContainer.addEventListener('mousemove', function(event) {
   }
 });
 
-svgContainer.addEventListener('mouseup', function(event){
+drawInHere.addEventListener('mouseup', function(event){
   mouseIsDown = false;
   dragging = false;
   
@@ -196,10 +197,9 @@ function startDrawing(event) {
     currentSvgWrapper = event.target.closest(".svgWrapper");
   }
 
-  // currentSvgWrapper = event.target.closest(".svgWrapper");
   if (currentSvgWrapper){
     
-    currentSvgWrapper.classList.add("drawing-in-here");
+    // currentSvgWrapper.classList.add("drawing-in-here");
     document.body.classList.add("drawing");
     currentSvgWrapper.classList.remove("hidden");
   }
@@ -274,9 +274,9 @@ function draw(event) {
 
   dragging = true;
 
-    cursorPrompt.style.display = "none";
+    // cursorPrompt.style.display = "none";
   
-  svgContainer.classList.add("drawing");
+  drawInHere.classList.add("drawing");
 
   if (!pathData) return;
 
@@ -329,30 +329,33 @@ const projectNamesElem = document.getElementById("projectLinks")
 function stopDrawing(event) {
 
 
-  // console.log("stop drawing: ")
+  
   // console.log(currentSvgWrapper);
 
 
-  svgContainer.classList.remove("drawing");
+  drawInHere.classList.remove("drawing");
   document.body.classList.remove("drawing");
-  document.querySelector(".drawing-in-here").classList.remove("drawing-in-here")
+  // document.querySelector(".drawing-in-here").classList.remove("drawing-in-here")
   currentSvgWrapper.classList.add("complete");
 
-  if (projectNamesElem.querySelector(".most-recent")!= null){
+  console.log(projectNamesElem) 
+
+  if (projectNamesElem.querySelector(".home--mostRecent")!= null){
     // console.log("something with most recent exists")
-    projectNamesElem.querySelector(".most-recent").classList.remove("most-recent");
+    projectNamesElem.querySelector(".home--mostRecent").classList.remove("home--mostRecent");
   }
   let nameElem = projectNamesElem.querySelector(`[data-slug="${currentSvgWrapper.getAttribute("data-slug")}"]`);
   // projectNamesElem.classList.add("visible");
-  // projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
+  // projectNamesElem.style.top = `calc(var(--nav-height) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
   if (nameElem != null){
     
-  nameElem.classList.add("most-recent");
+  nameElem.classList.add("home--mostRecent");
   nameElem.style.order = 1 - drawingCount;
-  nameElem.classList.add("visible");
+  nameElem.classList.add('home--visible');
+  nameElem.removeAttribute("data-hide-cursor");
   nameElem.style.zIndex = drawingCount;
-  console.log(nameElem);
-  console.log("changed z index, " + drawingCount);
+  // console.log(nameElem);
+  // console.log("changed z index, " + drawingCount);
   nameElem.style.animationDelay = 150 * drawingCount + "ms";
 
 }
@@ -390,13 +393,14 @@ function resetSvgs(){
     div.classList.remove("complete");
   }
   for (let li of document.querySelectorAll("#projectLinks li.visible")){
-    li.classList.remove("visible");
+    li.classList.remove('home--visible');
     li.removeAttribute("style");
   }
-  // projectNamesElem.style.top = `calc(var(--navHeight) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
+  // projectNamesElem.style.top = `calc(var(--nav-height) * ${drawingCount%maxPathCount+2} + ${drawingCount%maxPathCount+2}px)`
 }
 
 function assignNewSvg(){
+  // console.log("assign new svg")
 
   if (!grid){
     currentSvgWrapper = svgWrappers[drawingCount%projectCount];
@@ -410,7 +414,7 @@ function assignNewSvg(){
 
     newSvg = currentSvgWrapper.querySelector("svg");
 
-    console.log(currentSvgWrapper, newSvg)
+    // console.log(currentSvgWrapper, newSvg)
 
     paths = newSvg.querySelectorAll('path');
     for (let path of paths){
@@ -429,205 +433,203 @@ function assignNewSvg(){
 }
 
 
-const projectsButton = document.getElementById("navLink_projects");
-projectsButton.addEventListener("click", function(e){
-    e.preventDefault();
-    makeGrid();
-})
+// const projectsButton = document.getElementById("navLink_projects");
+// projectsButton.addEventListener("click", function(e){
+//     e.preventDefault();
+//     makeGrid();
+// })
 
-const drawButton = document.getElementById("navLink_draw");
-drawButton.addEventListener("click", function(e){
-    e.preventDefault();
-    makeDraw();
-})
+// const drawButton = document.getElementById("navLink_draw");
+// drawButton.addEventListener("click", function(e){
+//     e.preventDefault();
+//     makeDraw();
+// })
 
 
-function makeGrid(){
-    document.body.classList.add("grid");
-    setTimeout(function(){
-      document.body.classList.add("transition-complete")
-    }, 1000)
-    // turn this back on
-    window.history.pushState({"pageTitle":"Projects"},"", "/projects/");
-    grid = true;
+// function makeGrid(){
+//     document.body.classList.add("grid");
+//     setTimeout(function(){
+//       document.body.classList.add("transition-complete")
+//     }, 1000)
+//     // turn this back on
+//     window.history.pushState({"pageTitle":"Projects"},"", "/projects/");
+//     grid = true;
 
-    pathWeight = gridPathWeight;
-    cursor.style.width = pathWeight + "px";
-    cursor.style.height = pathWeight + "px";
+//     pathWeight = gridPathWeight;
+//     cursor.style.width = pathWeight + "px";
+//     cursor.style.height = pathWeight + "px";
 
-    for (let image of document.querySelectorAll("image")){
-      image.setAttribute("width", window.innerWidth/3 + "px");
-      image.setAttribute("height", window.innerHeight/3 + "px");
-    }
-}
+//     for (let image of document.querySelectorAll("image")){
+//       image.setAttribute("width", window.innerWidth/3 + "px");
+//       image.setAttribute("height", window.innerHeight/3 + "px");
+//     }
+// }
 
-if (document.querySelector("main.page-projects")){
-  makeGrid();
-}
+// if (document.querySelector("main.page-projects")){
+//   makeGrid();
+// }
 
-function makeDraw(){
-    document.body.classList.remove("grid");
-    window.history.pushState({"pageTitle":"Home"},"", "/");
-    grid = false;
+// function makeDraw(){
+//     document.body.classList.remove("grid");
+//     window.history.pushState({"pageTitle":"Home"},"", "/");
+//     grid = false;
 
-    pathWeight = drawPathWeight;
-    cursor.style.width = pathWeight + "px";
-    cursor.style.height = pathWeight + "px";
+//     pathWeight = drawPathWeight;
+//     cursor.style.width = pathWeight + "px";
+//     cursor.style.height = pathWeight + "px";
 
-    for (let image of document.querySelectorAll("image")){
-      image.setAttribute("width", window.innerWidth + "px");
-      image.setAttribute("height", window.innerHeight + "px");
-    }
-}
+//     for (let image of document.querySelectorAll("image")){
+//       image.setAttribute("width", window.innerWidth + "px");
+//       image.setAttribute("height", window.innerHeight + "px");
+//     }
+// }
 
 function showFullImage(){
-    svgContainer.classList.toggle("fullImages");
+    drawInHere.classList.toggle("fullImages");
     document.body.classList.toggle("showingFullImages");
 }
 
-function transition_GridToProject(targetElement, cursorY) {
-  console.log("transition to project");
-  let items = document.querySelectorAll('.svgWrapper');
-  targetElement = targetElement.closest('.svgWrapper')
-  let index = Array.from(items).indexOf(targetElement);
+// function transition_GridToProject(targetElement, cursorY) {
+//   console.log("transition to project");
+//   let items = document.querySelectorAll('.svgWrapper');
+//   targetElement = targetElement.closest('.svgWrapper')
+//   let index = Array.from(items).indexOf(targetElement);
 
-  // If the target element is not a grid-item, return
-  if (index === -1) return;
+//   // If the target element is not a grid-item, return
+//   if (index === -1) return;
 
-  let column = (index % 3) + 1; // Assuming you have 3 columns
-  console.log('This item is in column ' + column);
+//   let column = (index % 3) + 1; // Assuming you have 3 columns
+//   console.log('This item is in column ' + column);
 
-  document.body.classList.add("transition-to-project");
+//   document.body.classList.add("transition-to-project");
 
-  targetElement.classList.add("transfer-target-thumb");
+//   targetElement.classList.add("transfer-target-thumb");
 
-  // Check the row in relation to the horizontal lines
-  let line1Top = document.getElementById('line-h1').getBoundingClientRect().top;
-  let line2Top = document.getElementById('line-h2').getBoundingClientRect().top;
+//   // Check the row in relation to the horizontal lines
+//   let line1Top = document.getElementById('line-h1').getBoundingClientRect().top;
+//   let line2Top = document.getElementById('line-h2').getBoundingClientRect().top;
 
-  setTimeout(function(){
+//   setTimeout(function(){
     
-    if (column == 1){
-      document.getElementById("line-v1").style.right = "-1px";
-      document.getElementById("line-v2").style.right = "-1px";
-    } else if (column == 2){
-      document.getElementById("line-v1").style.right = "100vw";
-      document.getElementById("line-v2").style.right = "-1px";
-    } else if (column == 3){
-      document.getElementById("line-v1").style.right = "100vw";
-      document.getElementById("line-v2").style.right = "100vw";
-    }
+//     if (column == 1){
+//       document.getElementById("line-v1").style.right = "-1px";
+//       document.getElementById("line-v2").style.right = "-1px";
+//     } else if (column == 2){
+//       document.getElementById("line-v1").style.right = "100vw";
+//       document.getElementById("line-v2").style.right = "-1px";
+//     } else if (column == 3){
+//       document.getElementById("line-v1").style.right = "100vw";
+//       document.getElementById("line-v2").style.right = "100vw";
+//     }
 
-    if (cursorY < line1Top) {
-        console.log('Cursor is above the first line');
-        document.getElementById("line-h1").style.bottom = "-1px";
-        document.getElementById("line-h2").style.bottom = "-1px";
-    } else if (cursorY < line2Top) {
-        console.log('Cursor is between the two lines');
-        document.getElementById("line-h1").style.bottom = "100vh";
-        document.getElementById("line-h2").style.bottom = "-1px";
-    } else {
-        console.log('Cursor is below the second line');
-        document.getElementById("line-h1").style.bottom = "100vh";
-        document.getElementById("line-h2").style.bottom = "100vh";
-    }
+//     if (cursorY < line1Top) {
+//         console.log('Cursor is above the first line');
+//         document.getElementById("line-h1").style.bottom = "-1px";
+//         document.getElementById("line-h2").style.bottom = "-1px";
+//     } else if (cursorY < line2Top) {
+//         console.log('Cursor is between the two lines');
+//         document.getElementById("line-h1").style.bottom = "100vh";
+//         document.getElementById("line-h2").style.bottom = "-1px";
+//     } else {
+//         console.log('Cursor is below the second line');
+//         document.getElementById("line-h1").style.bottom = "100vh";
+//         document.getElementById("line-h2").style.bottom = "100vh";
+//     }
 
-  }, 400)
+//   }, 400)
 
-  setTimeout(function(){
-    let urlExtension = targetElement.getAttribute("data-href"); // This is just a placeholder; replace with your actual URL extension
-        // Ensure there's no trailing slash
-    // let currentPath = window.location.pathname;
-    // if (currentPath.endsWith('/')) {
-    //     currentPath = currentPath.slice(0, -1);
-    // }
+//   setTimeout(function(){
+//     let urlExtension = targetElement.getAttribute("data-href"); // This is just a placeholder; replace with your actual URL extension
+//         // Ensure there's no trailing slash
+//     // let currentPath = window.location.pathname;
+//     // if (currentPath.endsWith('/')) {
+//     //     currentPath = currentPath.slice(0, -1);
+//     // }
 
-    // console.log(window.location.origin, currentPath, urlExtension);
+//     // console.log(window.location.origin, currentPath, urlExtension);
 
-    window.location.href = window.location.origin + urlExtension;
-  },1000)
-
-  
+//     window.location.href = window.location.origin + urlExtension;
+//   },1000)
 
   
 
-// If the target element is not a grid-item, return
-if (index === -1) return;
+  
+
+// // If the target element is not a grid-item, return
+// if (index === -1) return;
   
   
-  // ... any other transition code you have
-}
-
-
-//////////////////////////////////////
-// TRANSITION TO PROJECT USING AJAX //
-//////////////////////////////////////
-
-// let isAnimating = false;
-
-// document.addEventListener('click', function(event) {
-//   if (event.target.getAttribute('data-type') === 'page-transition') {
-//      event.preventDefault();
-//      // detect which page has been selected
-//      var newPage = event.target.getAttribute('href');
-//      // if the page is not animating - trigger animation
-//      if (!isAnimating) changePage(newPage, true);
-//   }
-// });
-
-// function changePage(url, bool) {
-//   isAnimating = true;
-//   // trigger page animation
-//   document.body.classList.add('page-is-changing');
-//   // ...
-//   loadNewContent(url, bool);
-//   // ...
+//   // ... any other transition code you have
 // }
 
-// function loadNewContent(url, bool) {
-//   var newSectionName = 'cd-' + url.replace('.html', '');
-//   // var newSectionName = 'main'
-//   var temp = document.createElement('div');
-//   // temp.className = 'cd-main-content ' + newSectionName;
 
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('GET', url, true);
-//   xhr.onreadystatechange = function() {
-//      if (xhr.readyState === 4 && xhr.status === 200) {
-//         // load new content and replace <main> content with the new one
-//         temp.innerHTML = xhr.responseText;
+// //////////////////////////////////////
+// // TRANSITION TO PROJECT USING AJAX //
+// //////////////////////////////////////
+
+// // let isAnimating = false;
+
+// // document.addEventListener('click', function(event) {
+// //   if (event.target.getAttribute('data-type') === 'page-transition') {
+// //      event.preventDefault();
+// //      // detect which page has been selected
+// //      var newPage = event.target.getAttribute('href');
+// //      // if the page is not animating - trigger animation
+// //      if (!isAnimating) changePage(newPage, true);
+// //   }
+// // });
+
+// // function changePage(url, bool) {
+// //   isAnimating = true;
+// //   // trigger page animation
+// //   document.body.classList.add('page-is-changing');
+// //   // ...
+// //   loadNewContent(url, bool);
+// //   // ...
+// // }
+
+// // function loadNewContent(url, bool) {
+// //   var newSectionName = 'cd-' + url.replace('.html', '');
+// //   // var newSectionName = 'main'
+// //   var temp = document.createElement('div');
+// //   // temp.className = 'cd-main-content ' + newSectionName;
+
+// //   var xhr = new XMLHttpRequest();
+// //   xhr.open('GET', url, true);
+// //   xhr.onreadystatechange = function() {
+// //      if (xhr.readyState === 4 && xhr.status === 200) {
+// //         // load new content and replace <main> content with the new one
+// //         temp.innerHTML = xhr.responseText;
         
-//         temp.querySelector('.section.hero').style.visibility="hidden";
+// //         temp.querySelector('.section.hero').style.visibility="hidden";
         
-//         setTimeout(function(){
-//           const styleElems = temp.querySelectorAll('link[rel="stylesheet"]')
-//           for (let styleElem of styleElems){
-//             document.head.appendChild(styleElem);
-//           }
-//           document.querySelector('main').innerHTML = temp.querySelector('main').innerHTML;
-//           // ...
-//           document.body.classList.remove('page-is-changing');
-//           // ...
+// //         setTimeout(function(){
+// //           const styleElems = temp.querySelectorAll('link[rel="stylesheet"]')
+// //           for (let styleElem of styleElems){
+// //             document.head.appendChild(styleElem);
+// //           }
+// //           document.querySelector('main').innerHTML = temp.querySelector('main').innerHTML;
+// //           // ...
+// //           document.body.classList.remove('page-is-changing');
+// //           // ...
   
-//           if (url !== window.location) {
-//              // add the new page to the window.history
-//              window.history.pushState({ path: url }, '', url);
-//           }
-//         },1200)
+// //           if (url !== window.location) {
+// //              // add the new page to the window.history
+// //              window.history.pushState({ path: url }, '', url);
+// //           }
+// //         },1200)
         
-//      }
-//   };
-//   xhr.send();
-// }
+// //      }
+// //   };
+// //   xhr.send();
+// // }
 
-// window.addEventListener('popstate', function() {
-//   var newPageArray = location.pathname.split('/');
-//   // this is the url of the page to be loaded 
-//   var newPage = newPageArray[newPageArray.length - 1];
-//   if (!isAnimating) changePage(newPage);
-// });
-
-
+// // window.addEventListener('popstate', function() {
+// //   var newPageArray = location.pathname.split('/');
+// //   // this is the url of the page to be loaded 
+// //   var newPage = newPageArray[newPageArray.length - 1];
+// //   if (!isAnimating) changePage(newPage);
+// // });
 
 
 
@@ -638,9 +640,11 @@ if (index === -1) return;
 
 
 
-//////////////////////////
-//   HELPER FUNCTIONS   //
-//////////////////////////
+
+
+// //////////////////////////
+// //   HELPER FUNCTIONS   //
+// //////////////////////////
 
 function shuffleNodes(parentElem){
     var nodeList = parentElem.childNodes;
@@ -664,3 +668,12 @@ function shuffle(array) {
       [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
+
+
+// document.getElementById("navLink_draw").addEventListener("click", function(e){
+//   e.preventDefault();
+//   if (window.innerWidth < 420){
+//     document.getElementById("nav").classList.toggle("open");
+//   }
+// })

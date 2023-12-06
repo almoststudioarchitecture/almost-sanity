@@ -6,8 +6,9 @@ import { Metadata } from "next";
 import { getSingleProject } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
 import { PortableText } from "@portabletext/react";
-import fallBackImage from "@/public/project.png";
+// import fallBackImage from "@/public/project.png";
 import AboutScript from "./ProjectScript";
+import imageUrlBuilder from '@sanity/image-url';
 import ProjectGalleryImage from "../../components/ProjectGalleryImage";
 // import { Dimensions } from 'react-native';
 import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, PromiseLikeOfReactNode, Key } from "react";
@@ -25,6 +26,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.project;
   const project: ProjectType = await getSingleProject(slug);
+  
 
   // console.log(project);
 
@@ -54,7 +56,7 @@ export default async function Project({ params }: Props) {
                 className="hero-image"
                 layout='fill'
                 objectFit='cover'
-                src={project.coverImage?.image || fallBackImage}
+                src={project.coverImage?.image}
                 alt={project.coverImage?.alt || project.name}
                 priority
               />
@@ -148,6 +150,7 @@ export default async function Project({ params }: Props) {
                             src={item.image}
                             alt={item.alt || project.name}
                             fit={item.fit}
+                            
                         />
                       </div>
                     </div>

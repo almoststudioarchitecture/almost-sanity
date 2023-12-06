@@ -6,12 +6,12 @@
 }
 
 .information {
-    /* margin-top:var(--navHeight);
+    /* margin-top:var(--nav-height);
     position:absolute;
     top:0px; */
 }
 .information {
-    margin-top: var(--navHeight);
+    margin-top: var(--nav-height);
 }
 
 .information .box {
@@ -36,11 +36,12 @@
 }
 
 .information strong {
-    color: var(--mainColor)
+    color: var(--main-color)
 }
 
-.information button:hover{
-    color: var(--mainColor);
+.information button:hover,
+.information a:hover{
+    color: var(--main-color);
 }
 
 /* #teamSection button strong{
@@ -105,7 +106,7 @@
 }
 
 .box.one-third.bio:last-child{
-    border-right: 1px solid var(--mainColor);
+    border-right: 1px solid var(--main-color);
 }
 
 .bio{
@@ -123,7 +124,7 @@
         border-right:transparent;
     }
     .box.one-third.bio:last-child{
-        border-right: 1px solid var(--mainColor);
+        border-right: 1px solid var(--main-color);
     }
 }
 

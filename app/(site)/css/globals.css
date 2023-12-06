@@ -1,0 +1,388 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face{
+    font-family: 'Dedale';
+    font-weight: 600;
+    src: url('../fonts/DedaleTrial-Bold.otf');
+  }
+  @font-face{
+    font-family: 'Dedale';
+    font-weight: 400;
+    src: url('../fonts/DedaleTrial-Regular.otf');
+  }
+  @font-face{
+    font-family: 'Dedale';
+    font-weight: 300;
+    src: url('../fonts/DedaleTrial-Light.otf');
+  }
+  
+  :root{
+    --main-color: red;
+    --nav-height: 28px;
+    --bg: #F8F8F8;
+    --grey: #c6c6c6;
+  
+    --logo-width: 142.836px;
+    --projects-width: 91.141px;
+    --profile-width: 75.352px;
+  
+    --pad_x: 0.4em;
+    --pad_y: 0.2em;
+
+    --primary-type: "Dedale";
+    --pad: 0.7rem;
+    --transition: 600ms linear;
+  }
+  
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased; 
+    font-family: 'Dedale', sans-serif;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    background: var(--bg);
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  a {
+    /* color: #0070f3; */
+    text-decoration: none;
+  }
+  
+  /* a:hover {
+    text-decoration: none;
+  } */
+  
+  img {
+    max-width: 100%;
+    display: block;
+  }
+  
+  ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  
+
+  /* HOMEPAGE DRAWING */
+
+.drawInHere{
+  cursor:none;
+  width:100%;
+  height:100%;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:0;
+}
+
+/* body.drawing #drawInHere {
+  z-index:99;
+} */
+
+/* Hover over svgs */
+#drawInHere .svgWrapper.hover svg{
+  filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3));
+  animation: zoomSvg 200ms linear both;
+}
+
+@keyframes zoomSvg{
+  0%{
+      transform: scale(1);
+  }
+  100%{
+      transform: scale(1.015)
+  }
+}
+
+
+/* Styles */
+#drawInHere .drawnSvg path{
+  stroke-width: 130px;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke: white;
+  fill: none;
+  pointer-events: all;
+}
+
+#drawInHere>.svgWrapper {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top:0;
+  left:0;
+}
+
+#drawInHere:active{
+  z-index:2;
+}
+
+/* #drawInHere .svgWrapper.hidden {
+  opacity: 0;
+}
+.grid #drawInHere .svgWrapper.hidden {
+  opacity: 1;
+} */
+
+#drawInHere .shadow path{
+  stroke: #8C8C8C;
+}
+
+/* body:not(.grid) #drawInHere .shadow {
+  mix-blend-mode: hard-light;
+} */
+#drawInHere .shadow {
+  mix-blend-mode: hard-light;
+}
+#drawInHere image{
+  width:100vw;
+  height: 100vh;
+  position:relative;
+}
+#drawInHere.fullImages rect{
+mask: none !important;
+}
+#drawInHere.fullImages .shadow{
+  display:none;
+}
+
+/* hide this svg, just save its defs */
+svg.defs,
+#drawInHere .defs,
+.grid #drawInHere .defs {
+position: fixed;
+opacity:0;
+pointer-events: none;
+top: -1000px;
+left: -1000px;
+}
+
+
+/* HOMEPAGE GLOBAL STYLES */
+
+.home--visible{
+  opacity: 1;
+  pointer-events:inherit;
+}
+
+li.home--visible:hover, li.home--mostRecent{
+  width: calc(100% - 1px);
+  overflow: visible !important;
+  /* background: var(--bg); */
+}
+
+.home--visible a, .home--mostRecent a{
+
+  opacity: 1;
+  pointer-events:inherit !important;
+  user-select: none;
+  /* background: var(--bg); */
+}
+
+.home--mostRecent a, .home--visible:hover a{
+  width: calc(100% - 1px);
+  /* background: var(--bg); */
+}
+
+.home--visible{
+  /* width:calc(100% - 2px); */
+  /* transform:translateX(1px); */
+  background: var(--bg);
+  border-bottom: 1px dotted var(--grey) !important;
+  /* border-left: 1px solid var(--grey) !important; */
+}
+
+#projectLinks:hover .home--mostRecent:not(:hover) svg{
+  /* display:none !important; */
+}
+
+.home--mostRecent a svg,
+.home--visible:hover a svg{
+  display:inline-block !important;
+}
+
+
+
+
+
+/* HOMEPAGE */
+
+h1{
+  font-size: 200px;
+  user-select: none;
+}
+
+.canvas-container{
+  position:absolute;
+  top:-1px;
+  left:-1px;
+  transition: width 500ms, height 500ms, left 500ms, top 500ms, transform 400ms;
+  /* border-left:1px solid black; */
+  /* border-bottom:1px solid black; */
+}
+
+
+canvas{
+  transition: 500ms;
+  cursor: none;
+}
+.canvases{
+  position: relative;
+}
+body.mousedown .canvases{
+    z-index: 99;
+}
+body.mousedown nav{
+  pointer-events: none;
+  user-select: none;
+}
+body.mousedown .home--projectLinks{
+  z-index:2;
+}
+body.mousedown .list-container{
+  z-index:2;
+}
+
+/* #btn{
+  position:fixed;
+  top:10px;
+  left:10px;
+  background: red;
+  z-index:100;
+  cursor:pointer;
+  border-radius: 10px;
+  width: 100px;
+  height: 50px;
+}
+
+#btn:hover{
+  background: blue;
+} */
+
+body{
+  user-select: none;
+}
+
+.canvases.path-projects .canvas-container{
+  width: 50vw;
+  height: 50vh;
+  background-size:cover;
+  background-position:center;
+}
+
+.canvases canvas{
+  z-index:1;
+  position:relative;
+}
+
+.canvas-container img{
+  opacity:0;
+  pointer-events: none;
+  display: none;
+  transition: opacity 500ms;
+  transition-delay:400ms;
+  object-fit: cover;
+  object-position: center;
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
+  top:1px;
+  z-index:0;
+  position: absolute;
+}
+
+.canvases.path-projects .canvas-container img{
+  display: block;
+}
+
+.list-container:hover + #cursor{
+  display: none !important;
+}
+
+.list-container{
+    position: relative;
+    left: 0px;
+    z-index:98;
+    top: var(--nav-height);
+    height: calc(100vh - var(--nav-height));
+    width: calc(var(--profile-width) + var(--projects-width) + calc(var(--pad_x)*4) + 2px);
+    overflow-y:scroll;
+}
+
+
+  .list-container a:before{
+    content: '';
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    right: 0px;
+    top: 0px;
+    background: transparent;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, var(--bg) 90%);
+  }
+
+  .list-container a:hover:before,
+  .list-container a.home--mostRecent:before {
+    display: none;
+  }
+  
+
+
+
+  /* NAVBAR INITIAL LOAD */
+
+/* .initial-load nav:after {
+  animation: lineExpand 800ms ease-in-out both;
+}
+
+.initial-load nav li {
+  animation: navItemAppear 500ms linear both;
+}
+
+.initial-load nav li .link{
+  transition-delay: 1s;
+}
+
+@keyframes lineExpand{
+  0%{ width: 0px;}
+  100%{ width: 100vw;}
+}
+@keyframes navItemAppear{
+  0%{ opacity: 0;}
+  100%{ opacity: 1;}
+} */
+
+
+body.path- .list-container ul{
+  transform: translateX(0%);
+  transition-delay: 800ms;
+}
+
+
+
+body.path-projects {
+  --main-color: grey;
+}
+
+body.path-projects .canvas-container{
+    border-left:1px solid black;
+    border-bottom:1px solid black;
+    position:static;
+}
+body.path-projects .canvas-container:nth-child(odd){
+  /* border-left:1px solid black; */
+  border-bottom:1px solid black;
+  position:static;
+}

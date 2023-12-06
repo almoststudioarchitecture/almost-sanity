@@ -1,0 +1,10 @@
+.container {
+    background: var(--bg);
+    position:relative;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
