@@ -101,6 +101,13 @@ function initializeSketch(p, container, idx) {
                     }
                 });
 
+                p.canvas.addEventListener("touchstart", p.touchStarted);
+                p.canvas.addEventListener("touchmove", function(event) {
+                    if (mousePressedOverCanvas) {
+                        p.loop();
+                    }
+                });
+
                 p.noLoop();
                 p.canvas.p5instance = p;
 
@@ -122,6 +129,13 @@ function initializeSketch(p, container, idx) {
                     if (cnvImage.pixels.length > 0) {
                         imageDrawn = true;
                     }
+                }
+                if (mousePressedOverCanvas) {
+                    // Use p.touchX and p.touchY for touch devices
+                    let x = p.mouseIsPressed ? p.mouseX : p.touchX;
+                    let y = p.mouseIsPressed ? p.mouseY : p.touchY;
+                    updateStrokeProperties();
+                    addPointToPath(x, y);
                 }
             
                 if (imageDrawn) {
@@ -211,7 +225,68 @@ function initializeSketch(p, container, idx) {
                 }
             });
 
+            document.addEventListener("touchend", function(event) {
+                mousePressedOverCanvas = false;
+                // rest of the touchend logic
+                
+                // remove drawing class to body
+                document.body.classList.remove("mousedown")
 
+                
+            
+                if (p.canvas && (event.target === p.canvas || p.canvas.contains(event.target))) {
+                    if (p === currentSketch) {
+                        let slug = container.getAttribute("data-slug");
+
+                        let corresponding_lis = document.querySelectorAll(`.list-container [data-slug="${slug}"]`)
+                        // console.log(corresponding_lis);
+                        for (mostRecent of document.querySelectorAll(".home--mostRecent")){
+                            mostRecent.classList.remove("home--mostRecent");
+                        }
+                        for (li of corresponding_lis){
+                            li.classList.add("home--visible");
+                            li.classList.add("home--mostRecent");
+                            li.style.order = 99999 - canvasCounter;
+                        }
+
+                        p.canvas.style.pointerEvents = 'none';
+                        // startWeight -= 20;
+                        startWeight *= 0.86;
+                
+                        if (canvasCounter < canvases.length - 1) {
+                            // Proceed to the next canvas
+                            canvasCounter++;
+                            strokeCounter++;
+                            currentSketch = sketches[shuffledIndices[canvasCounter]];
+                            canvases[shuffledIndices[canvasCounter]].style.display = 'block';
+                        } else {
+                            // Reset and start over
+                            console.log('No more canvases left. Resetting...');
+                            if (!isReordered){
+                                canvasCounter = 0;
+                                // shuffledIndices = shuffleIndices(canvases);
+                                // shuffledIndices.forEach((index, idx) => {
+                                //     let container = canvases[index];
+                                //     container.style.zIndex = strokeCounter + idx;
+                                // });
+                                
+                                currentSketch = sketches[shuffledIndices[canvasCounter]];
+                                // currentSketch = sketches[shuffledIndices[canvasCounter]];
+                                canvases[shuffledIndices[canvasCounter]].style.display = 'block';
+
+
+                            }
+                        }
+                    }
+                }
+            
+                if (currentSketch) {
+                    p.noLoop();
+                }
+            });
+
+
+            
 
             
             p.mousePressed = function() {
@@ -221,6 +296,20 @@ function initializeSketch(p, container, idx) {
                     strokeShrink = strokeShrinkStart;
                 }
             };
+
+            p.touchStarted = function() {
+                if (p.touches.length > 0) {
+                    const touch = p.touches[0];
+                    if (isCanvasTouched(touch.x, touch.y)) {
+                        mousePressedOverCanvas = true;
+                        path = [];
+                        currentWeight = startWeight;
+                        strokeShrink = strokeShrinkStart;
+                    }
+                }
+            };
+
+            
 
             function drawPathsOnMask(graphics, path, weight) {
                 graphics.clear();
@@ -252,6 +341,11 @@ function initializeSketch(p, container, idx) {
                     graphics.curveVertex(path[path.length - 1].x, path[path.length - 1].y + yOffset);
                     graphics.endShape();
                 }
+            }
+
+            function isCanvasTouched(x, y) {
+                return (x >= p.canvas.offsetLeft && x <= p.canvas.offsetLeft + p.canvas.width &&
+                        y >= p.canvas.offsetTop && y <= p.canvas.offsetTop + p.canvas.height);
             }
 
             function addPointToPath(x, y) {
