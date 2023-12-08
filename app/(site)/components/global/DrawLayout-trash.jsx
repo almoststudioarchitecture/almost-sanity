@@ -1,4 +1,51 @@
-// document.addEventListener('DOMContentLoaded', () => {
+'use client'
+
+import React, { useEffect, useState, ReactNode } from 'react';
+import p5 from 'p5'; // Assuming you've installed p5 as a module
+import { getProjects } from "@/sanity/sanity.query";
+// import type { ProjectType } from "@/types";
+import Script from 'next/script';
+import DrawCursor from '../DrawCursor';
+import ProjectListItem from "../ProjectListItem";
+import styles from '../../css/Home.module.css';
+
+const DrawLayout = ({ children }) => {
+  // ... existing state and functions
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const fetchedProjects = await getProjects();
+        shuffleArray(fetchedProjects);
+        setProjects(fetchedProjects);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+
+    fetchProjects();
+  }, []); // 
+
+// Function to shuffle an array
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Shuffle the projects array for display
+const shuffledProjects = [...projects]; // Clone the projects array
+shuffleArray(shuffledProjects);
+
+
+
+  useEffect(() => {
+
+
+    if (projects.length > 0) {
+    // document.addEventListener('DOMContentLoaded', () => {
 const canvases = document.querySelectorAll(".canvas-container");
 console.log(canvases);
 const cursorElement = document.getElementById("cursor");
@@ -42,8 +89,6 @@ shuffledIndices.forEach((index, idx) => {
 });
 
 
-
-
 canvases.forEach(canvas => {
     canvas.style.display = 'none';
 });
@@ -72,8 +117,8 @@ function initializeSketch(p, container) {
         // let sketch = function(p) {
 
 
-            // cursorElement.style.width = startWeight + "px";
-            // cursorElement.style.height = startWeight + "px";
+            // cursorElement.style.width = currentWeight + "px";
+            // cursorElement.style.height = currentWeight + "px";
             
 
             p.preload = function() {
@@ -85,10 +130,9 @@ function initializeSketch(p, container) {
             p.setup = function() {
                 // let targetCanvasElement = container.querySelector(canvas);
                 var cnv = p.createCanvas(p.windowWidth, p.windowHeight);
-                console.log("canvas created");
                 // resizeCanvas
                 cnv.parent(container.id);
-                // console.log(container.id);
+                console.log(container.id);
                 maskGraphics = p.createGraphics(p.windowWidth, p.windowHeight);
                 maskGraphics.clear();
                 p.strokeJoin(p.ROUND);
@@ -116,7 +160,6 @@ function initializeSketch(p, container) {
 
             p.draw = function() {
                 // console.log("drawing");
-                // console.log("start weight: " + startWeight);
                 if (p !== currentSketch) {
                     return; // Only draw if this is the current sketch
                 }
@@ -166,8 +209,6 @@ function initializeSketch(p, container) {
 
                 // remove drawing class to body
                 document.body.classList.remove("mousedown")
-
-                
 
                 
             
@@ -233,13 +274,6 @@ function initializeSketch(p, container) {
                 }
             };
 
-            p.mouseReleased = function(){
-                console.log("mouse was released");
-
-                // cursorElement.style.width = startWeight*0.86+strokeShrink + "px";
-                // cursorElement.style.height = startWeight*0.86+strokeShrink + "px";
-            }
-
             function drawPathsOnMask(graphics, path, weight) {
                 graphics.clear();
                 drawNonLinearShadows(graphics, path, weight, shadowHeightLight, 127, 235, -1);
@@ -280,15 +314,14 @@ function initializeSketch(p, container) {
             }
 
             function updateStrokeProperties() {
-                cursorElement.style.width = currentWeight + "px";
-                cursorElement.style.height = currentWeight + "px";
                 strokeShrink = p.max(strokeShrink - 0.1, 0);
                 if (isReordered){
                     currentWeight = gridWeight;
                 } else {
                     currentWeight = p.max(currentWeight - strokeShrink, startWeight - weightDiff);
                 }
-
+                // cursorElement.style.width = currentWeight + "px";
+                // cursorElement.style.height = currentWeight + "px";
             }
 
             function drawImageCover(theImg, canvasWidth, canvasHeight) {
@@ -319,22 +352,6 @@ function initializeSketch(p, container) {
 }
 
 
-// function shuffleIndices(canvases) {
-//     // Create an array of indices from 0 to canvases.length - 1
-//     const indices = Array.from(Array(canvases.length).keys());
-
-//     // Fisher-Yates (Durstenfeld) Shuffle algorithm for indices
-//     for (let i = indices.length - 1; i > 0; i--) {
-//         // Generate a random index
-//         const j = Math.floor(Math.random() * (i + 1));
-
-//         // Swap elements i and j in the indices array
-//         [indices[i], indices[j]] = [indices[j], indices[i]];
-//     }
-
-//     return indices;
-// }
-
 function shuffleIndices(canvases) {
     // Create an array of indices from 1 to canvases.length
     const indices = Array.from({ length: canvases.length }, (_, i) => i);
@@ -347,7 +364,6 @@ document.addEventListener("mousedown", function(event) {
     // Check if the event target is any of the canvas elements
     // console.log(canvasCounter);
     // restart
-
     if (canvasCounter % maxSketches == 0 && !isReordered){
         for (let canvas of canvases){
             canvas.style.display="none";
@@ -386,12 +402,6 @@ if (projectsBtn){
         // reorderCanvases();
     });
 }
-
-// window.onpopstate = function(event) {
-//     console.log("URL changed!");
-//     // You can access the new URL using window.location.href
-//     console.log("New URL:", window.location.href);
-// };
 
 function reorderCanvases(){
     for (let canvas of canvases){
@@ -473,3 +483,47 @@ function reorderCanvases(){
 }
 
 // });
+    }
+
+  }, [projects]); // Empty dependency array ensures this runs once after initial render
+
+  // ... rest of the component
+
+  return (
+    <>
+      <main>
+        {/* Your persistent p5 canvases go here */}
+        <div className="canvases">
+          {shuffledProjects.slice(0, 8).map((project, index) => {
+            // Find the original index of the project
+            const originalIndex = projects.findIndex(p => p.slug === project.slug);
+
+              return (
+                <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}>
+                  <img src={project.coverImage.image}></img>
+                  {/* <canvas className={`canvas${originalIndex}`}></canvas> */}
+                </div>
+              );
+            })}
+          </div>
+          <div className="list-container">
+                <ul className={`home--projectLinks ${styles.projectLinks} ${styles.lined}`}>
+                  {projects && projects.map((project, index) => (
+                      <ProjectListItem key={index} project={project} index={index} />
+                  ))}
+                </ul>
+                <ul className={`home--projectLinks ${styles.projectLinks}`} id="projectLinks">
+                  {projects && projects.map((project, index) => (
+                      <ProjectListItem key={index} project={project} index={index} />
+                  ))}
+                </ul>
+          </div>
+          <DrawCursor />
+
+      </main>
+    </>
+  );
+
+};
+
+export default DrawLayout;

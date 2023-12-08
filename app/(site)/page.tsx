@@ -15,6 +15,8 @@ import DrawCursor from './components/DrawCursor';
 import styles from './css/Home.module.css';
 // import { useEffect } from 'react';
 import ProjectListItem from "./components/ProjectListItem";
+import DrawLayout from './components/global/DrawLayout'; // Adjust the path as needed
+
 
 
 export default async function Home() {
@@ -37,18 +39,19 @@ export default async function Home() {
       <>
           <Head>
             <title>ALMOST STUDIO</title>
-            {/* <script src="../scripts/draw.js"></script> */}
           </Head>
           
-
+          <main>
           <div className="canvases">
-          {shuffledProjects.slice(0, 8).map((project, index) => {
+          {/* {shuffledProjects.map((project, index) => { */}
+          {shuffledProjects.slice(0, 2).map((project, index) => {
             // Find the original index of the project
             const originalIndex = projects.findIndex(p => p.slug === project.slug);
 
               return (
                 <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}>
                   <img src={project.coverImage.image}></img>
+                  {/* <canvas className={`canvas${originalIndex}`}></canvas> */}
                 </div>
               );
             })}
@@ -66,19 +69,20 @@ export default async function Home() {
                 </ul>
           </div>
           <DrawCursor />
-          
 
-          <Script
-            // type="module" 
-            async
-            src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"
-            />
-            <Script
-            // type="module" 
-            async 
-            strategy='lazyOnload'
-            src="/js/sketch.js"
-            />
+<Script
+  // type="module" 
+  async
+  src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"
+  />
+  <Script
+  // type="module" 
+  async 
+  strategy='lazyOnload'
+  src="/js/sketch.js"
+  />
+          </main>
+          
         </>
     )
 }

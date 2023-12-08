@@ -231,10 +231,11 @@ h1{
   transition: width 500ms, height 500ms, left 500ms, top 500ms, transform 400ms;
   /* border-left:1px solid black; */
   /* border-bottom:1px solid black; */
+  /* border: 1px solid black; */
 }
 
 
-canvas{
+.p5Canvas{
   transition: 500ms;
   cursor: none;
 }
@@ -275,16 +276,28 @@ body{
   user-select: none;
 }
 
-.canvases.path-projects .canvas-container{
+.canvases.path-projects .canvas-container,
+.canvases.gridded .canvas-container{
   width: 50vw;
   height: 50vh;
   background-size:cover;
   background-position:center;
 }
 
-.canvases canvas{
+.canvases .p5Canvas{
   z-index:1;
   position:relative;
+}
+
+.canvases.gridded .canvas-container{
+  width: 50vw;
+  height: 50vh;
+  background-size:cover;
+  background-position:center;
+}
+
+.canvases.gridded .canvas-container img{
+  display: block;
 }
 
 .canvas-container img{
@@ -302,7 +315,8 @@ body{
   position: absolute;
 }
 
-.canvases.path-projects .canvas-container img{
+.canvases.path-projects .canvas-container img,
+.canvases.gridded .canvas-container img{
   display: block;
 }
 
@@ -313,11 +327,15 @@ body{
 .list-container{
     position: relative;
     left: 0px;
-    z-index:98;
+    z-index:99;
     top: var(--nav-height);
     height: calc(100vh - var(--nav-height));
     width: calc(var(--profile-width) + var(--projects-width) + calc(var(--pad_x)*4) + 2px);
     overflow-y:scroll;
+}
+
+.list-container a{
+  pointer-events:none;
 }
 
 
@@ -338,7 +356,9 @@ body{
     display: none;
   }
   
-
+.path-projects .list-container{
+  transform:translateX(-100%);
+}
 
 
   /* NAVBAR INITIAL LOAD */
@@ -365,24 +385,129 @@ body{
 } */
 
 
-body.path- .list-container ul{
+body.path- .list-container ul,
+*:not(.gridded) .list-container ul{
   transform: translateX(0%);
   transition-delay: 800ms;
 }
 
 
 
-body.path-projects {
+body.path-projects,
+body.gridded {
   --main-color: grey;
 }
 
 body.path-projects .canvas-container{
-    border-left:1px solid black;
-    border-bottom:1px solid black;
-    position:static;
+    /* border-left:1px solid black; */
+    /* border-bottom:1px solid black; */
+    /* position:static; */
 }
 body.path-projects .canvas-container:nth-child(odd){
   /* border-left:1px solid black; */
-  border-bottom:1px solid black;
-  position:static;
+  /* border-bottom:1px solid black; */
+  /* position:static; */
+}
+
+/* Navbar active classes */
+
+nav li {
+  border-right: 1px solid var(--main-color);
+  background: var(--bg);
+}
+
+/* Styles with animation for initial load */
+.initial-load:after {
+  animation: lineExpand 800ms ease-in-out both;
+}
+
+.initial-load li {
+  animation: navItemAppear 500ms linear both;
+}
+
+.initial-load li a{
+  transition-delay: 1s;
+}
+
+
+nav li:first-child button,
+nav li:first-child a{
+  width: calc(var(--logo-width) + var(--pad_x)*2);
+}
+nav li:nth-child(2) button,
+nav li:nth-child(2) a{
+  width: calc(var(--projects-width) + var(--pad_x)*2);
+}
+nav li:nth-child(3) button,
+nav li:nth-child(3) a{
+  width: calc(var(--profile-width) + var(--pad_x)*2);
+}   
+nav li button, 
+nav li a{
+  transition: width 300ms ease-in-out;
+}
+
+
+nav li:first-child .active,
+nav.active-1 li:first-child a{
+  animation: expandLogo 600ms 1s ease-in-out both;
+  /* width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
+}
+nav li:nth-child(2) .active,
+nav.active-2 li:nth-child(2) button{
+  animation: expandProjects 600ms ease-in-out both;
+  /* width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
+}
+nav.active-2 li:first-child a{
+  /* width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px); */
+  animation: unset, expandLogo 600ms 100ms ease-in-out reverse both;
+  /* width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
+}
+nav li:nth-child(3) .active,
+nav.active-3 li:nth-child(3) a{
+  animation: expandProfile 600ms 1s ease-in-out both;
+  /* width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px) */
+}
+
+.initial-load .listItem:first-child a.active{
+  width: var(--logo-width);
+  animation: expandLogo 800ms 1s ease-in-out both;
+}
+
+@keyframes expandLogo{
+  /* 0%{ width: var(--logo-width);} */
+  0%{ width: calc(var(--logo-width) + var(--pad_x)*2)}
+  /* 100%{ width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*2 - 2px);} */
+  100%{ width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px)}
+}
+
+@keyframes expandProjects{
+  /* 0%{ width: var(--projects-width);} */
+  0%{ width: calc(var(--projects-width) + var(--pad_x)*2)}
+  100%{
+    width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px)
+  }
+  /* 100%{ width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*2 - 2px);} */
+}
+@keyframes expandProfile{
+  0%{ width: var(--profile-width);}
+  100%{ width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
+}
+
+nav li:nth-child(2){
+  animation-delay:200ms;
+}
+
+nav li:nth-child(3){
+  animation-delay:400ms;
+}
+
+
+@keyframes lineExpand{
+  0%{ width: 0px;}
+  100%{ width: 100vw;}
+}
+@keyframes navItemAppear{
+  0%{ opacity: 0;}
+  100%{ opacity: 1;}
 }

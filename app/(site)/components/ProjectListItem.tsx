@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+// import React from 'react';
+import React, { useEffect } from 'react';
 import ArrowTopRight from '../icons/ArrowTopRight';
 import styles from '../css/Home.module.css';
 import type { ProjectType } from "@/types";
@@ -26,7 +27,7 @@ const ProjectListItem: React.FC<ProjectListItemProps> = ({ project, index }) => 
     };
 
     const handleMouseLeave = (e: React.MouseEvent<HTMLLIElement>) => {
-        console.log("Mouse left", project.slug);
+        // console.log("Mouse left", project.slug);
         // Additional mouse leave logic here
         let correspondingCanvas = document.querySelector<HTMLElement>(`.canvases [data-slug='${project.slug}']`)
         if (correspondingCanvas){
@@ -39,6 +40,50 @@ const ProjectListItem: React.FC<ProjectListItemProps> = ({ project, index }) => 
             correspondingLinkSvg.style.display = "none";
         }
     };
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            const elementsAtPoint = document.elementsFromPoint(x, y);
+            let isOverListItem = false;
+
+            // console.log(elementsAtPoint);
+
+            for (const element of elementsAtPoint) {
+                if (element.matches('li') && element.classList.contains('home--visible')) {
+                    isOverListItem = true;
+                    // console.log("is over list item");
+                    // let linksContainer = document.querySelector<HTMLElement>(".list-container");
+                    // if (linksContainer) {
+                    //     linksContainer.style.pointerEvents = "inherit";
+                    // }
+                    let targetLink = element.querySelector<HTMLElement>("a");
+                    if (targetLink) {
+                        targetLink.style.pointerEvents = "inherit";
+                    }
+                    break;
+                }
+            }
+
+            if (!isOverListItem) {
+                // let linksContainer = document.querySelector<HTMLElement>(".list-container");
+                // if (linksContainer) {
+                //     linksContainer.style.pointerEvents = "none";
+                // }
+                // let targetLink = element.querySelector<HTMLElement>("a");
+                // if (targetLink) {
+                //     targetLink.style.pointerEvents = "none";
+                // }
+            }
+        };
+
+        document.addEventListener('mousemove', handleMouseMove);
+
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, [project.slug]);
 
     return (
         <li 

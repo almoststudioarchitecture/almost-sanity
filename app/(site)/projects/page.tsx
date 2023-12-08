@@ -31,37 +31,35 @@ export default async function Projects() {
     return (
       <>
           <Head>
-            <title>ALMOST STUDIO</title>
-            {/* <script src="../scripts/draw.js"></script> */}
+            <title>PROJECTS – ALMOST STUDIO</title>
           </Head>
           
+        <main>
+            <div className="canvases gridded">
+            {shuffledProjects.slice(0, 8).map((project, index) => {
+              // Find the original index of the project
+              const originalIndex = projects.findIndex(p => p.slug === project.slug);
 
-          <div className="canvases gridded">
-          {shuffledProjects.slice(0, 8).map((project, index) => {
-            // Find the original index of the project
-            const originalIndex = projects.findIndex(p => p.slug === project.slug);
-
-              return (
-                <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}>
-                  <img src={project.coverImage.image}></img>
-                </div>
-              );
-            })}
-          </div>
-          <div className="list-container">
-                <ul className={`home--projectLinks ${styles.projectLinks} ${styles.lined}`}>
-                  {projects && projects.map((project, index) => (
-                      <ProjectListItem key={index} project={project} index={index} />
-                  ))}
-                </ul>
-                <ul className={`home--projectLinks ${styles.projectLinks}`} id="projectLinks">
-                  {projects && projects.map((project, index) => (
-                      <ProjectListItem key={index} project={project} index={index} />
-                  ))}
-                </ul>
-          </div>
-          <DrawCursor />
-          
+                return (
+                  <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}>
+                    <img src={project.coverImage.image}></img>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="list-container">
+                  <ul className={`home--projectLinks ${styles.projectLinks} ${styles.lined}`}>
+                    {projects && projects.map((project, index) => (
+                        <ProjectListItem key={index} project={project} index={index} />
+                    ))}
+                  </ul>
+                  <ul className={`home--projectLinks ${styles.projectLinks}`} id="projectLinks">
+                    {projects && projects.map((project, index) => (
+                        <ProjectListItem key={index} project={project} index={index} />
+                    ))}
+                  </ul>
+            </div>
+            <DrawCursor /> 
 
           <Script
             // type="module" 
@@ -74,6 +72,7 @@ export default async function Projects() {
             strategy='lazyOnload'
             src="/js/sketch.js"
             />
+            </main>         
         </>
     )
 }
