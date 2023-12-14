@@ -44,7 +44,7 @@ export default async function Home() {
           <main>
           <div className="canvases">
           {/* {shuffledProjects.map((project, index) => { */}
-          {shuffledProjects.slice(0, 2).map((project, index) => {
+          {shuffledProjects.slice(0, 8).map((project, index) => {
             // Find the original index of the project
             const originalIndex = projects.findIndex(p => p.slug === project.slug);
 

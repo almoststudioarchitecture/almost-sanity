@@ -84,7 +84,7 @@ const DrawLayout = ({ children }: DrawLayoutProps) => {
             // type="module" 
             // async 
             // strategy='lazyOnload'
-            src="/js/sketch.js"
+            src="/js/sketch.js" async
             />
             
 
