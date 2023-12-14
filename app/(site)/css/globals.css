@@ -325,8 +325,8 @@ body{
 }
 
 .list-container{
-    position: relative;
-    left: 0px;
+    position: absolute;
+    right: 0px;
     z-index:99;
     top: var(--nav-height);
     height: calc(100vh - var(--nav-height));

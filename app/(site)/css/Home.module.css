@@ -15,7 +15,7 @@
   }
   .projectLinks:first-child{
     mix-blend-mode:multiply;
-    border-right: 1px solid var(--grey);
+    border-left: 1px solid var(--grey);
     pointer-events: none;
   }
   .projectLinks:first-child a{
