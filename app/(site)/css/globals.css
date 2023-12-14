@@ -175,6 +175,7 @@ left: -1000px;
 .home--visible{
   opacity: 1;
   pointer-events:inherit;
+  margin-left: 1px;
 }
 
 li.home--visible:hover, li.home--mostRecent{
@@ -357,7 +358,7 @@ body{
   }
   
 .path-projects .list-container{
-  transform:translateX(-100%);
+  transform:translateX(100%);
 }
 
 
