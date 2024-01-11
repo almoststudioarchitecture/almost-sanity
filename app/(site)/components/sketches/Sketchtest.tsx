@@ -100,6 +100,10 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
 
         drawPathsOnMask(maskGraphics, path, cursorRadius);
 
+
+        let stringified = JSON.stringify(path);
+        localStorage.setItem(imageUrl, stringified);
+
         if (!isReordered){
             
             let displayImage = cnvImage.get();

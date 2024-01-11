@@ -74,7 +74,7 @@ const DrawLayout = ({ children }: DrawLayoutProps) => {
                   ))}
                 </ul>
           </div>
-          <DrawCursor />
+          {/* <DrawCursor /> */}
           {/* <Script
             // type="module" 
             // async
