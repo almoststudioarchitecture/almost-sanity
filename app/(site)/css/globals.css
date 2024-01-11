@@ -428,6 +428,9 @@ body{
     width: calc(var(--profile-width) + var(--projects-width) + calc(var(--pad_x)*4) + 2px);
     overflow-y:scroll;
 }
+.list-container:hover{
+  background: var(--bg);
+}
 
 body.path- .list-container{
   animation: moveIn 300ms 1s ease-out both;
