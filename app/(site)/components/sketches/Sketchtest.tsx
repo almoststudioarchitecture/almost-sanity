@@ -224,4 +224,6 @@ const App = React.memo(({ imageUrl, cursorRadius }: AppProps) => {
     return prevProps.imageUrl === nextProps.imageUrl;
 });
 
+App.displayName = 'App'; // Assigning a display name
+
 export { App };
