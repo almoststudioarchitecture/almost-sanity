@@ -518,7 +518,7 @@ function reorderCanvases(){
                   ))}
                 </ul>
           </div>
-          <DrawCursor />
+          {/* <DrawCursor /> */}
 
       </main>
     </>
