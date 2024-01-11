@@ -12,7 +12,8 @@ interface AppProps {
 function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   let pos: { x: number; y: number; };
   let img: p5.Image;
-  let maskGraphics: Image | Element | Framebuffer;
+//   let maskGraphics: Image | Element | Framebuffer;
+  let maskGraphics: p5.Graphics;
   let path: { y: number; }[] | { x: any; y: any; }[] = [];
   let imageDrawn = false;
   let mousePressedOverCanvas = false;
