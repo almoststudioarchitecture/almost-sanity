@@ -64,7 +64,7 @@ return (
               </div>
           )}
       </div>
-      <DrawCursor />
+      {/* <DrawCursor /> */}
       <ShadowFilter />
       </>
 
