@@ -10,6 +10,7 @@ import { PortableText } from "@portabletext/react";
 import AboutScript from "./ProjectScript";
 import imageUrlBuilder from '@sanity/image-url';
 import ProjectGalleryImage from "../../components/ProjectGalleryImage";
+import InteractiveLogo from "../../components/global/InteractiveLogo";
 // import { Dimensions } from 'react-native';
 import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, PromiseLikeOfReactNode, Key } from "react";
 import './project.css'
@@ -186,57 +187,10 @@ export default async function Project({ params }: Props) {
                 return null;
               })}
           {/* </div> */}
+          <InteractiveLogo />
 
-          <div id="logo">
-              <div className="a">
-                  <div></div>
-                  <div className="bottom"></div>
-              </div>
-              <div className="l">
-                  <div className="top right"></div>
-              </div>
-              <div className="m">
-                  <div className="bottom"></div>
-                  <div className="bottom"></div>
-              </div>
-              <div className="o">
-                  <div className="center"></div>
-              </div>
-              <div className="s">
-                  <div className="right"></div>
-                  <div className="left"></div>
-              </div>
-              <div className="t">
-                  <div className="bottom left"></div>
-                  <div className="bottom right"></div>
-              </div>
-              <div className="gap"></div>
-              
-              <div className="s">
-                  <div className="right"></div>
-                  <div className="left"></div>
-              </div>
-              <div className="t">
-                  <div className="bottom left"></div>
-                  <div className="bottom right"></div>
-              </div>
-              <div className="u">
-                  <div className="top"></div>
-              </div>
-              <div className="d">
-                  <div className="right top"></div>
-                  <div className="right bottom"></div>
-                  <div></div>
-              </div>
-              <div className="i">
-                  <div className="left"></div>
-                  <div className="right"></div>
-              </div>
-              <div className="o">
-                  <div className="center"></div>
-              </div>
-          </div>
-          <AboutScript />
+          
+          {/* <AboutScript /> */}
       {/* </div> */}
     </main>
   );
