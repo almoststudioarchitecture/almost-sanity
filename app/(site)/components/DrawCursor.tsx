@@ -3,7 +3,13 @@
 import { useEffect, useState } from 'react';
 import styles from '../css/Cursor.module.css';
 
-export default function DrawCursor() {
+// Define an interface for the props
+interface DrawCursorProps {
+    size: number; // Assuming size is a number
+}
+
+export default function DrawCursor({ size }: DrawCursorProps) {
+
     const [cursorPosition, setCursorPosition] = useState({ x: -500, y: -500 });
     const [isCursorVisible, setIsCursorVisible] = useState(true);
 
@@ -61,12 +67,20 @@ export default function DrawCursor() {
     }, []);
 
     const cursorStyle = {
-        left: cursorPosition.x + 'px',
-        top: cursorPosition.y + 'px',
+        left: `${cursorPosition.x}px`,
+        top: `${cursorPosition.y}px`,
         display: isCursorVisible ? 'block' : 'none',
+        // Apply the size prop to width and height to control the size of the cursor
+        width: `${size}px`,
+        height: `${size}px`,
+        // To keep the cursor centered around the mouse pointer, we adjust the margin
+        // marginLeft: `${-size / 2}px`, 
+        // marginTop: `${-size / 2}px`,
     };
 
     return (
-        <div id="cursor" className={`${styles.cursor} cursor`} style={cursorStyle}><span>Draw</span></div>
+       <div id="cursor" className={`${styles.cursor} cursor`} style={cursorStyle}>
+            <span>Draw</span>
+        </div>
     );
 }

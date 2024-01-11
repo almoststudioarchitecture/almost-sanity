@@ -104,7 +104,7 @@ export default async function About() {
             </div>
             ))}
 
-            {/* <InteractiveLogo /> */}
+            <InteractiveLogo />
             <Script
             src="/js/about.js"
             strategy="lazyOnload"

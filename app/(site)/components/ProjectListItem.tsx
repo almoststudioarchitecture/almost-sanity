@@ -17,7 +17,7 @@ const ProjectListItem: React.FC<ProjectListItemProps> = ({ project, index }) => 
         let correspondingCanvas = document.querySelector<HTMLElement>(`.canvases [data-slug='${project.slug}']`)
         if (correspondingCanvas){
             correspondingCanvas.style.transform = "scale(1.08)";
-            correspondingCanvas.style.zIndex = "99";
+            correspondingCanvas.style.zIndex = "101";
             correspondingCanvas.style.pointerEvents = "none";
         }
         let correspondingLinkSvg = document.querySelector<HTMLElement>(`li[data-slug='${project.slug}'] svg`);

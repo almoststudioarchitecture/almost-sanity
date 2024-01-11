@@ -1,5 +1,6 @@
 #logo{
     --unit: calc(100vw/49);
+    --height: 0px;
     display:flex;
     /* position:absolute; */
     bottom:0px;
@@ -7,14 +8,15 @@
     /* margin-top:50vh; */
     height:50vh;
     margin-top: var(--nav-height);
-    align-items: flex-end;
+    align-items: flex-start;
     max-width:100vw;
+    margin-top: 300px;
 }
 
 
 #logo > div{
     width: calc(var(--unit)*4 - 1px);
-    height:calc(var(--unit)*5);
+    height:var(--height);
     border:1px solid red;
     position: relative;
     border-right:0px;
@@ -22,7 +24,7 @@
     /* border-bottom:0px; */
 }
 #logo:hover > div{
-    height:50vh;
+    /* height:50vh; */
 }
 #logo > div:hover{
     width: 300px;
@@ -42,7 +44,7 @@
 }
 
 #logo > div:hover > div{
-    background: red;
+    /* background: red; */
 }
 
 #logo > div > div{

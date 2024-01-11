@@ -16,16 +16,16 @@ export default async function Projects() {
   const projects: ProjectType[] = await getProjects();
 
   // Function to shuffle an array
-  function shuffleArray(array: ProjectType[]): void {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
+  // function shuffleArray(array: ProjectType[]): void {
+  //   for (let i = array.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1));
+  //     [array[i], array[j]] = [array[j], array[i]];
+  //   }
+  // }
 
-  // Shuffle the projects array for display
-  const shuffledProjects = [...projects]; // Clone the projects array
-  shuffleArray(shuffledProjects);
+  // // Shuffle the projects array for display
+  // const shuffledProjects = [...projects]; // Clone the projects array
+  // shuffleArray(shuffledProjects);
 
 
     return (
@@ -35,19 +35,25 @@ export default async function Projects() {
           </Head>
           
         <main>
+            <div className="verticalLine"></div>
             <div className="canvases gridded">
-            {shuffledProjects.slice(0, 8).map((project, index) => {
+            {projects.map((project, index) => {
               // Find the original index of the project
               const originalIndex = projects.findIndex(p => p.slug === project.slug);
 
                 return (
                   <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}>
-                    <img src={project.coverImage.image}></img>
+                    <img src={project.coverImage.image} className={project.coverImage.white ? 'white' : ''}></img>
+                    <div className="projectInfo">
+                      <div className="projectName">{project.name}</div>
+                      {project.location && <div className="projectLocation">{project.location}</div>}
+                    </div>
+                    
                   </div>
                 );
               })}
             </div>
-            <div className="list-container">
+            {/* <div className="list-container">
                   <ul className={`home--projectLinks ${styles.projectLinks} ${styles.lined}`}>
                     {projects && projects.map((project, index) => (
                         <ProjectListItem key={index} project={project} index={index} />
@@ -58,10 +64,10 @@ export default async function Projects() {
                         <ProjectListItem key={index} project={project} index={index} />
                     ))}
                   </ul>
-            </div>
-            <DrawCursor /> 
+            </div> */}
+            <DrawCursor size={40}  /> 
 
-          <Script
+          {/* <Script
             // type="module" 
             async
             src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"
@@ -71,7 +77,7 @@ export default async function Projects() {
             async 
             strategy='lazyOnload'
             src="/js/sketch.js"
-            />
+            /> */}
             </main>         
         </>
     )

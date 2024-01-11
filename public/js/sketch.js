@@ -44,13 +44,13 @@ shuffledIndices.forEach((index, idx) => {
 
 
 
-canvases.forEach(canvas => {
-    canvas.style.display = 'none';
-});
-// Display only the first canvas in the shuffled order
-if (shuffledIndices.length > 0) {
-    canvases[shuffledIndices[0]].style.display = 'block';
-}
+// canvases.forEach(canvas => {
+//     canvas.style.display = 'none';
+// });
+// // Display only the first canvas in the shuffled order
+// if (shuffledIndices.length > 0) {
+//     canvases[shuffledIndices[0]].style.display = 'block';
+// }
 
 function initializeSketch(p, container) {
         // console.log(container)
@@ -174,6 +174,9 @@ function initializeSketch(p, container) {
                 if (p.canvas && (event.target === p.canvas || p.canvas.contains(event.target))) {
                     if (p === currentSketch) {
                         let slug = container.getAttribute("data-slug");
+
+                        let stringified = JSON.stringify(path);
+                        localStorage.setItem(slug, stringified);
 
                         let corresponding_lis = document.querySelectorAll(`.list-container [data-slug="${slug}"]`)
                         // console.log(corresponding_lis);

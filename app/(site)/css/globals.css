@@ -290,15 +290,66 @@ body{
   position:relative;
 }
 
+.canvases.gridded{
+  display:flex;
+  flex-wrap:wrap;
+}
+
 .canvases.gridded .canvas-container{
   width: 50vw;
   height: 50vh;
   background-size:cover;
   background-position:center;
+  position: relative;
+  border-bottom:1px solid var(--main-color);
+  overflow: hidden;
 }
 
 .canvases.gridded .canvas-container img{
   display: block;
+  opacity: 1;
+  position: relative;
+  animation: canvasImage 600ms 800ms linear both;
+}
+
+@keyframes canvasImage{
+  0%{
+    opacity:0;
+  }
+  100%{
+    opacity:1;
+  }
+}
+
+.canvases.gridded img.white{
+  object-fit: contain;
+  background-color: white;;
+}
+
+.canvases.gridded .projectInfo{
+  position:absolute;
+  top:0;
+  left:0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.canvases.gridded .projectInfo > div{
+  border-bottom: 1px solid var(--main-color);
+  border-right: 1px solid var(--main-color);
+  background: var(--bg);
+  padding:var(--pad_y) var(--pad_x);
+  width: auto;
+  animation: projectName 300ms 1s ease-out both;
+}
+
+.canvases.gridded .projectInfo .projectName{
+  z-index:1;
+}
+.canvases.gridded .projectInfo .projectLocation{
+  animation-delay: 1300ms;
+  z-index:0;
 }
 
 .canvas-container img{
@@ -309,11 +360,54 @@ body{
   transition-delay:400ms;
   object-fit: cover;
   object-position: center;
-  width: calc(100% - 1px);
-  height: calc(100% - 1px);
-  top:1px;
+  /* width: calc(100% - 1px);
+  height: calc(100% - 1px); */
+  width: 100%;
+  height:100%;
+  top:0px;
   z-index:0;
   position: absolute;
+}
+
+.verticalLine{
+  position:fixed;
+  /* top:0; */
+  left:calc(50% - 1px);
+  /* transform:translateX(-50%); */
+  width:1px;
+  background: var(--main-color);
+  height:0px;
+  top:var(--nav-height);
+  z-index:2;
+  /* animation: verticalLine 600ms linear both; */
+}
+
+.path-projects .verticalLine{
+  height: calc(100% - var(--nav-height));
+}
+
+@keyframes verticalLine{
+  0%{
+    height:0px;
+  }
+  100%{
+    height:calc(100vh - var(--nav-height));
+  }
+}
+
+/* .canvas-container img:nth-child(odd){
+  border-right:1px solid var(--main-color);
+} */
+
+@keyframes projectName{
+  0%{
+    opacity:0;
+    transform:translateY(-100%)
+  }
+  100%{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 .canvases.path-projects .canvas-container img,
@@ -333,6 +427,29 @@ body{
     height: calc(100vh - var(--nav-height));
     width: calc(var(--profile-width) + var(--projects-width) + calc(var(--pad_x)*4) + 2px);
     overflow-y:scroll;
+}
+
+body.path- .list-container{
+  animation: moveIn 300ms 1s ease-out both;
+}
+
+body.transition-home-projects .verticalLine,
+body.transition-profile-projects .verticalLine{
+  animation: verticalLine 600ms linear both;
+}
+
+body.transition-home-projects .list-container,
+body.transition-home-profile .list-container{
+  animation: moveIn 300ms ease-out reverse both;
+}
+
+@keyframes moveIn{
+  0%{
+    transform:translateX(100%);
+  }
+  100%{
+    transform:translateX(0%);
+  }
 }
 
 .list-container a{
@@ -359,6 +476,8 @@ body{
   
 .path-projects .list-container{
   transform:translateX(100%);
+  /* transform:translateX(100%); */
+  /* display:none; */
 }
 
 
@@ -387,7 +506,7 @@ body{
 
 
 body.path- .list-container ul,
-*:not(.gridded) .list-container ul{
+body:not(.gridded) .list-container ul{
   transform: translateX(0%);
   transition-delay: 800ms;
 }
@@ -396,7 +515,12 @@ body.path- .list-container ul,
 
 body.path-projects,
 body.gridded {
-  --main-color: grey;
+  /* --main-color: grey; */
+  --main-color: black;
+}
+
+body.path-projects nav{
+  position:sticky;
 }
 
 body.path-projects .canvas-container{
@@ -448,39 +572,124 @@ nav li a{
   transition: width 300ms ease-in-out;
 }
 
-
-nav li:first-child .active,
-nav.active-1 li:first-child a{
-  animation: expandLogo 600ms 1s ease-in-out both;
-  /* width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
+nav{
+  --hoverGap: 30px;
 }
-nav li:nth-child(2) .active,
+
+
+/* ************ */
+/* ON DRAW PAGE */
+
+ /* Loading */
+body.loading nav.active-1 li:first-child a{
+  animation: expandLogo 600ms 1s ease-in-out both;
+}
+
+
+
+ /* After Loaded */
+nav.active-1 li:first-child a{
+  transition: width 100ms linear;
+  width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
+}
+
+nav.active-1.hoveringOthers li:first-child a{
+  width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
+}
+
+nav.active-2.hoveringOthers li:nth-child(2) button{
+  width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
+}
+
+nav.active-3.hoveringOthers li:nth-child(3) button{
+  width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
+}
+
+
+
+
+nav.active-1 li:nth-child(2):hover button,
+nav.active-3 li:nth-child(2):hover button{
+  width: calc(var(--projects-width) + var(--hoverGap) + var(--pad_x)*2);
+}
+nav.active-1 li:nth-child(3):hover button,
+nav.active-2 li:nth-child(3):hover button{
+  width: calc(var(--profile-width) + var(--hoverGap) + var(--pad_x)*2);
+}
+
+nav.active-2 li:first-child:hover a,
+nav.active-3 li:first-child:hover a{
+  width: calc(var(--logo-width) + var(--hoverGap) + var(--pad_x)*2);
+}
+
+
+nav.active-1 li:nth-child(2):hover button > div,
+nav.active-1 li:nth-child(3):hover button > div{
+  width: calc(100% - var(--hoverGap));
+}
+
+/* **************** */
+/* ON PROJECTS PAGE */
+
 nav.active-2 li:nth-child(2) button{
+  transition: width 100ms linear;
+  width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
+}
+
+body.transition-home-projects nav li:first-child a,
+body.transition-home-profile nav li:first-child a{
+  animation: expandLogo 600ms ease-in-out reverse both;
+}
+
+body.transition-home-projects nav li:nth-child(2) button,
+body.transition-profile-projects nav li:nth-child(2) button{
   animation: expandProjects 600ms ease-in-out both;
   /* width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
 }
+
+
+/* ON PROFILE PAGE */
+
+nav.active-3 li:nth-child(3) button{
+  transition: width 100ms linear;
+  width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px);
+}
+
+/* Transition home to profile */
+body.transition-home-profile nav li:nth-child(3) button{
+  animation: expandProfile 600ms ease-in-out both;
+  /* width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
+}
+
+body.transition-profile-projects nav li:nth-child(3) button,
+body.transition-profile-home nav li:nth-child(3) button{
+  animation: expandProfile 600ms ease-in-out reverse both;
+}
+
+
 nav.active-2 li:first-child a{
   /* width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px); */
-  animation: unset, expandLogo 600ms 100ms ease-in-out reverse both;
+  /* animation: expandLogo 600ms 100ms ease-in-out reverse both; */
   /* width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
 }
 nav li:nth-child(3) .active,
 nav.active-3 li:nth-child(3) a{
-  animation: expandProfile 600ms 1s ease-in-out both;
+  /* animation: expandProfile 600ms 1s ease-in-out both; */
   /* width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px) */
 }
 
-.initial-load .listItem:first-child a.active{
+body.loading .listItem:first-child a.active{
   width: var(--logo-width);
   animation: expandLogo 800ms 1s ease-in-out both;
 }
 
 @keyframes expandLogo{
-  /* 0%{ width: var(--logo-width);} */
   0%{ width: calc(var(--logo-width) + var(--pad_x)*2)}
-  /* 100%{ width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*2 - 2px);} */
-  100%{ width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px)}
+  100%{ 
+    width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
+  }
 }
+
 
 @keyframes expandProjects{
   /* 0%{ width: var(--projects-width);} */
@@ -512,3 +721,43 @@ nav li:nth-child(3){
   0%{ opacity: 0;}
   100%{ opacity: 1;}
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar,
+.list-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body,
+.list-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+nav:after {
+  content: '';
+  width: 100vw;
+  border-bottom: 1px solid var(--main-color);
+  position: absolute;
+}
+
+body.loading nav:after {
+  animation: lineExpand 800ms ease-in-out both;
+}
+
+body.loading nav li{
+    animation: navItemAppear 500ms linear both;
+    position:relative;
+}
+
+@keyframes lineExpand{
+  0%{ width: 0px;}
+  100%{ width: 100vw;}
+}
+
+@keyframes navItemAppear{
+  0%{ opacity: 0;}
+  100%{ opacity: 1;}
+} 

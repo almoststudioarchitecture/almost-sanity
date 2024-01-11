@@ -47,6 +47,15 @@ export default async function Project({ params }: Props) {
   const slug = params.project;
   const project: ProjectType = await getSingleProject(slug);
 
+  const builder = imageUrlBuilder({
+    projectId: "oogp23sh",
+    dataset: "production",
+  });
+  
+  function urlFor(source) {
+    return builder.image(source);
+  }
+
   return (
     <main>
       {/* <div id="before"></div> */}
@@ -125,13 +134,19 @@ export default async function Project({ params }: Props) {
 
               {project.gallery && project.gallery.map((item, index) => {
                 const randomStyleNumber = Math.floor(Math.random() * 11) + 1;
+                
+
                 if (item._type === 'image' && item.caption) {
+                  const imageUrl = urlFor(item.image)
+                   .height(200) // set the height to 200px
+                   .url(); // get the URL
                   return (
                     <div key={index} className="image-container-outer relative">
-                      <div className={`image-container-inner relative style${randomStyleNumber}`}>
+                      <div className={`image-container-inner relative style${randomStyleNumber}`} data-width="500" data-height="100">
                         <ProjectGalleryImage
                             key={index}
-                            src={item.image}
+                            // src={item.image}
+                            src={imageUrl}
                             alt={item.alt || project.name}
                             fit={item.fit}
                         />
@@ -150,7 +165,6 @@ export default async function Project({ params }: Props) {
                             src={item.image}
                             alt={item.alt || project.name}
                             fit={item.fit}
-                            
                         />
                       </div>
                     </div>

@@ -1,9 +1,63 @@
+'use client';
+
+import React, { useEffect, useRef } from 'react';
 import styles from '../../css/InteractiveLogo.module.css';
 
 export default function InteractiveLogo() {
+  const logoRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const element = document.querySelector(`.interactiveLogo > div`);
+      const logoElements = document.querySelectorAll(`.interactiveLogo > div`);
+      const viewportBottom = window.scrollY + window.innerHeight;
+
+      const pageHeight = Math.max( document.body.scrollHeight, document.body.offsetHeight, 
+                       document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );
+
+        const stretchAmt = window.innerHeight/2;
+
+        // Select the element with the #logo ID
+const logoElement = document.getElementById('logo');
+
+
+    //   for (let element of elements) {
+        if (element) {
+            const rect = element.getBoundingClientRect();
+            const elementBottom = rect.top + window.scrollY + rect.height;
+            console.log(window.scrollY, pageHeight);
+        
+            if (elementBottom <= viewportBottom) {
+                console.log('Element touched the bottom');
+        
+                if (logoElements) {
+                    let newHeight = map(window.scrollY, pageHeight - stretchAmt - window.innerWidth, pageHeight - window.innerWidth, 0, stretchAmt);
+                    console.log(window.scrollY, pageHeight - stretchAmt - window.innerWidth, pageHeight - window.innerWidth);
+                    console.log(newHeight)
+                    
+                    // Ensure each logoElement is an HTMLElement to access the style property
+                    logoElements.forEach((logoElement) => {
+                        const htmlLogoElement = logoElement as HTMLElement;
+                        htmlLogoElement.style.height = newHeight + "px";
+                    });
+                }
+            }
+        }
+        
+      }
+    // };
+
+    function map(value:number, low1:number, high1:number, low2:number, high2:number) {
+        return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
 
-<div id={styles.logo}>
+<div id={styles.logo} className="interactiveLogo">
     <div className={styles.a}>
         <div></div>
         <div className={styles.bottom}></div>
