@@ -150,26 +150,28 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     }
 }
 
-function drawPathWithOffset(graphics: p5.Graphics, path: Point[], weight: number, c: number, yOffset: number) {
-    graphics.stroke(c, c, c);
-    graphics.strokeWeight(weight);
-    graphics.noFill();
+    function drawPathWithOffset(graphics, path, weight, c, yOffset) {
+        graphics.stroke(c, c, c);
+        graphics.strokeWeight(weight);
+        graphics.noFill();
 
-    if (path.length > 1) {
-        graphics.beginShape();
-        for (let point of path) {
-            graphics.curveVertex(point.x, point.y + yOffset);
+        if (path.length > 1) {
+            graphics.beginShape();
+            graphics.curveVertex(path[0].x, path[0].y + yOffset); 
+            for (let point of path) {
+                graphics.curveVertex(point.x, point.y + yOffset);
+            }
+            graphics.curveVertex(path[path.length - 1].x, path[path.length - 1].y + yOffset);
+            graphics.endShape();
         }
-        graphics.endShape();
     }
-}
 
-function addPointToPath(x: number, y: number, path: Point[]) {
-    const point: Point = { x, y };
-    if (path.length === 0 || p.dist(x, y, path[path.length - 1].x, path[path.length - 1].y) >= 3) {
-        path.push(point);
+    function addPointToPath(x, y) {
+        const point = { x, y };
+        if (path.length === 0 || p.dist(x, y, path[path.length - 1].x, path[path.length - 1].y) >= 3) {
+            path.push(point);
+        }
     }
-}
 
     function updateStrokeProperties() {
         // cursorElement.style.width = cursorRadius + "px";
