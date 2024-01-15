@@ -14,13 +14,14 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   let img: p5.Image;
 //   let maskGraphics: Image | Element | Framebuffer;
   let maskGraphics: p5.Graphics;
-  let path: { y: number; }[] | { x: any; y: any; }[] = [];
+  let path: Point[] = [];
   let imageDrawn = false;
   let mousePressedOverCanvas = false;
   let cnvImage: Image;
   let shadowHeightDark = 8;
   let shadowHeightLight = 10;
   let isReordered = false;
+  let cnv: any;
 
   const cursorElement = document.getElementById("cursor");
 
@@ -29,52 +30,70 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     dataset: "production",
   });
 
-//   const imageUrl = urlFor(project.coverImage.image)
-//                    .height(200) // set the height to 200px
-//                    .url(); // get the URL
-
   p.preload = function() {
-    // if (projectData && projectData.coverImage && projectData.coverImage.image) {
-    //   img = p.loadImage(projectData.coverImage.image);
-    // }
     if (imageUrl) {
         img = p.loadImage(imageUrl);
       }
     console.log(imageUrl);
-    // console.log("preloading");
   };
   
   p.setup = () => {
-    p.createCanvas(p.windowWidth, p.windowHeight);
-    // pos = {x: p.random(p.width), y: p.random(p.height)};
-    // Ensure img is defined before using it
-    // if (img) {
-    //     if (img.height<img.width){
-    //         img.resize(0, p.height); 
-    //     } else {
-    //         img.resize(p.width, 0); 
-    //     }
-    //     // img.resize(p.width, 0); // Example, resize if needed
-    // }
+    cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+
     maskGraphics = p.createGraphics(p.width, p.height);
     maskGraphics.clear();
     p.strokeJoin(p.ROUND);
 
-    // Add event listeners after the canvas has been created
-    p.canvas.addEventListener("mousedown", function(event) {
-        // Check if the mouse is over the canvas
-        if (event.target === p.canvas || p.canvas.contains(event.target)) {
-            mousePressedOverCanvas = true;
-            p.loop();
-
-            // add drawing class to body
-            document.body.classList.add("mousedown")
-        }
-    });
-
     p.noLoop();
 
   }
+  
+
+  function handleCanvasInteraction(event: MouseEvent | TouchEvent) {
+    // Assuming 'cnv' is your canvas element or p5.js canvas object
+    const target = 'target' in event ? event.target : null; // Extract target based on event type
+    if (target === cnv || cnv.canvas === target) {
+        mousePressedOverCanvas = true;
+        p.loop();
+  
+        // Add drawing class to body
+        document.body.classList.add("mousedown");
+    }
+  }
+  
+  p.mousePressed = function(event: MouseEvent) {
+    handleCanvasInteraction(event);
+  }
+  
+  p.touchStarted = function(event: TouchEvent) {
+    handleCanvasInteraction(event);
+  }
+
+//   function handleMouseDown(event){
+//     // Check if the mouse is over the canvas
+//     if (event.target === p.canvas || p.canvas.contains(event.target)) {
+//         mousePressedOverCanvas = true;
+//         p.loop();
+
+//         // add drawing class to body
+//         document.body.classList.add("mousedown")
+//     }
+//   }
+
+  // Function to handle touch events
+  function touchHandler(event: TouchEvent, type: string) {
+    if (type === 'start' || type === 'move') {
+        // If the touch is within the canvas
+        if (p.mouseX >= 0 && p.mouseX <= p.width && p.mouseY >= 0 && p.mouseY <= p.height) {
+            mousePressedOverCanvas = true;
+            p.loop();
+        }
+    } else if (type === 'end') {
+        mousePressedOverCanvas = false;
+        p.noLoop();
+    }
+    event.preventDefault(); // Prevent default touch behavior
+}
 
   p.draw = () => {
     // console.log(imageDrawn);
@@ -105,20 +124,18 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
         let stringified = JSON.stringify(path);
         localStorage.setItem(imageUrl, stringified);
 
-        if (!isReordered){
             
-            let displayImage = cnvImage.get();
-            displayImage.mask(maskGraphics);
+            let displayImage: p5.Image = cnvImage.get();
+            
+            // Create a new p5.Image from maskGraphics
+            let maskImage: p5.Image = p.createImage(maskGraphics.width, maskGraphics.height);
+            maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0, 0, maskGraphics.width, maskGraphics.height);
 
-            p.image(displayImage, 0, 0, p.width*2, p.height*2);
-            // console.log(displayImage)
-        } else {
-            p.background('white');
-            let whiteImage = p.get();
-            p.clear();
-            whiteImage.mask(maskGraphics);
-            p.image(whiteImage, 0, 0, p.width, p.height);
-        }
+            // Apply the mask to displayImage
+            displayImage.mask(maskImage);
+
+            // Draw the masked image
+            p.image(displayImage, 0, 0, p.width * 2, p.height * 2);
 
         p.push();
         p.blendMode(p.HARD_LIGHT);
@@ -131,6 +148,10 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     // }
   };
   p.mouseReleased = function(){
+    p.noLoop();
+  }
+
+  p.touchEnded = function(){
     p.noLoop();
   }
 
@@ -155,7 +176,8 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     }
 }
 
-    function drawPathWithOffset(graphics, path, weight, c, yOffset) {
+function drawPathWithOffset(graphics: p5.Graphics, path: Point[], weight: number, c: number, yOffset: number) {
+
         graphics.stroke(c, c, c);
         graphics.strokeWeight(weight);
         graphics.noFill();
@@ -171,8 +193,8 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
         }
     }
 
-    function addPointToPath(x, y) {
-        const point = { x, y };
+    function addPointToPath(x: number, y: number) {
+        const point: Point = { x, y };
         if (path.length === 0 || p.dist(x, y, path[path.length - 1].x, path[path.length - 1].y) >= 3) {
             path.push(point);
         }
@@ -191,7 +213,8 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
 
     }
 
-    function drawImageCover(theImg, canvasWidth, canvasHeight) {
+    function drawImageCover(theImg: p5.Image, canvasWidth: number, canvasHeight: number) {
+
         let canvasRatio = canvasWidth / canvasHeight;
         let imageRatio = theImg.width / theImg.height;
         let drawWidth, drawHeight, drawX, drawY;

@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 // import P5Wrapper from 'p5-wrapper';
 import p5 from 'p5'
 import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
-import { App } from './components/sketches/Sketchtest';
+import { App } from './components/sketches/DrawHome';
 import imageUrlBuilder from '@sanity/image-url';
 
 
@@ -33,7 +33,7 @@ export default function Home() {
   const [displayedIndices, setDisplayedIndices] = useState(new Set());
 
   // State for managing cursor radius
-  const [cursorRadius, setCursorRadius] = useState(200); // Assuming 100 is the initial radius
+  const [cursorRadius, setCursorRadius] = useState(getInitialCursorRadius());
   const minRadius = 30; // Set the minimum radius size
   const initialRadius = 200; // Set the minimum radius size
   const radiusChange = 20; // The change in radius per mouseup event
@@ -43,6 +43,23 @@ export default function Home() {
     projectId: "oogp23sh",
     dataset: "production",
   });
+
+  function getInitialCursorRadius() {
+    return window.innerWidth >= 500 ? 200 : 150;
+  }
+
+  // UseEffect for setting up the resize listener
+  useEffect(() => {
+    const handleResize = () => {
+      setCursorRadius(getInitialCursorRadius());
+    };
+
+    // Set up the resize event listener
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   // function urlFor(source) {
   //   return builder.image(source);
@@ -106,6 +123,7 @@ const addRandomProject = () => {
   // Event listener for adding a random project and changing the cursor size on mouseup
   useEffect(() => {
     const handleMouseUp = () => {
+      console.log("mouse up")
       addRandomProject();
 
       if (displayedProjects.length > 0) {
@@ -143,10 +161,18 @@ const addRandomProject = () => {
     // Attach the event listener
     const canvasesElem = document.querySelector(".canvases")
     if (canvasesElem){
-      console.log("canvases eleme exists")
+      
       canvasesElem.addEventListener('mouseup', handleMouseUp);
-      return () => canvasesElem.removeEventListener('mouseup', handleMouseUp);
+      canvasesElem.addEventListener('touchend', handleMouseUp);
+      canvasesElem.addEventListener('touchcancel', handleMouseUp);
+      return () => {
+        canvasesElem.removeEventListener('mouseup', handleMouseUp);
+        canvasesElem.removeEventListener('touchend', handleMouseUp);
+        canvasesElem.removeEventListener('touchcancel', handleMouseUp);
+      };
     }
+
+    
 
     // Cleanup the event listener on component unmount
     // return () => {
@@ -203,8 +229,9 @@ const addRandomProject = () => {
                   ))}
                 </ul>
           </div>
-          <DrawCursor size={cursorRadius} />
-
+          
+          <DrawCursor cursorSize={cursorRadius} />
+          
           </main>
           
         </>

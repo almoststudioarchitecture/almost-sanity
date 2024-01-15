@@ -31,6 +31,22 @@ export default function Navbar() {
     const router = useRouter(); // Initialize the router
 
 
+    const [isNavOpen, setIsNavOpen] = useState(false); // New state to track the toggle of the first nav item
+
+    // Function to close the nav
+    const closeNav = () => {
+        setIsNavOpen(false);
+    };
+
+    // Event handler for the first nav item
+    const handleFirstNavToggle = () => {
+        if (window.innerWidth < 420) {
+            setIsNavOpen(!isNavOpen); // Toggle only for small screens
+        }
+        handleNavClick('home'); // Continue with nav click handling
+    };
+
+
     useEffect(() => {
         // Add the 'loading' class on initial load
         document.body.classList.add('loading');
@@ -119,53 +135,40 @@ export default function Navbar() {
     }, []);
 
     // Function to handle navigation click
-    const handleNavClick = (newPath: React.SetStateAction<string>) => {
-        // Apply transition class
-        if (currentPath == ""){
-            document.body.classList.add(`transition-home-${newPath}`);
-            setTimeout(() => {
-                document.body.classList.remove(`transition-home-${newPath}`);
-            }, TRANSITION_SPEED);
+    const handleNavClick = (newPath: string) => {
+        console.log("." + currentPath + ".");
+        if (newPath === currentPath) {
+            // If the clicked link is for the current page, toggle the open state
+            if (window.innerWidth < 420) {
+                setIsNavOpen(!isNavOpen);
+            }
         } else {
-            document.body.classList.add(`transition-${currentPath}-${newPath}`);
-            setTimeout(() => {
-                document.body.classList.remove(`transition-${currentPath}-${newPath}`);
-            }, TRANSITION_SPEED);
+            // If the clicked link is for a different page, close the nav and navigate
+            closeNav();
+            navigateTo(newPath);
         }
-        
+    };
 
-        // Logic to update URL based on newPath
+    // Navigation logic abstracted into a function for reusability
+    const navigateTo = (newPath: React.SetStateAction<string>) => {
         let url = '/';
         switch (newPath) {
             case 'home':
-                url = '/'; // URL for home
+                url = '/';
                 break;
             case 'projects':
-                url = '/projects'; // URL for projects
+                url = '/projects';
                 break;
             case 'profile':
-                url = '/profile'; // URL for profile
+                url = '/profile';
                 break;
             // Add cases for other paths as needed
         }
 
-        // Update the browser's URL using the router's push method
         router.push(url);
-
-        // Remove the class after the specified timeout
-        
-
         // Update path states
         setPreviousPath(currentPath);
         setCurrentPath(newPath);
-
-        if (newPath == 'projects'){
-            onProjectsClick();
-        }
-
-        if (newPath == 'profile'){
-            onProfileClick();
-        }
     };
 
     // Function to be called when Projects tab is clicked
@@ -254,9 +257,10 @@ export default function Navbar() {
     return (
         <nav className={`${styles.nav} ${navClass} ${initialLoadRef.current ? 'initial-load' : ''}`} data-hide-cursor='true'>
         <ul className={styles.list}>
-            <li className={styles.listItem}>
+            <li className={`${styles.listItem} ${isNavOpen ? styles.open : ''}`}> {/* Toggle class here */}
                 {/* <Link href="/" className={`${styles.link} ${getActiveClass('/')}`}> */}
-                <Link href="/" className={`${styles.link}`}  onClick={() => handleNavClick('home')}>
+                {/* <Link href="/" className={`${styles.link}`}  onClick={() => handleNavClick('home')}> */}
+                <Link href="/" className={`${styles.link}`} onClick={() => handleNavClick('')}>
                     <div className={styles.inner}><span>A</span><span>l</span><span>m</span><span>o</span><span>s</span><span>t</span><span> </span><span>S</span><span>t</span><span>u</span><span>d</span><span>i</span><span>o</span></div>
                     <Image 
                         className={`${styles.icon} ${styles.iconDraw}`}

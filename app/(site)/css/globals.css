@@ -246,6 +246,11 @@ h1{
 body.mousedown .canvases{
     z-index: 99;
 }
+@media screen and (pointer:coarse){
+  body.mousedown main{
+    position: fixed;
+  }
+}
 body.mousedown nav{
   pointer-events: none;
   user-select: none;
@@ -293,6 +298,14 @@ body{
 .canvases.gridded{
   display:flex;
   flex-wrap:wrap;
+}
+
+.canvases.gridded .p5Canvas{
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
 }
 
 .canvases.gridded .canvas-container{
@@ -429,11 +442,45 @@ body{
     overflow-y:scroll;
 }
 .list-container:hover{
-  background: var(--bg);
+  /* background: var(--bg); */
 }
 
 body.path- .list-container{
   animation: moveIn 300ms 1s ease-out both;
+}
+
+@media screen and (max-width: 420px){
+  body.path- .list-container{
+      animation:none;
+      /* transform:translateX(100%); */
+      /* display: none; */
+      width: 100%;
+      top:0;
+      height:calc(var(--nav-height)*2 + 1px);
+      z-index: 1;
+  }
+  .home--visible{
+    border-bottom: 1px solid var(--main-color) !important;
+  }
+  li.home--mostRecent{
+    z-index:0;
+    animation: dropIn 300ms linear both;
+  }
+  .home--mostRecent a svg{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes dropIn{
+  0%{
+    transform:translateY(-100%);
+  }
+  100%{
+    transform:translateY(0%);
+  }
 }
 
 body.transition-home-projects .verticalLine,
@@ -609,26 +656,52 @@ nav.active-3.hoveringOthers li:nth-child(3) button{
 }
 
 
+@media screen and (min-width: 420px){
+  
+
+    nav.active-1 li:nth-child(2):hover button,
+    nav.active-3 li:nth-child(2):hover button{
+      width: calc(var(--projects-width) + var(--hoverGap) + var(--pad_x)*2);
+    }
+    nav.active-1 li:nth-child(3):hover button,
+    nav.active-2 li:nth-child(3):hover button{
+      width: calc(var(--profile-width) + var(--hoverGap) + var(--pad_x)*2);
+    }
+
+    nav.active-2 li:first-child:hover a,
+    nav.active-3 li:first-child:hover a{
+      width: calc(var(--logo-width) + var(--hoverGap) + var(--pad_x)*2);
+    }
 
 
-nav.active-1 li:nth-child(2):hover button,
-nav.active-3 li:nth-child(2):hover button{
-  width: calc(var(--projects-width) + var(--hoverGap) + var(--pad_x)*2);
+    nav.active-1 li:nth-child(2):hover button > div,
+    nav.active-1 li:nth-child(3):hover button > div{
+      width: calc(100% - var(--hoverGap));
+    }
+
+
 }
-nav.active-1 li:nth-child(3):hover button,
-nav.active-2 li:nth-child(3):hover button{
-  width: calc(var(--profile-width) + var(--hoverGap) + var(--pad_x)*2);
-}
-
-nav.active-2 li:first-child:hover a,
-nav.active-3 li:first-child:hover a{
-  width: calc(var(--logo-width) + var(--hoverGap) + var(--pad_x)*2);
-}
 
 
-nav.active-1 li:nth-child(2):hover button > div,
-nav.active-1 li:nth-child(3):hover button > div{
-  width: calc(100% - var(--hoverGap));
+@media screen and (max-width: 420px){
+
+  nav.active-1 li:first-child,
+  nav.active-2 li:nth-child(2),
+  nav.active-3 li:nth-child(3){
+      z-index:2;
+  }
+  nav.active-1 li:nth-child(2),
+  nav.active-2 li:first-child{
+      z-index:1;
+  }
+  nav.active-1 li:nth-child(3){
+      z-index:0;
+  }
+
+  nav:not(.active-3) li:nth-child(3){
+      border-bottom:1px solid var(--main-color);
+  }
+
 }
 
 /* **************** */
@@ -693,7 +766,6 @@ body.loading .listItem:first-child a.active{
   }
 }
 
-
 @keyframes expandProjects{
   /* 0%{ width: var(--projects-width);} */
   0%{ width: calc(var(--projects-width) + var(--pad_x)*2)}
@@ -705,6 +777,30 @@ body.loading .listItem:first-child a.active{
 @keyframes expandProfile{
   0%{ width: var(--profile-width);}
   100%{ width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
+}
+
+
+@media screen and (max-width: 420px){
+  nav.active-1 li:first-child a,
+  nav.active-2 li:nth-child(2) button,
+  nav.active-3 li:nth-child(3) button{
+    width: 100%;
+  }
+
+  @keyframes expandLogo{
+    0%{ width: calc(var(--logo-width) + var(--pad_x)*2)}
+    100%{ 
+      width: 100%;
+    }
+  }
+  @keyframes expandProjects{
+    0% { width: calc(var(--projects-width) + var(--pad_x)*2)}
+    100% { width: 100%; }
+  }
+  @keyframes expandProfile{
+    0%{ width: var(--profile-width); }
+    100%{ width: 100%; }
+  }
 }
 
 nav li:nth-child(2){

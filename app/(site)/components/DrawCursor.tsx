@@ -5,26 +5,47 @@ import styles from '../css/Cursor.module.css';
 
 // Define an interface for the props
 interface DrawCursorProps {
-    size: number; // Assuming size is a number
+    // defaultSize: number; // Assuming size is a number
+    // smallSize: number; // The smaller size for screens <= 500px
+    cursorSize: number; // Assuming size is a number
 }
 
-export default function DrawCursor({ size }: DrawCursorProps) {
 
-    const [cursorPosition, setCursorPosition] = useState({ x: -500, y: -500 });
+// export default function DrawCursor({ defaultSize, smallSize }: DrawCursorProps) {
+    export default function DrawCursor({ cursorSize }: DrawCursorProps) {
+
+    // console.log(defaultSize, smallSize);
+
+
+    // const [cursorSize, setCursorSize] = useState(window.innerWidth <= 500 ? smallSize : defaultSize);
+
+    const [cursorPosition, setCursorPosition] = useState({ x: window.innerWidth/2, y: window.innerHeight/2 });
     const [isCursorVisible, setIsCursorVisible] = useState(true);
 
     useEffect(() => {
+
+        // const updateCursorSize = () => {
+        //     setCursorSize(window.innerWidth <= 500 ? smallSize : defaultSize);
+        // };
+
         // Function to update the cursor position
         const updateCursorPosition = (e: MouseEvent) => {
             setCursorPosition({ x: e.clientX, y: e.clientY });
         };
 
+        // Function to update the cursor position for touch events
+        const updateTouchPosition = (e: TouchEvent) => {
+            const touch = e.touches[0];
+            setCursorPosition({ x: touch.clientX, y: touch.clientY });
+        };
+
         // Set initial cursor position to the center of the window
-        const setInitialCursorPosition = () => {
+        const setInitialCursor = () => {
             setCursorPosition({
                 x: window.innerWidth / 2,
                 y: window.innerHeight / 2
             });
+            // updateCursorSize();
         };
 
         // Other event handlers
@@ -37,7 +58,9 @@ export default function DrawCursor({ size }: DrawCursorProps) {
 
         // Adding event listeners
         window.addEventListener('mousemove', updateCursorPosition);
-        window.addEventListener('load', setInitialCursorPosition);  // Set initial position on window load
+        window.addEventListener('touchmove', updateTouchPosition);
+        // window.addEventListener('resize', updateCursorSize);
+        window.addEventListener('load', setInitialCursor);  // Set initial position on window load
 
         const cursorElem = document.getElementById('cursor');
         if (cursorElem) {
@@ -53,7 +76,9 @@ export default function DrawCursor({ size }: DrawCursorProps) {
         // Cleanup function
         return () => {
             window.removeEventListener('mousemove', updateCursorPosition);
-            window.removeEventListener('load', setInitialCursorPosition);
+            window.removeEventListener('touchmove', updateTouchPosition);
+            // window.removeEventListener('resize', updateCursorSize);
+            window.removeEventListener('load', setInitialCursor);
 
             if (cursorElem) {
                 cursorElem.removeEventListener('mousedown', clearCursorText);
@@ -64,22 +89,21 @@ export default function DrawCursor({ size }: DrawCursorProps) {
                 elem.removeEventListener('mouseleave', showCursor);
             });
         };
-    }, []);
+    }, [cursorSize]);
+
+    // console.log(defaultSize);
 
     const cursorStyle = {
         left: `${cursorPosition.x}px`,
         top: `${cursorPosition.y}px`,
         display: isCursorVisible ? 'block' : 'none',
-        // Apply the size prop to width and height to control the size of the cursor
-        width: `${size}px`,
-        height: `${size}px`,
-        // To keep the cursor centered around the mouse pointer, we adjust the margin
-        // marginLeft: `${-size / 2}px`, 
-        // marginTop: `${-size / 2}px`,
+        width: `${cursorSize}px`,  // Use cursorSize state here
+        height: `${cursorSize}px`, // Use cursorSize state here
     };
 
+
     return (
-       <div id="cursor" className={`${styles.cursor} cursor`} style={cursorStyle}>
+        <div id="cursor" className={`${styles.cursor} cursor`} style={cursorStyle}>
             <span>Draw</span>
         </div>
     );

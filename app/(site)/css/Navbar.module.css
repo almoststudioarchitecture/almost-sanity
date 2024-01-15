@@ -34,6 +34,18 @@
     width:calc(100% - 30px);
 }
 
+@media screen and (max-width: 420px){
+    .list li:hover .inner{
+        width:100%;
+    }
+    .list li:hover .icon{
+        opacity:0;
+    }
+    .icon{
+        display: none;
+    }
+}
+
 /* .list li:first-child:hover .inner{
     width:calc(100% - 20px);
 } */
@@ -248,6 +260,11 @@
     } */
     .nav{
         width: 100%;
+        position:fixed;
+    }
+    .nav:after{
+        top: var(--nav-height);
+        z-index:2;
     }
     .list{
         display:block;
@@ -255,19 +272,57 @@
     }
     .listItem{
         border-right:0px;
-        border-top: 1px solid red;
+        border-top: 1px solid var(--main-color);
+        /* z-index:0; */
+        position:relative;
+        /* width: 100%;
+        top:0;
+        left:0; */
+        transition: transform 300ms;
+        /* transform:translateY(-1px); */
     }
+    /* .listItem:not(.first-child){
+        position:fixed;
+    } */
+    /* .listItem:first-child,
+    .nav.active-2 .listItem:nth-child(2),
+    .nav.active-3 .listItem:nth-child(3){
+        z-index:2;
+    }
+    .listItem:nth-child(2),
+    .nav.active-2 .listItem:first-child{
+        z-index:1;
+    } */
+    
+
     .listItem:first-child  .link{
         text-align: center;
         margin:auto;
     }
-    .listItem:first-child:not(.open) ~ .listItem{
-        display: none;
+    .listItem:first-child:not(.open) ~ .listItem:nth-child(2){
+        /* display: none; */
+        transform:translateY(-100%);
+    }
+    .listItem:first-child:not(.open) ~ .listItem:nth-child(3){
+        /* display: none; */
+        transform:translateY(-200%);
+    }
+    .listItem:first-child.open ~ .listItem:nth-child(3){
+        border-bottom: 1px solid var(--main-color);
+    }
+    .link{
+        margin:auto;
+    }
+    .link:hover{
+        width:100%;
     }
     /* @keyframes expandLogo{
         0%{ width: var(--logo-width);}
         100%{ width: 100%;}
     } */
+    .nav{
+        height:var(--nav-height);
+    }
 }
 
 /* .shorten{

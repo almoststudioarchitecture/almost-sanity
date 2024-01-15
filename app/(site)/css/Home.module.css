@@ -102,7 +102,16 @@
       width:100%;
       border-left:0px;
       top: calc(var(--nav-height) + 1px);
-      opacity: 0;
+      /* opacity: 0; */
+      z-index:0;
+    }
+    .projectLinks:first-child{
+      border-left:0px;
+      /* border-bottom: 1px solid var(--main-color); */
+    }
+    .li{
+      /* border-bottom: 1px solid var(--main-color); */
+      border-bottom: 0px;
     }
   }
   
