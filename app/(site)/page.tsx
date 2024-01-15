@@ -50,18 +50,20 @@ export default function Home() {
 
   // Update the cursor radius based on the client width after component mounts
   useEffect(() => {
-    const updateCursorRadius = () => {
-      const newRadius = document.documentElement.clientWidth >= 500 ? 200 : 150;
-      setCursorRadius(newRadius);
-    };
+    if (typeof window !== 'undefined') {
+      const updateCursorRadius = () => {
+        const newRadius = document.documentElement.clientWidth >= 500 ? 200 : 150;
+        setCursorRadius(newRadius);
+      };
 
-    updateCursorRadius();
+      updateCursorRadius();
 
-    // Also update on resize
-    window.addEventListener('resize', updateCursorRadius);
+      // Also update on resize
+      window.addEventListener('resize', updateCursorRadius);
 
-    return () => {
-      window.removeEventListener('resize', updateCursorRadius);
+      return () => {
+        window.removeEventListener('resize', updateCursorRadius);
+      };
     };
   }, []);
 
@@ -126,54 +128,57 @@ const addRandomProject = () => {
 
   // Event listener for adding a random project and changing the cursor size on mouseup
   useEffect(() => {
-    const handleMouseUp = () => {
-      console.log("mouse up")
-      addRandomProject();
+    if (typeof window !== 'undefined') {
+      const handleMouseUp = () => {
+        
+          addRandomProject();
 
-      if (displayedProjects.length > 0) {
-        const lastProject = displayedProjects[displayedProjects.length - 1];
-        const lastProjectSlug = lastProject.slug; // Get the slug of the last project
-      
-        let corresponding_lis = document.querySelectorAll(`.list-container [data-slug="${lastProjectSlug}"]`);
-        document.querySelectorAll(".home--mostRecent").forEach(mostRecent => {
-          if (mostRecent instanceof HTMLElement) {
-            mostRecent.classList.remove("home--mostRecent");
+          if (displayedProjects.length > 0) {
+            const lastProject = displayedProjects[displayedProjects.length - 1];
+            const lastProjectSlug = lastProject.slug; // Get the slug of the last project
+          
+            let corresponding_lis = document.querySelectorAll(`.list-container [data-slug="${lastProjectSlug}"]`);
+            document.querySelectorAll(".home--mostRecent").forEach(mostRecent => {
+              if (mostRecent instanceof HTMLElement) {
+                mostRecent.classList.remove("home--mostRecent");
+              }
+            });
+            corresponding_lis.forEach(li => {
+              if (li instanceof HTMLElement) {
+                li.classList.add("home--visible");
+                li.classList.add("home--mostRecent");
+                li.style.order = (99999 - currentIndex).toString();
+              }
+            });
+            // Perform any actions needed with lastProjectSlug
+            // console.log("Last picked project slug:", lastProjectSlug);
           }
-        });
-        corresponding_lis.forEach(li => {
-          if (li instanceof HTMLElement) {
-            li.classList.add("home--visible");
-            li.classList.add("home--mostRecent");
-            li.style.order = (99999 - currentIndex).toString();
-          }
-        });
-        // Perform any actions needed with lastProjectSlug
-        // console.log("Last picked project slug:", lastProjectSlug);
-      }
 
-      document.body.classList.remove("mousedown");
-      // Update the cursor radius
-      setCursorRadius(prevRadius => {
-        // Check if the radius is greater than the minimum size
-        if (prevRadius - radiusChange >= minRadius) {
-          return prevRadius - radiusChange; // Decrease radius
-        }
-        return initialRadius; // Reset to initial size when it reaches the minimum
-      });
-    };
-
-    // Attach the event listener
-    const canvasesElem = document.querySelector(".canvases")
-    if (canvasesElem){
-      
-      canvasesElem.addEventListener('mouseup', handleMouseUp);
-      canvasesElem.addEventListener('touchend', handleMouseUp);
-      canvasesElem.addEventListener('touchcancel', handleMouseUp);
-      return () => {
-        canvasesElem.removeEventListener('mouseup', handleMouseUp);
-        canvasesElem.removeEventListener('touchend', handleMouseUp);
-        canvasesElem.removeEventListener('touchcancel', handleMouseUp);
+          document.body.classList.remove("mousedown");
+          // Update the cursor radius
+          setCursorRadius(prevRadius => {
+            // Check if the radius is greater than the minimum size
+            if (prevRadius - radiusChange >= minRadius) {
+              return prevRadius - radiusChange; // Decrease radius
+            }
+            return initialRadius; // Reset to initial size when it reaches the minimum
+          });
       };
+
+
+      // Attach the event listener
+      const canvasesElem = document.querySelector(".canvases")
+      if (canvasesElem){
+        
+        canvasesElem.addEventListener('mouseup', handleMouseUp);
+        canvasesElem.addEventListener('touchend', handleMouseUp);
+        canvasesElem.addEventListener('touchcancel', handleMouseUp);
+        return () => {
+          canvasesElem.removeEventListener('mouseup', handleMouseUp);
+          canvasesElem.removeEventListener('touchend', handleMouseUp);
+          canvasesElem.removeEventListener('touchcancel', handleMouseUp);
+        };
+      }
     }
 
 }, [currentIndex, displayedProjects]); // Now dependent on currentIndex and displayedProjects
