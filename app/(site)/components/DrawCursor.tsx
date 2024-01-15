@@ -39,13 +39,12 @@ interface DrawCursorProps {
             setCursorPosition({ x: touch.clientX, y: touch.clientY });
         };
 
-        // Set initial cursor position to the center of the window
+        // Set initial cursor position based on window size
         const setInitialCursor = () => {
             setCursorPosition({
-                x: window.innerWidth / 2,
-                y: window.innerHeight / 2
+                x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
+                y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0
             });
-            // updateCursorSize();
         };
 
         // Other event handlers
@@ -57,10 +56,11 @@ interface DrawCursorProps {
         };
 
         // Adding event listeners
-        window.addEventListener('mousemove', updateCursorPosition);
-        window.addEventListener('touchmove', updateTouchPosition);
-        // window.addEventListener('resize', updateCursorSize);
-        window.addEventListener('load', setInitialCursor);  // Set initial position on window load
+        if (typeof window !== 'undefined') {
+            window.addEventListener('mousemove', updateCursorPosition);
+            window.addEventListener('touchmove', updateTouchPosition);
+            window.addEventListener('load', setInitialCursor);  // Set initial position on window load
+        }
 
         const cursorElem = document.getElementById('cursor');
         if (cursorElem) {
@@ -75,10 +75,11 @@ interface DrawCursorProps {
 
         // Cleanup function
         return () => {
-            window.removeEventListener('mousemove', updateCursorPosition);
-            window.removeEventListener('touchmove', updateTouchPosition);
-            // window.removeEventListener('resize', updateCursorSize);
-            window.removeEventListener('load', setInitialCursor);
+            if (typeof window !== 'undefined') {
+                window.removeEventListener('mousemove', updateCursorPosition);
+                window.removeEventListener('touchmove', updateTouchPosition);
+                window.removeEventListener('load', setInitialCursor);
+            }
 
             if (cursorElem) {
                 cursorElem.removeEventListener('mousedown', clearCursorText);
