@@ -13,7 +13,6 @@
   import styles from '../css/Home.module.css';
   import ProjectListItem from "../components/ProjectListItem";
   import { Sketch } from '../components/sketches/DrawProjects';
-  // import { Sketch } from '../components/sketches/DrawProjectsLg';
   import { useEffect, useState } from 'react';
 
 
