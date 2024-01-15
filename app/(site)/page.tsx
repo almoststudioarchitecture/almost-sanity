@@ -44,20 +44,28 @@ export default function Home() {
     dataset: "production",
   });
 
+  // function getInitialCursorRadius() {
+  //   return window.innerWidth >= 500 ? 200 : 150;
+  // }
+
   function getInitialCursorRadius() {
-    return window.innerWidth >= 500 ? 200 : 150;
+    // This function now safely checks for window
+    return typeof window !== 'undefined' && window.innerWidth >= 500 ? 200 : 150;
   }
+  
 
   // UseEffect for setting up the resize listener
+  useEffect(() => {
+    setCursorRadius(getInitialCursorRadius());
+  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setCursorRadius(getInitialCursorRadius());
     };
 
-    // Set up the resize event listener
     window.addEventListener('resize', handleResize);
 
-    // Cleanup the event listener on component unmount
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
