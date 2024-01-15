@@ -12,8 +12,18 @@
     height: calc(100vh - 160px);
     /* width: 100vw; */
     transition: margin 300ms, height 300ms;
-    margin-top: calc(var(--nav-height)*-1)
+    margin-top: calc(var(--nav-height)*-1);
+    animation: hero 600ms 800ms ease-out both;
 }
+
+@keyframes hero{
+    0%{
+        height: 100vh;
+    }
+    100%{
+        height: calc(100vh - 160px);
+    }
+} 
 .hero img{
     object-position: top left;
 }
@@ -30,6 +40,8 @@
     letter-spacing: -0.02em;
     cursor: pointer;
 }
+
+
 
 .info--header {
     margin-bottom: 100px;
