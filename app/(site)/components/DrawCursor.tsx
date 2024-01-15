@@ -25,36 +25,36 @@ export default function DrawCursor({ cursorSize }: DrawCursorProps) {
     }, []);
 
     useEffect(() => {
-
-        // Function to update the cursor position
-        const updateCursorPosition = (e: MouseEvent) => {
-            setCursorPosition({ x: e.clientX, y: e.clientY });
-        };
-
-        // Function to update the cursor position for touch events
-        const updateTouchPosition = (e: TouchEvent) => {
-            const touch = e.touches[0];
-            setCursorPosition({ x: touch.clientX, y: touch.clientY });
-        };
-
-        // Set initial cursor position based on window size
-        const setInitialCursor = () => {
-            setCursorPosition({
-                x: document.documentElement.clientWidth / 2,
-                y: document.documentElement.clientHeight / 2
-            });
-        };
-
-        // Other event handlers
-        const hideCursor = () => setIsCursorVisible(false);
-        const showCursor = () => setIsCursorVisible(true);
-        const clearCursorText = () => {
-            const cursorSpan = document.querySelector('#cursor span');
-            if (cursorSpan) cursorSpan.innerHTML = "";
-        };
-
-        // Adding event listeners
         if (typeof window !== 'undefined') {
+            // Function to update the cursor position
+            const updateCursorPosition = (e: MouseEvent) => {
+                setCursorPosition({ x: e.clientX, y: e.clientY });
+            };
+
+            // Function to update the cursor position for touch events
+            const updateTouchPosition = (e: TouchEvent) => {
+                const touch = e.touches[0];
+                setCursorPosition({ x: touch.clientX, y: touch.clientY });
+            };
+
+            // Set initial cursor position based on window size
+            const setInitialCursor = () => {
+                setCursorPosition({
+                    x: document.documentElement.clientWidth / 2,
+                    y: document.documentElement.clientHeight / 2
+                });
+            };
+
+            // Other event handlers
+            const hideCursor = () => setIsCursorVisible(false);
+            const showCursor = () => setIsCursorVisible(true);
+            const clearCursorText = () => {
+                const cursorSpan = document.querySelector('#cursor span');
+                if (cursorSpan) cursorSpan.innerHTML = "";
+            };
+
+            // Adding event listeners
+        
             document.addEventListener('mousemove', updateCursorPosition);
             document.addEventListener('touchmove', updateTouchPosition);
             document.addEventListener('load', setInitialCursor);  // Set initial position on window load
