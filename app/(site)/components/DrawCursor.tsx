@@ -5,29 +5,23 @@ import styles from '../css/Cursor.module.css';
 
 // Define an interface for the props
 interface DrawCursorProps {
-    // defaultSize: number; // Assuming size is a number
-    // smallSize: number; // The smaller size for screens <= 500px
     cursorSize: number; // Assuming size is a number
 }
 
 
-// export default function DrawCursor({ defaultSize, smallSize }: DrawCursorProps) {
-    export default function DrawCursor({ cursorSize }: DrawCursorProps) {
-
-    // console.log(defaultSize, smallSize);
-
-
-    // const [cursorSize, setCursorSize] = useState(window.innerWidth <= 500 ? smallSize : defaultSize);
+export default function DrawCursor({ cursorSize }: DrawCursorProps) {
 
     const [isCursorVisible, setIsCursorVisible] = useState(true);
 
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
-        // if(typeof window !== 'undefined'){
-                // Set the cursor position after the component mounts
-                setCursorPosition({ x: document.documentElement.clientWidth / 2, y: document.documentElement.clientHeight / 2 });
-            // }
+        if (typeof window !== 'undefined') {
+            setCursorPosition({ 
+                x: document.documentElement.clientWidth / 2, 
+                y: document.documentElement.clientHeight / 2 
+            });
+        }
     }, []);
 
     useEffect(() => {
@@ -60,40 +54,43 @@ interface DrawCursorProps {
         };
 
         // Adding event listeners
-        // if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined') {
             document.addEventListener('mousemove', updateCursorPosition);
             document.addEventListener('touchmove', updateTouchPosition);
             document.addEventListener('load', setInitialCursor);  // Set initial position on window load
-        // }
 
-        const cursorElem = document.getElementById('cursor');
-        if (cursorElem) {
-            document.addEventListener('mousedown', clearCursorText);
-        }
-
-        const hideCursorElems = document.querySelectorAll('[data-hide-cursor]');
-        hideCursorElems.forEach(elem => {
-            elem.addEventListener('mouseenter', hideCursor);
-            elem.addEventListener('mouseleave', showCursor);
-        });
-
-        // Cleanup function
-        return () => {
-            // if (typeof window !== 'undefined') {
-                document.removeEventListener('mousemove', updateCursorPosition);
-                document.removeEventListener('touchmove', updateTouchPosition);
-                document.removeEventListener('load', setInitialCursor);
-            // }
-
+        
+            const cursorElem = document.getElementById('cursor');
             if (cursorElem) {
-                cursorElem.removeEventListener('mousedown', clearCursorText);
+                document.addEventListener('mousedown', clearCursorText);
             }
 
+            const hideCursorElems = document.querySelectorAll('[data-hide-cursor]');
             hideCursorElems.forEach(elem => {
-                elem.removeEventListener('mouseenter', hideCursor);
-                elem.removeEventListener('mouseleave', showCursor);
+                elem.addEventListener('mouseenter', hideCursor);
+                elem.addEventListener('mouseleave', showCursor);
             });
-        };
+
+
+            // Cleanup function
+            return () => {
+                if (typeof window !== 'undefined') {
+                    document.removeEventListener('mousemove', updateCursorPosition);
+                    document.removeEventListener('touchmove', updateTouchPosition);
+                    document.removeEventListener('load', setInitialCursor);
+                }
+
+                if (cursorElem) {
+                    cursorElem.removeEventListener('mousedown', clearCursorText);
+                }
+
+                hideCursorElems.forEach(elem => {
+                    elem.removeEventListener('mouseenter', hideCursor);
+                    elem.removeEventListener('mouseleave', showCursor);
+                });
+            };
+
+        }
     }, [cursorSize]);
 
     // console.log(defaultSize);
