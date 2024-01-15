@@ -228,7 +228,9 @@ const addRandomProject = () => {
                 </ul>
           </div>
           
+          {typeof window !== 'undefined' && (
           <DrawCursor cursorSize={cursorRadius} />
+          )}
           
           </main>
           
