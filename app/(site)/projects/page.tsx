@@ -1,17 +1,17 @@
   'use client'; 
 
-  import * as sanityQuery from "@/sanity/sanity.query";
-  import type { ProfileType } from "@/types";
-  import ShadowFilter from "../icons/ShadowFilter";
-  import ArrowTopRight from "../icons/ArrowTopRight";
+  // import * as sanityQuery from "@/sanity/sanity.query";
+  // import type { ProfileType } from "@/types";
+  // import ShadowFilter from "../icons/ShadowFilter";
+  // import ArrowTopRight from "../icons/ArrowTopRight";
   import { getProjects } from "@/sanity/sanity.query";
   import type { ProjectType } from "@/types";
-  import Script from 'next/script';
+  // import Script from 'next/script';
   import Head from 'next/head';
   import Link from 'next/link';
   import DrawCursor from '../components/DrawCursor';
-  import styles from '../css/Home.module.css';
-  import ProjectListItem from "../components/ProjectListItem";
+  // import styles from '../css/Home.module.css';
+  // import ProjectListItem from "../components/ProjectListItem";
   import { Sketch } from '../components/sketches/DrawProjects';
   import { useEffect, useState } from 'react';
 
