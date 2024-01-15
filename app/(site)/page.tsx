@@ -44,12 +44,9 @@ export default function Home() {
     dataset: "production",
   });
 
-  // function getInitialCursorRadius() {
-  //   return window.innerWidth >= 500 ? 200 : 150;
-  // }
 
   function getInitialCursorRadius() {
-    // This function now safely checks for window
+    // This function now safely checks for wind
     return document.documentElement.clientWidth >= 500 ? 200 : 150;
   }
   
@@ -180,13 +177,6 @@ const addRandomProject = () => {
       };
     }
 
-    
-
-    // Cleanup the event listener on component unmount
-    // return () => {
-    //   window.removeEventListener('mouseup', handleMouseUp);
-    // };
-    // return () => window.removeEventListener('mouseup', handleMouseUp);
 }, [currentIndex, displayedProjects]); // Now dependent on currentIndex and displayedProjects
   // }, [projects]);
 
@@ -216,9 +206,9 @@ const addRandomProject = () => {
               //   <App projectData={project} cursorRadius={cursorRadius} />
               // </div>
               <div key={project.slug} className="canvas-container" id={`container${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
-                {/* <img src={imageUrl} alt={`Project ${project.slug}`} /> */}
-                <App imageUrl={imageUrl} cursorRadius={cursorRadius} />
-                {/* <App projectData={project} cursorRadius={cursorRadius} /> */}
+                {typeof window !== 'undefined' && (
+                  <App imageUrl={imageUrl} cursorRadius={cursorRadius} />
+                )}
               </div>
             );
           })}
