@@ -39,12 +39,12 @@ export default function Navbar() {
     };
 
     // Event handler for the first nav item
-    const handleFirstNavToggle = () => {
-        if (window.innerWidth < 420) {
-            setIsNavOpen(!isNavOpen); // Toggle only for small screens
-        }
-        handleNavClick('home'); // Continue with nav click handling
-    };
+    // const handleFirstNavToggle = () => {
+    //     if (window.innerWidth < 420) {
+    //         setIsNavOpen(!isNavOpen); // Toggle only for small screens
+    //     }
+    //     handleNavClick('home'); // Continue with nav click handling
+    // };
 
 
     useEffect(() => {
@@ -136,16 +136,18 @@ export default function Navbar() {
 
     // Function to handle navigation click
     const handleNavClick = (newPath: string) => {
-        console.log("." + currentPath + ".");
-        if (newPath === currentPath) {
-            // If the clicked link is for the current page, toggle the open state
-            if (window.innerWidth < 420) {
-                setIsNavOpen(!isNavOpen);
+        if (typeof window !== "undefined") {
+            console.log("." + currentPath + ".");
+            if (newPath === currentPath) {
+                // If the clicked link is for the current page, toggle the open state
+                if (window.innerWidth < 420) {
+                    setIsNavOpen(!isNavOpen);
+                }
+            } else {
+                // If the clicked link is for a different page, close the nav and navigate
+                closeNav();
+                navigateTo(newPath);
             }
-        } else {
-            // If the clicked link is for a different page, close the nav and navigate
-            closeNav();
-            navigateTo(newPath);
         }
     };
 

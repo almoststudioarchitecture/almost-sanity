@@ -25,8 +25,8 @@ interface DrawCursorProps {
 
     useEffect(() => {
         if(typeof window !== 'undefined'){
-                    // Set the cursor position after the component mounts
-                    setCursorPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+                // Set the cursor position after the component mounts
+                setCursorPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
             }
     }, []);
 
