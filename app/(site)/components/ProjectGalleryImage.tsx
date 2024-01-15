@@ -24,7 +24,7 @@ function ProjectGalleryImage({ src, alt, fit }: ProjectGalleryImageProps) {
         img.style.objectFit = "contain";
 
         const imageAspectRatio = img.naturalWidth / img.naturalHeight;
-        const browserAspectRatio = window.innerWidth / window.innerHeight;
+        const browserAspectRatio = document.documentElement.clientWidth / document.documentElement.clientHeight;
 
         img.style.left = "50%";
         img.style.top = "50%";

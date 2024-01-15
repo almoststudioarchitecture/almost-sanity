@@ -50,7 +50,7 @@ export default function Home() {
 
   function getInitialCursorRadius() {
     // This function now safely checks for window
-    return typeof window !== 'undefined' && window.innerWidth >= 500 ? 200 : 150;
+    return document.documentElement.clientWidth >= 500 ? 200 : 150;
   }
   
 
@@ -64,9 +64,9 @@ export default function Home() {
       setCursorRadius(getInitialCursorRadius());
     };
 
-    window.addEventListener('resize', handleResize);
+    document.addEventListener('resize', handleResize);
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => document.removeEventListener('resize', handleResize);
   }, []);
   
   // function urlFor(source) {

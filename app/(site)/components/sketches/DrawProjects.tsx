@@ -35,9 +35,9 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
   };
   
   p.setup = () => {
-    p.createCanvas(p.windowWidth/2, p.windowHeight/2);
+    p.createCanvas(document.documentElement.clientWidth/2, document.documentElement.clientHeight/2);
 
-    maskGraphics = p.createGraphics(p.windowWidth/2, p.windowHeight/2);
+    maskGraphics = p.createGraphics(document.documentElement.clientWidth/2, document.documentElement.clientHeight/2);
     maskGraphics.clear();
     p.strokeJoin(p.ROUND);
 

@@ -63,7 +63,7 @@ export default function Navbar() {
 
 
     useEffect(() => {
-        if (typeof window !== "undefined") { // Check if running on the client side
+        // if (typeof window !== "undefined") { // Check if running on the client side
             // Update the current and previous path states
             const formattedPath = pathname.replace(/\//g, '');
             if (currentPath !== pathname) {
@@ -76,7 +76,7 @@ export default function Navbar() {
                     initialLoadRef.current = false;
                 }
             }
-        }
+        // }
     }, [pathname, currentPath]);
 
     useEffect(() => {
@@ -136,11 +136,11 @@ export default function Navbar() {
 
     // Function to handle navigation click
     const handleNavClick = (newPath: string) => {
-        if (typeof window !== "undefined") {
+        // if (typeof window !== "undefined") {
             console.log("." + currentPath + ".");
             if (newPath === currentPath) {
                 // If the clicked link is for the current page, toggle the open state
-                if (window.innerWidth < 420) {
+                if (document.documentElement.clientWidth < 420) {
                     setIsNavOpen(!isNavOpen);
                 }
             } else {
@@ -148,7 +148,7 @@ export default function Navbar() {
                 closeNav();
                 navigateTo(newPath);
             }
-        }
+        // }
     };
 
     // Navigation logic abstracted into a function for reusability

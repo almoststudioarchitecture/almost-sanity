@@ -24,10 +24,10 @@ interface DrawCursorProps {
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
-        if(typeof window !== 'undefined'){
+        // if(typeof window !== 'undefined'){
                 // Set the cursor position after the component mounts
-                setCursorPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
-            }
+                setCursorPosition({ x: document.documentElement.clientWidth / 2, y: document.documentElement.clientHeight / 2 });
+            // }
     }, []);
 
     useEffect(() => {
@@ -46,8 +46,8 @@ interface DrawCursorProps {
         // Set initial cursor position based on window size
         const setInitialCursor = () => {
             setCursorPosition({
-                x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
-                y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0
+                x: document.documentElement.clientWidth / 2,
+                y: document.documentElement.clientHeight / 2
             });
         };
 
@@ -60,11 +60,11 @@ interface DrawCursorProps {
         };
 
         // Adding event listeners
-        if (typeof window !== 'undefined') {
-            window.addEventListener('mousemove', updateCursorPosition);
-            window.addEventListener('touchmove', updateTouchPosition);
-            window.addEventListener('load', setInitialCursor);  // Set initial position on window load
-        }
+        // if (typeof window !== 'undefined') {
+            document.addEventListener('mousemove', updateCursorPosition);
+            document.addEventListener('touchmove', updateTouchPosition);
+            document.addEventListener('load', setInitialCursor);  // Set initial position on window load
+        // }
 
         const cursorElem = document.getElementById('cursor');
         if (cursorElem) {
@@ -79,11 +79,11 @@ interface DrawCursorProps {
 
         // Cleanup function
         return () => {
-            if (typeof window !== 'undefined') {
-                window.removeEventListener('mousemove', updateCursorPosition);
-                window.removeEventListener('touchmove', updateTouchPosition);
-                window.removeEventListener('load', setInitialCursor);
-            }
+            // if (typeof window !== 'undefined') {
+                document.removeEventListener('mousemove', updateCursorPosition);
+                document.removeEventListener('touchmove', updateTouchPosition);
+                document.removeEventListener('load', setInitialCursor);
+            // }
 
             if (cursorElem) {
                 cursorElem.removeEventListener('mousedown', clearCursorText);

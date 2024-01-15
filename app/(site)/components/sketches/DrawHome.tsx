@@ -38,7 +38,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   };
   
   p.setup = () => {
-    cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+    cnv = p.createCanvas(document.documentElement.clientWidth, document.documentElement.clientHeight);
 
     maskGraphics = p.createGraphics(p.width, p.height);
     maskGraphics.clear();
