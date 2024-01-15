@@ -53,7 +53,7 @@ export default async function Project({ params }: Props) {
     dataset: "production",
   });
   
-  function urlFor(source) {
+  function urlFor(source: string) {
     return builder.image(source);
   }
 
