@@ -19,14 +19,16 @@ interface DrawCursorProps {
 
     // const [cursorSize, setCursorSize] = useState(window.innerWidth <= 500 ? smallSize : defaultSize);
 
-    const [cursorPosition, setCursorPosition] = useState({ x: window.innerWidth/2, y: window.innerHeight/2 });
     const [isCursorVisible, setIsCursorVisible] = useState(true);
 
-    useEffect(() => {
+    const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
-        // const updateCursorSize = () => {
-        //     setCursorSize(window.innerWidth <= 500 ? smallSize : defaultSize);
-        // };
+    useEffect(() => {
+        // Set the cursor position after the component mounts
+        setCursorPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+    }, []);
+
+    useEffect(() => {
 
         // Function to update the cursor position
         const updateCursorPosition = (e: MouseEvent) => {
