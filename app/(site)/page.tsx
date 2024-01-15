@@ -33,7 +33,7 @@ export default function Home() {
   const [displayedIndices, setDisplayedIndices] = useState(new Set());
 
   // State for managing cursor radius
-  const [cursorRadius, setCursorRadius] = useState(getInitialCursorRadius());
+  // const [cursorRadius, setCursorRadius] = useState(getInitialCursorRadius());
   const minRadius = 30; // Set the minimum radius size
   const initialRadius = 200; // Set the minimum radius size
   const radiusChange = 20; // The change in radius per mouseup event
@@ -45,27 +45,26 @@ export default function Home() {
   });
 
 
-  function getInitialCursorRadius() {
-    // This function now safely checks for wind
-    return document.documentElement.clientWidth >= 500 ? 200 : 150;
-  }
-  
+  // Initialize cursorRadius with a default value
+  const [cursorRadius, setCursorRadius] = useState(200); // default value
 
-  // UseEffect for setting up the resize listener
+  // Update the cursor radius based on the client width after component mounts
   useEffect(() => {
-    setCursorRadius(getInitialCursorRadius());
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setCursorRadius(getInitialCursorRadius());
+    const updateCursorRadius = () => {
+      const newRadius = document.documentElement.clientWidth >= 500 ? 200 : 150;
+      setCursorRadius(newRadius);
     };
 
-    document.addEventListener('resize', handleResize);
+    updateCursorRadius();
 
-    return () => document.removeEventListener('resize', handleResize);
+    // Also update on resize
+    window.addEventListener('resize', updateCursorRadius);
+
+    return () => {
+      window.removeEventListener('resize', updateCursorRadius);
+    };
   }, []);
-  
+
   // function urlFor(source) {
   //   return builder.image(source);
   // }
@@ -229,7 +228,7 @@ const addRandomProject = () => {
           </div>
           
           {typeof window !== 'undefined' && (
-          <DrawCursor cursorSize={cursorRadius} />
+            <DrawCursor cursorSize={cursorRadius} />
           )}
           
           </main>
