@@ -1,25 +1,25 @@
 'use client'; 
 
-import * as sanityQuery from "@/sanity/sanity.query";
-import type { ProfileType } from "@/types";
-import ShadowFilter from "./icons/ShadowFilter";
-import ArrowTopRight from "./icons/ArrowTopRight";
-import Draw from "./components/Draw";
+// import * as sanityQuery from "@/sanity/sanity.query";
+// import type { ProfileType } from "@/types";
+// import ShadowFilter from "./icons/ShadowFilter";
+// import ArrowTopRight from "./icons/ArrowTopRight";
+// import Draw from "./components/Draw";
 // import Job from "./components/Job";
 import { getProjects } from "@/sanity/sanity.query";
 // import Layout, { siteTitle } from './layout';
 import Head from 'next/head';
 import type { ProjectType } from "@/types";
-import Script from 'next/script';
+// import Script from 'next/script';
 import DrawCursor from './components/DrawCursor';
 import styles from './css/Home.module.css';
 // import { useEffect } from 'react';
 import ProjectListItem from "./components/ProjectListItem";
-import DrawLayout from './components/global/DrawLayout'; // Adjust the path as needed
+// import DrawLayout from './components/global/DrawLayout'; // Adjust the path as needed
 import { useEffect, useState } from 'react';
 // import P5Wrapper from 'p5-wrapper';
-import p5 from 'p5'
-import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
+// import p5 from 'p5'
+// import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
 import { App } from './components/sketches/DrawHome';
 import imageUrlBuilder from '@sanity/image-url';
 
