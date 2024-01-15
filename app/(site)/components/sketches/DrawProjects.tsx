@@ -42,17 +42,6 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
     p.strokeJoin(p.ROUND);
 
     // Add event listeners after the canvas has been created
-    // p.canvas.addEventListener("mousedown", function(event) {
-    //     // console.log("hello");
-    //     // Check if the mouse is over the canvas
-    //     if (event.target === p.canvas || p.canvas.contains(event.target)) {
-    //         mousePressedOverCanvas = true;
-    //         p.loop();
-
-    //         // add drawing class to body
-    //         // document.body.classList.add("mousedown")
-    //     }
-    // });
 
     p.noLoop();
 
