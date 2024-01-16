@@ -22,7 +22,11 @@ import { useEffect, useState } from 'react';
 // import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
 import { App } from './components/sketches/DrawHome';
 import imageUrlBuilder from '@sanity/image-url';
+import dynamic from 'next/dynamic'
 
+const DynamicApp = dynamic(() => import('./components/sketches/DrawHome').then((mod) => mod.App), {
+  ssr: false, // This will disable server-side rendering for this component
+});
 
 
 export default function Home() {
@@ -247,8 +251,8 @@ const addRandomProject = () => {
             return (
               <div key={project.slug} className="canvas-container" id={`container-${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
                 {typeof window !== 'undefined' && (
-                  
-                  <App imageUrl={imageUrl} cursorRadius={cursorRadius} />
+                  <DynamicApp imageUrl={imageUrl} cursorRadius={cursorRadius} />
+                  // <App imageUrl={imageUrl} cursorRadius={cursorRadius} />
                 )}
               </div>
             );
