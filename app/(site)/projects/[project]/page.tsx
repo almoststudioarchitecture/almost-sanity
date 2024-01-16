@@ -14,6 +14,8 @@ import InteractiveLogo from "../../components/global/InteractiveLogo";
 // import { Dimensions } from 'react-native';
 import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, PromiseLikeOfReactNode, Key } from "react";
 import './project.css'
+import { useRef, useEffect } from 'react';
+
 
 type Props = {
   params: {

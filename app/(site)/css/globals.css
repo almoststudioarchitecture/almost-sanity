@@ -263,6 +263,10 @@ body.mousedown .canvases{
   body.mousedown main{
     position: fixed;
   }
+  html, body.mousedown {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
 }
 body.mousedown nav{
   pointer-events: none;
