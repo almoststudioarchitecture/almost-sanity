@@ -13,10 +13,14 @@ export default function InteractiveLogo() {
     // Set isClient to true as this code will only run on the client side
     setIsClient(true);
 
+    
+
     const startLogoHeight = window.innerWidth / 49 * 4 + 4;
 
     const handleScroll = () => {
-      if (!isClient) return;
+      // if (!isClient) return;
+
+      console.log("hello world")
 
       const logoElements = document.querySelectorAll(`.interactiveLogo > div`);
       const logoElement = document.querySelector('.interactiveLogo');
@@ -54,6 +58,8 @@ export default function InteractiveLogo() {
             stretchAmt
           );
 
+          console.log(newHeight)
+
           logoElements.forEach(element => {
             if (element instanceof HTMLElement) {
               element.style.height = newHeight + "px";
@@ -77,9 +83,9 @@ export default function InteractiveLogo() {
       return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
     }
 
-    // if (isClient) {
-    //   window.addEventListener('scroll', handleScroll);
-    // }
+    if (typeof window !== undefined) {
+      window.addEventListener('scroll', handleScroll);
+    }
 
     return () => {
       if (isClient) {

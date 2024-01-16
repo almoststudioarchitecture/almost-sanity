@@ -55,6 +55,10 @@
     --main-color: white;
   }
 
+  body.path-other .interactiveLogo{
+    margin-top:0px !important;
+  }
+
   body.path-other main{
     margin-top:var(--nav-height);
   }

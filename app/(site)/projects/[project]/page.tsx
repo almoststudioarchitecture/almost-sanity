@@ -58,7 +58,9 @@ export default async function Project({ params }: Props) {
   }
 
   return (
+    <>
     <main>
+      <div className="projectInner">
       {/* <div id="before"></div> */}
       <div id="after"></div>
       <div className="section hero relative">
@@ -187,11 +189,16 @@ export default async function Project({ params }: Props) {
                 return null;
               })}
           {/* </div> */}
-          <InteractiveLogo />
+          
 
           
           {/* <AboutScript /> */}
       {/* </div> */}
+      
+      </div>
+      <InteractiveLogo />
     </main>
+    
+    </>
   );
 }

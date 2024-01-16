@@ -95,21 +95,21 @@
     transform:translateX(100%);
 } */
 
-main{
+.projectInner{
     height: calc(100vh - var(--nav-height));
     overflow-y: scroll;
     /* margin-top: var(--nav-height); */
     /* --main-color:white; */
 }
 
-main{
+.projectInner{
     scroll-snap-type: y mandatory;
     height: calc(100vh - var(--nav-height));
     overflow-y: scroll;
     /* scroll-padding-top:var(--nav-height) */
 }
 
-main > *{
+.projectInner > *{
     scroll-snap-align: start;
 }
 .info{
@@ -128,13 +128,13 @@ main > *{
     }
 } 
 
-main::-webkit-scrollbar,
+.projectInner::-webkit-scrollbar,
 .info::-webkit-scrollbar {
     display: none;
   }
   
   /* Hide scrollbar for IE, Edge and Firefox */
-  main, .info {
+  .projectInner, .info {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
