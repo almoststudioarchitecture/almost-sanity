@@ -1,5 +1,6 @@
 import * as React from "react";
-import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
+import { ReactP5Wrapper } from "@p5-wrapper/react";
+import { P5CanvasInstance } from "@p5-wrapper/react";
 import imageUrlBuilder from '@sanity/image-url';
 import p5, { Image, Element, Framebuffer } from "p5";
 
@@ -40,20 +41,22 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   };
   
   p.setup = () => {
-    cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+    if (typeof window !== "undefined" && typeof document !== "undefined") {
+      cnv = p.createCanvas(p.windowWidth, p.windowHeight);
 
-    cnvParent = cnv.canvas.closest(".canvas-container");
-    if (cnvParent){
-      slug = cnvParent.getAttribute("data-slug");
+      cnvParent = cnv.canvas.closest(".canvas-container");
+      if (cnvParent){
+        slug = cnvParent.getAttribute("data-slug");
+      }
+
+      console.log(cnvParent);
+
+      maskGraphics = p.createGraphics(p.width, p.height);
+      maskGraphics.clear();
+      p.strokeJoin(p.ROUND);
+
+      p.noLoop();
     }
-
-    console.log(cnvParent);
-
-    maskGraphics = p.createGraphics(p.width, p.height);
-    maskGraphics.clear();
-    p.strokeJoin(p.ROUND);
-
-    p.noLoop();
 
   }
   
@@ -257,9 +260,22 @@ function drawPathWithOffset(graphics: p5.Graphics, path: Point[], weight: number
 // });
 
 const App = React.memo(({ imageUrl, cursorRadius }: AppProps) => {
-    return <ReactP5Wrapper sketch={(p) => sketch(p, imageUrl, cursorRadius)} />;
+  // Use useState and useEffect to determine if the component is being rendered on the client
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true); // Update the state to true when the component mounts
+  }, []);
+
+  if (!isClient) {
+    // Render nothing or a placeholder on the server
+    return null;
+  }
+
+  return <ReactP5Wrapper sketch={(p) => sketch(p, imageUrl, cursorRadius)} />;
 }, (prevProps, nextProps) => {
-    return prevProps.imageUrl === nextProps.imageUrl;
+  // Memoization condition based on imageUrl
+  return prevProps.imageUrl === nextProps.imageUrl;
 });
 
 App.displayName = 'App'; // Assigning a display name
