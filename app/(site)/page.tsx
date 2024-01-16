@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 // import P5Wrapper from 'p5-wrapper';
 // import p5 from 'p5'
 // import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
-// import { App } from './components/sketches/DrawHome';
+import { App } from './components/sketches/DrawHome';
 import imageUrlBuilder from '@sanity/image-url';
 
 
@@ -246,10 +246,10 @@ const addRandomProject = () => {
                    
             return (
               <div key={project.slug} className="canvas-container" id={`container-${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
-                {/* {typeof window !== 'undefined' && (
+                {typeof window !== 'undefined' && (
                   
                   <App imageUrl={imageUrl} cursorRadius={cursorRadius} />
-                )} */}
+                )}
               </div>
             );
           })}

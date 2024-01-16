@@ -26,7 +26,6 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   let cnvParent: HTMLElement;
   let slug: any;
 
-//   const cursorElement = document.getElementById("cursor");
 
   const builder = imageUrlBuilder({
     projectId: "oogp23sh",
@@ -62,14 +61,16 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   
 
   function handleCanvasInteraction(event: MouseEvent | TouchEvent) {
-    // Assuming 'cnv' is your canvas element or p5.js canvas object
-    const target = 'target' in event ? event.target : null; // Extract target based on event type
-    if (target === cnv || cnv.canvas === target) {
-        mousePressedOverCanvas = true;
-        p.loop();
-  
-        // Add drawing class to body
-        document.body.classList.add("mousedown");
+    if (typeof window !== "undefined" && typeof document !== "undefined") {
+      // Assuming 'cnv' is your canvas element or p5.js canvas object
+      const target = 'target' in event ? event.target : null; // Extract target based on event type
+      if (target === cnv || cnv.canvas === target) {
+          mousePressedOverCanvas = true;
+          p.loop();
+    
+          // Add drawing class to body
+          document.body.classList.add("mousedown");
+      }
     }
   }
   
@@ -80,17 +81,6 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   p.touchStarted = function(event: TouchEvent) {
     handleCanvasInteraction(event);
   }
-
-//   function handleMouseDown(event){
-//     // Check if the mouse is over the canvas
-//     if (event.target === p.canvas || p.canvas.contains(event.target)) {
-//         mousePressedOverCanvas = true;
-//         p.loop();
-
-//         // add drawing class to body
-//         document.body.classList.add("mousedown")
-//     }
-//   }
 
   // Function to handle touch events
   function touchHandler(event: TouchEvent, type: string) {
