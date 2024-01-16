@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
-import { P5CanvasInstance } from "@p5-wrapper/react";
+// import { P5CanvasInstance } from "@p5-wrapper/react";
 import imageUrlBuilder from '@sanity/image-url';
 import p5, { Image, Element, Framebuffer } from "p5";
 
@@ -10,7 +10,7 @@ interface AppProps {
     cursorRadius: number;
   }
 
-function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
+function sketch(imageUrl: string, cursorRadius: number) {
 }
 //   let pos: { x: number; y: number; };
 //   let img: p5.Image;
@@ -263,7 +263,7 @@ const App = React.memo(({ imageUrl, cursorRadius }: AppProps) => {
     return null;
   }
 
-  return <ReactP5Wrapper sketch={(p) => sketch(p, imageUrl, cursorRadius)} />;
+  return <ReactP5Wrapper sketch={(p) => sketch(imageUrl, cursorRadius)} />;
 }, (prevProps, nextProps) => {
   // Memoization condition based on imageUrl
   return prevProps.imageUrl === nextProps.imageUrl;
