@@ -329,6 +329,14 @@ body{
   overflow: hidden;
 }
 
+@media screen and (max-width: 420px){
+  .canvases.path-projects .canvas-container,
+  .canvases.gridded .canvas-container{
+    width: 100vw;
+  }
+}
+
+
 .canvases.gridded .canvas-container img{
   display: block;
   opacity: 1;
@@ -405,6 +413,13 @@ body{
   z-index:2;
   /* animation: verticalLine 600ms linear both; */
 }
+
+@media screen and (max-width: 420px){
+  .verticalLine{
+    opacity: 0;
+  }
+}
+
 
 .path-projects .verticalLine{
   height: calc(100% - var(--nav-height));
