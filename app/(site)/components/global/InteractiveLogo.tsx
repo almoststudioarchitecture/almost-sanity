@@ -6,11 +6,14 @@ import styles from '../../css/InteractiveLogo.module.css';
 export default function InteractiveLogo() {
   const [isClient, setIsClient] = useState(false);
 
-  const startLogoHeight = window.innerWidth/49*4+4;
+  
+  // const startLogoHeight = window.innerWidth/49*4+4;
 
   useEffect(() => {
     // Set isClient to true as this code will only run on the client side
     setIsClient(true);
+
+    const startLogoHeight = window.innerWidth / 49 * 4 + 4;
 
     const handleScroll = () => {
       if (!isClient) return;
@@ -74,9 +77,9 @@ export default function InteractiveLogo() {
       return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
     }
 
-    if (isClient) {
-      window.addEventListener('scroll', handleScroll);
-    }
+    // if (isClient) {
+    //   window.addEventListener('scroll', handleScroll);
+    // }
 
     return () => {
       if (isClient) {
