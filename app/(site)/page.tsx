@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 // import P5Wrapper from 'p5-wrapper';
 // import p5 from 'p5'
 // import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
-import { App } from './components/sketches/DrawHome';
+// import { App } from './components/sketches/DrawHome';
 import imageUrlBuilder from '@sanity/image-url';
 
 
@@ -61,23 +61,25 @@ export default function Home() {
     // Your existing code that runs on component mount
     
     // Your new window.onload functionality
-    window.onload = function() {
-      if (window.location.href === sessionStorage.getItem("origin")) {
-        sessionStorage.clear();
+    if (typeof window !== "undefined") {
+        window.onload = function() {
+          if (window.location.href === sessionStorage.getItem("origin")) {
+            sessionStorage.clear();
+          }
+        };
+
+
+        window.onbeforeunload = function() {
+          sessionStorage.setItem("origin", window.location.href);
+        }
+
+        console.log(sessionStorage);
+
+        // Return a cleanup function to remove event listeners
+        return () => {
+          // Clean up your event listeners if any
+        };
       }
-    };
-
-
-    window.onbeforeunload = function() {
-      sessionStorage.setItem("origin", window.location.href);
-    }
-
-    console.log(sessionStorage);
-
-    // Return a cleanup function to remove event listeners
-    return () => {
-      // Clean up your event listeners if any
-    };
   }, []);
 
 
@@ -244,10 +246,10 @@ const addRandomProject = () => {
                    
             return (
               <div key={project.slug} className="canvas-container" id={`container-${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
-                {typeof window !== 'undefined' && (
+                {/* {typeof window !== 'undefined' && (
                   
                   <App imageUrl={imageUrl} cursorRadius={cursorRadius} />
-                )}
+                )} */}
               </div>
             );
           })}
