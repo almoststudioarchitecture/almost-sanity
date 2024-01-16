@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 // import P5Wrapper from 'p5-wrapper';
 // import p5 from 'p5'
 // import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
-import { App } from './components/sketches/DrawHome';
+// import { App } from './components/sketches/DrawHome';
 import imageUrlBuilder from '@sanity/image-url';
 import dynamic from 'next/dynamic'
 

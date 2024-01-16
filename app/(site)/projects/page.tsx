@@ -14,7 +14,12 @@
   // import ProjectListItem from "../components/ProjectListItem";
   // import { Sketch } from '../components/sketches/DrawProjects';
   import { useEffect, useState } from 'react';
+  import dynamic from 'next/dynamic'
 
+  const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').then((mod) => mod.Sketch), {
+    ssr: false, // This will disable server-side rendering for this component
+  });
+  
 
 
   export default function Projects() {
@@ -62,7 +67,7 @@
                     <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}>
                       <Link href={`/projects/${project.slug}`}>
                       <img src={project.coverImage.image} className={project.coverImage.white ? 'white' : ''}></img>
-                      {/* <Sketch cursorRadius={30} /> */}
+                      <DynamicApp cursorRadius={30} />
                       <div className="projectInfo">
                         <div className="projectName">{project.name}</div>
                         {project.location && <div className="projectLocation">{project.location}</div>}
