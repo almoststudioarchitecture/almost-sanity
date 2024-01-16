@@ -49,6 +49,15 @@
     letter-spacing: 0.02em;
     background: var(--bg);
   }
+
+  body.path-other{
+    background: black;
+    --main-color: white;
+  }
+
+  body.path-other main{
+    margin-top:var(--nav-height);
+  }
   
   * {
     box-sizing: border-box;
@@ -293,6 +302,7 @@ body{
 .canvases .p5Canvas{
   z-index:1;
   position:relative;
+  
 }
 
 .canvases.gridded{
@@ -306,6 +316,7 @@ body{
     left:0;
     height:100%;
     width:100%;
+    cursor: pointer;
 }
 
 .canvases.gridded .canvas-container{
@@ -397,6 +408,14 @@ body{
 
 .path-projects .verticalLine{
   height: calc(100% - var(--nav-height));
+}
+
+.path-projects nav{
+  z-index:100;
+}
+
+a{
+  -webkit-user-drag: none;
 }
 
 @keyframes verticalLine{
@@ -590,6 +609,25 @@ nav li {
   border-right: 1px solid var(--main-color);
   background: var(--bg);
 }
+nav.active-3{
+  position:sticky;
+  top:0;
+}
+
+nav.active-4 li{
+  background: transparent;
+}
+
+nav.active-4:before{
+  width: 100vw;
+  height: var(--nav-height);
+  display:block;
+  background: black;
+  content:'';
+  z-index: -1;
+  position: absolute;
+}
+
 
 /* Styles with animation for initial load */
 .initial-load:after {
@@ -616,7 +654,22 @@ nav li:nth-child(2) a{
 nav li:nth-child(3) button,
 nav li:nth-child(3) a{
   width: calc(var(--profile-width) + var(--pad_x)*2);
-}   
+}  
+
+nav.active-4 li:first-child:hover button,
+nav.active-4 li:first-child:hover a{
+  width: calc(var(--logo-width) + var(--pad_x)*2 + var(--hoverGap));
+}
+nav.active-4 li:nth-child(2):hover button,
+nav.active-4 li:nth-child(2):hover a{
+  width: calc(var(--projects-width) + var(--pad_x)*2 + var(--hoverGap));
+}
+nav.active-4 li:nth-child(3):hover button,
+nav.active-4 li:nth-child(3):hover a{
+  width: calc(var(--profile-width) + var(--pad_x)*2 + var(--hoverGap));
+}
+
+
 nav li button, 
 nav li a{
   transition: width 300ms ease-in-out;
@@ -654,6 +707,7 @@ nav.active-2.hoveringOthers li:nth-child(2) button{
 nav.active-3.hoveringOthers li:nth-child(3) button{
   width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
 }
+
 
 
 @media screen and (min-width: 420px){

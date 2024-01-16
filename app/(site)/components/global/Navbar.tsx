@@ -63,20 +63,25 @@ export default function Navbar() {
 
 
     useEffect(() => {
-        // if (typeof window !== "undefined") { // Check if running on the client side
-            // Update the current and previous path states
-            const formattedPath = pathname.replace(/\//g, '');
-            if (currentPath !== pathname) {
-                document.body.classList.remove(`path-${currentPath}`);
-                document.body.classList.add(`path-${formattedPath}`);
-                setPreviousPath(currentPath);
-                setCurrentPath(formattedPath);
-
-                if (initialLoadRef.current) {
-                    initialLoadRef.current = false;
-                }
+        // Format the path by removing the leading slash
+        const formattedPath = pathname.replace(/\//g, '');
+    
+        // Check if the path is one of the specified paths
+        const isSpecifiedPath = formattedPath === "" || formattedPath === "projects" || formattedPath === "profile";
+    
+        // Set 'other' if it's not one of the specified paths
+        const pathToUse = isSpecifiedPath ? formattedPath : "other";
+    
+        if (currentPath !== pathname) {
+            document.body.classList.remove(`path-${currentPath}`);
+            document.body.classList.add(`path-${pathToUse}`);
+            setPreviousPath(currentPath);
+            setCurrentPath(pathToUse);
+    
+            if (initialLoadRef.current) {
+                initialLoadRef.current = false;
             }
-        // }
+        }
     }, [pathname, currentPath]);
 
     useEffect(() => {
@@ -92,7 +97,7 @@ export default function Navbar() {
                 setActiveLinkIndex(3);
                 break;
             default:
-                setActiveLinkIndex(-1);
+                setActiveLinkIndex(4);
         }
     }, [pathname]);
 

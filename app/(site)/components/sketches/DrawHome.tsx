@@ -22,8 +22,10 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   let shadowHeightLight = 10;
   let isReordered = false;
   let cnv: any;
+  let cnvParent: HTMLElement;
+  let slug: any;
 
-  const cursorElement = document.getElementById("cursor");
+//   const cursorElement = document.getElementById("cursor");
 
   const builder = imageUrlBuilder({
     projectId: "oogp23sh",
@@ -38,7 +40,14 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   };
   
   p.setup = () => {
-    cnv = p.createCanvas(document.documentElement.clientWidth, document.documentElement.clientHeight);
+    cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+
+    cnvParent = cnv.canvas.closest(".canvas-container");
+    if (cnvParent){
+      slug = cnvParent.getAttribute("data-slug");
+    }
+
+    console.log(cnvParent);
 
     maskGraphics = p.createGraphics(p.width, p.height);
     maskGraphics.clear();
@@ -122,7 +131,8 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
 
 
         let stringified = JSON.stringify(path);
-        localStorage.setItem(imageUrl, stringified);
+        localStorage.setItem(slug, stringified);
+        console.log(localStorage);
 
             
             let displayImage: p5.Image = cnvImage.get();

@@ -44,6 +44,42 @@ export default function Home() {
     dataset: "production",
   });
 
+  const getStoredProjects = () => {
+    const storedProjects: ProjectType[] = [];
+    projects.forEach(project => {
+      const storedProjectData = sessionStorage.getItem(project.slug);
+      if (storedProjectData) {
+        storedProjects.push(project);
+      }
+    });
+    return storedProjects;
+  };
+
+  console.log(getStoredProjects());
+
+  useEffect(() => {
+    // Your existing code that runs on component mount
+    
+    // Your new window.onload functionality
+    window.onload = function() {
+      if (window.location.href === sessionStorage.getItem("origin")) {
+        sessionStorage.clear();
+      }
+    };
+
+
+    window.onbeforeunload = function() {
+      sessionStorage.setItem("origin", window.location.href);
+    }
+
+    console.log(sessionStorage);
+
+    // Return a cleanup function to remove event listeners
+    return () => {
+      // Clean up your event listeners if any
+    };
+  }, []);
+
 
   // Initialize cursorRadius with a default value
   const [cursorRadius, setCursorRadius] = useState(200); // default value
@@ -89,6 +125,8 @@ useEffect(() => {
 
   loadProjects();
 }, []);
+
+
 
 function shuffleArray<T>(array: T[]): T[] {
     let currentIndex = array.length, randomIndex;
@@ -205,12 +243,9 @@ const addRandomProject = () => {
                 .url()
                    
             return (
-              // <div key={project.slug} className="canvas-container" id={`container${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={project.coverImage.image}>
-              //   <img src={project.coverImage.image} alt={`Project ${project.slug}`} />
-              //   <App projectData={project} cursorRadius={cursorRadius} />
-              // </div>
-              <div key={project.slug} className="canvas-container" id={`container${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
+              <div key={project.slug} className="canvas-container" id={`container-${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
                 {typeof window !== 'undefined' && (
+                  
                   <App imageUrl={imageUrl} cursorRadius={cursorRadius} />
                 )}
               </div>

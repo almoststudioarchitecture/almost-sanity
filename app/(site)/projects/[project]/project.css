@@ -1,4 +1,5 @@
 /* PROJECT PAGE */
+
 .section{
     border-bottom: 1px solid var(--main-color);
     width:100vw;
@@ -13,19 +14,22 @@
     /* width: 100vw; */
     transition: margin 300ms, height 300ms;
     margin-top: calc(var(--nav-height)*-1);
-    animation: hero 600ms 800ms ease-out both;
+    animation: hero 600ms 1s ease-out both;
+    
 }
 
 @keyframes hero{
     0%{
-        height: 100vh;
+        height: calc(100vh - 40px);
     }
     100%{
         height: calc(100vh - 160px);
     }
 } 
+
 .hero img{
-    object-position: top left;
+    /* object-position: top left; */
+    object-position: center;
 }
 
 .info{
@@ -39,6 +43,7 @@
     color: var(--main-color);
     letter-spacing: -0.02em;
     cursor: pointer;
+    margin-bottom: 0.5rem;
 }
 
 
@@ -57,8 +62,12 @@
 .section.info .meta-data{
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    /* gap: 24px; */
     color: var(--main-color);
+    > *{
+        margin-right: 24px;
+        margin-bottom: 12px;
+    }
 }
 
 /* @media screen and max-width:  */
@@ -89,7 +98,8 @@
 main{
     height: calc(100vh - var(--nav-height));
     overflow-y: scroll;
-    margin-top: var(--nav-height);
+    /* margin-top: var(--nav-height); */
+    /* --main-color:white; */
 }
 
 main{
@@ -106,7 +116,17 @@ main > *{
     /* scroll-snap-align: none; */
     max-height: calc(100vh - var(--pad));
     overflow-y:scroll;
+    animation: fadeIn 600ms linear both;
 }
+
+@keyframes fadeIn{
+    0%{
+        opacity:0;
+    }
+    100%{
+        opacity:1;
+    }
+} 
 
 main::-webkit-scrollbar,
 .info::-webkit-scrollbar {

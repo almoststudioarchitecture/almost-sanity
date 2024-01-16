@@ -6,6 +6,8 @@ import styles from '../../css/InteractiveLogo.module.css';
 export default function InteractiveLogo() {
   const [isClient, setIsClient] = useState(false);
 
+  const startLogoHeight = window.innerWidth/49*4+4;
+
   useEffect(() => {
     // Set isClient to true as this code will only run on the client side
     setIsClient(true);
@@ -14,6 +16,7 @@ export default function InteractiveLogo() {
       if (!isClient) return;
 
       const logoElements = document.querySelectorAll(`.interactiveLogo > div`);
+      const logoElement = document.querySelector('.interactiveLogo');
       const viewportBottom = window.scrollY + window.innerHeight;
       const pageHeight = Math.max(
         document.body.scrollHeight,
@@ -22,27 +25,50 @@ export default function InteractiveLogo() {
         document.documentElement.scrollHeight,
         document.documentElement.offsetHeight
       );
-      const stretchAmt = window.innerHeight / 2;
+      const stretchAmt = window.innerHeight;
 
-      logoElements.forEach(element => {
-        const rect = element.getBoundingClientRect();
-        const elementBottom = rect.top + window.scrollY + rect.height;
+      // logoElements.forEach(element => {
+      if (logoElement){
+        
+        const rect = logoElement.getBoundingClientRect();
+        const elementTop = rect.top;
 
-        if (elementBottom <= viewportBottom) {
+        // console.log(elementTop, window.innerHeight-startLogoHeight);
+
+        if (elementTop < window.innerHeight-startLogoHeight){
+
+          console.log(elementTop,
+            window.innerHeight-startLogoHeight,
+            window.innerHeight,
+            startLogoHeight,
+            stretchAmt)
+
           let newHeight = map(
-            window.scrollY,
-            pageHeight - stretchAmt - window.innerWidth,
-            pageHeight - window.innerWidth,
+            elementTop,
+            window.innerHeight-startLogoHeight,
             0,
+            startLogoHeight,
             stretchAmt
           );
 
-          if (element instanceof HTMLElement) {
-            element.style.height = newHeight + "px";
-          }
+          logoElements.forEach(element => {
+            if (element instanceof HTMLElement) {
+              element.style.height = newHeight + "px";
+            }
+          });
+
+        } else {
+          logoElements.forEach(element => {
+            if (element instanceof HTMLElement) {
+              element.style.height = startLogoHeight + "px";
+            }
+          })
         }
-      });
+
+      }
+        
     };
+    // };
 
     function map(value: number, low1: number, high1: number, low2: number, high2: number): number {
       return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
@@ -86,7 +112,7 @@ export default function InteractiveLogo() {
         <div className={styles.right}></div>
         <div className={styles.left}></div>
     </div>
-    <div className={styles.t}>
+    <div className={`${styles.t} ${styles.end}`}>
         <div className={`${styles.bottom} ${styles.left}`}></div>
         <div className={`${styles.bottom} ${styles.right}`}></div>
     </div>

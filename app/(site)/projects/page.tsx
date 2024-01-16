@@ -62,7 +62,7 @@
                     <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}>
                       <Link href={`/projects/${project.slug}`}>
                       <img src={project.coverImage.image} className={project.coverImage.white ? 'white' : ''}></img>
-                      <Sketch cursorRadius={40} />
+                      <Sketch cursorRadius={30} />
                       <div className="projectInfo">
                         <div className="projectName">{project.name}</div>
                         {project.location && <div className="projectLocation">{project.location}</div>}
@@ -84,7 +84,7 @@
                       ))}
                     </ul>
               </div> */}
-              <DrawCursor cursorSize={40}  /> 
+              <DrawCursor cursorSize={30}  /> 
 
             {/* <Script
               // type="module" 

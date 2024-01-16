@@ -1,5 +1,7 @@
 /* ABOUT PAGE */
-
+:root{
+    --main-color: red;
+}
 .cols {
     display: flex;
     flex-wrap:wrap;
@@ -11,7 +13,7 @@
     top:0px; */
 }
 .information {
-    margin-top: var(--nav-height);
+    /* margin-top: var(--nav-height); */
 }
 
 .information .box {

@@ -4,6 +4,7 @@
 import React, { useEffect } from 'react';
 import ArrowTopRight from '../icons/ArrowTopRight';
 import styles from '../css/Home.module.css';
+import Link from 'next/link';
 import type { ProjectType } from "@/types";
 
 type ProjectListItemProps = {
@@ -94,10 +95,10 @@ const ProjectListItem: React.FC<ProjectListItemProps> = ({ project, index }) => 
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <a href={`/projects/${project.slug}`} className={`${styles.a}`}>
+            <Link href={`/projects/${project.slug}`} className={`${styles.a}`}>
                 <ArrowTopRight />
                 <span>{project.name}</span>
-            </a>
+            </Link>
         </li>
     );
 };
