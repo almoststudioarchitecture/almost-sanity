@@ -101,6 +101,8 @@ export default function Navbar() {
         }
     }, [pathname]);
 
+    
+
     // Function to add 'hoveringOthers' class to <nav> when hovering over non-active nav items
     const handleMouseEnter = (event: MouseEvent) => {
         const navElement = document.querySelector(`.${styles.nav}`) as HTMLElement;
@@ -177,6 +179,8 @@ export default function Navbar() {
         setPreviousPath(currentPath);
         setCurrentPath(newPath);
     };
+
+    
 
     // Function to be called when Projects tab is clicked
     const onProjectsClick = () => {

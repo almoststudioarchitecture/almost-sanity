@@ -36,6 +36,9 @@ export default function Home() {
   // const [loading, setLoading] = useState(true);
   const [displayedIndices, setDisplayedIndices] = useState(new Set());
 
+  const [showDrawCursor, setShowDrawCursor] = useState(false);
+
+
   // State for managing cursor radius
   // const [cursorRadius, setCursorRadius] = useState(getInitialCursorRadius());
   const minRadius = 30; // Set the minimum radius size
@@ -59,7 +62,7 @@ export default function Home() {
     return storedProjects;
   };
 
-  console.log(getStoredProjects());
+  // console.log(getStoredProjects());
 
   useEffect(() => {
     // Your existing code that runs on component mount
@@ -77,7 +80,7 @@ export default function Home() {
           sessionStorage.setItem("origin", window.location.href);
         }
 
-        console.log(sessionStorage);
+        // console.log(sessionStorage);
 
         // Return a cleanup function to remove event listeners
         return () => {
@@ -130,6 +133,21 @@ useEffect(() => {
   }
 
   loadProjects();
+}, []);
+
+useEffect(() => {
+  const checkIfOverCanvas = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    setShowDrawCursor(target.tagName === 'CANVAS');
+  };
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('mousemove', checkIfOverCanvas);
+    
+    return () => {
+      window.removeEventListener('mousemove', checkIfOverCanvas);
+    };
+  }
 }, []);
 
 
@@ -225,8 +243,17 @@ const addRandomProject = () => {
       }
     }
 
+
 }, [currentIndex, displayedProjects]); // Now dependent on currentIndex and displayedProjects
   // }, [projects]);
+
+  const renderAdditionalLines = () => {
+    const additionalLines = [];
+    for (let i = 0; i < 20; i++) {
+        additionalLines.push(<div key={i} className={styles.additionalLine}></div>);
+    }
+    return additionalLines;
+  };
 
 
     return (
@@ -242,7 +269,7 @@ const addRandomProject = () => {
           {displayedProjects.map((project) => {
             // Using the slug as a key since it should be unique
             const imageUrl = builder.image(project.coverImage.image)
-                .width(1200)
+                .width(1500)
                 .height(Math.floor((9 / 16) * 1200))
                 .fit("crop")
                 .auto("format")
@@ -252,7 +279,6 @@ const addRandomProject = () => {
               <div key={project.slug} className="canvas-container" id={`container-${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
                 {typeof window !== 'undefined' && (
                   <DynamicApp imageUrl={imageUrl} cursorRadius={cursorRadius} />
-                  // <App imageUrl={imageUrl} cursorRadius={cursorRadius} />
                 )}
               </div>
             );
@@ -265,17 +291,18 @@ const addRandomProject = () => {
                   {projects && projects.map((project, index) => (
                       <ProjectListItem key={index} project={project} index={index} />
                   ))}
+                  {renderAdditionalLines()} {/* Call the function here */}
                 </ul>
-                <ul className={`home--projectLinks ${styles.projectLinks}`} id="projectLinks">
+                {/* <ul className={`home--projectLinks ${styles.projectLinks}`} id="projectLinks">
                   {projects && projects.map((project, index) => (
                       <ProjectListItem key={index} project={project} index={index} />
                   ))}
-                </ul>
+                </ul> */}
           </div>
           
-          {typeof window !== 'undefined' && (
-            <DrawCursor cursorSize={cursorRadius} />
-          )}
+          
+          {showDrawCursor && <DrawCursor cursorSize={cursorRadius} />}
+          
           
           </main>
           

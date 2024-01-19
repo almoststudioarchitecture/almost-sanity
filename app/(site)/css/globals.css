@@ -21,7 +21,7 @@
   :root{
     --main-color: red;
     --nav-height: 28px;
-    --bg: #F8F8F8;
+    --bg-color: #F8F8F8;
     --grey: #c6c6c6;
   
     --logo-width: 142.836px;
@@ -34,6 +34,8 @@
     --primary-type: "Dedale";
     --pad: 0.7rem;
     --transition: 600ms linear;
+
+    --bg: var(--bg-color);
   }
   
   html,
@@ -48,10 +50,14 @@
     line-height: 1.4;
     letter-spacing: 0.02em;
     background: var(--bg);
+    transition: background 300ms;
   }
-
   body.path-other{
-    background: black;
+    --main-color: black;
+    --bg: var(--bg-color);
+  }
+  body.path-other.scrolled{
+    --bg: black;
     --main-color: white;
   }
 
@@ -213,9 +219,10 @@ li.home--visible:hover, li.home--mostRecent{
 .home--visible{
   /* width:calc(100% - 2px); */
   /* transform:translateX(1px); */
-  background: var(--bg);
+  /* background: var(--bg); */
   border-bottom: 1px dotted var(--grey) !important;
   /* border-left: 1px solid var(--grey) !important; */
+  color: grey;
 }
 
 #projectLinks:hover .home--mostRecent:not(:hover) svg{
@@ -264,7 +271,7 @@ body.mousedown .canvases{
     position: fixed;
   }
   html, body.mousedown {
-    overflow: hidden;
+    /* overflow: hidden; */
     overscroll-behavior: none;
   }
 }
@@ -324,7 +331,6 @@ body{
     left:0;
     height:100%;
     width:100%;
-    cursor: pointer;
 }
 
 .canvases.gridded .canvas-container{
@@ -349,7 +355,7 @@ body{
   display: block;
   opacity: 1;
   position: relative;
-  animation: canvasImage 600ms 800ms linear both;
+  animation: canvasImage 600ms 200ms linear both;
 }
 
 @keyframes canvasImage{
@@ -387,8 +393,23 @@ body{
 .canvases.gridded .projectInfo .projectName{
   z-index:1;
 }
+.canvases.gridded .projectInfo .projectName svg{
+  display: inline-block;
+  margin-left: -0.7em;
+  pointer-events:none;
+  opacity:0;
+  transform:translateY(-0.1em);
+  transition: opacity 100ms, margin-left 100ms;
+}
+.canvases.gridded .canvas-container:hover svg{
+  margin-left: 0.3em;
+  opacity:1;
+}
+.canvases.gridded .projectInfo .projectName svg path{
+  fill: var(--main-color);
+}
 .canvases.gridded .projectInfo .projectLocation{
-  animation-delay: 1300ms;
+  animation-delay: 800ms;
   z-index:0;
 }
 
@@ -419,7 +440,7 @@ body{
   height:0px;
   top:var(--nav-height);
   z-index:2;
-  /* animation: verticalLine 600ms linear both; */
+  transition: height 400ms;
 }
 
 @media screen and (max-width: 420px){
@@ -482,6 +503,20 @@ a{
     height: calc(100vh - var(--nav-height));
     width: calc(var(--profile-width) + var(--projects-width) + calc(var(--pad_x)*4) + 2px);
     overflow-y:scroll;
+    mix-blend-mode:multiply;
+    transition: background 300ms;
+
+}
+.list-container:hover{
+  background:var(--bg);
+  mix-blend-mode:inherit;
+}
+.list-container:hover * {
+  color: var(--main-color) !important;
+  transition: color 300ms;
+}
+.list-container li:last-child{
+  background:black;
 }
 .list-container:hover{
   /* background: var(--bg); */
@@ -533,6 +568,10 @@ body.transition-profile-projects .verticalLine{
 body.transition-home-projects .list-container,
 body.transition-home-profile .list-container{
   animation: moveIn 300ms ease-out reverse both;
+}
+
+body.path-projects .verticalLine{
+  animation: verticalLine 600ms linear both;
 }
 
 @keyframes moveIn{
@@ -645,7 +684,7 @@ nav.active-4:before{
   width: 100vw;
   height: var(--nav-height);
   display:block;
-  background: black;
+  background: var(--bg);
   content:'';
   z-index: -1;
   position: absolute;
@@ -695,7 +734,7 @@ nav.active-4 li:nth-child(3):hover a{
 
 nav li button, 
 nav li a{
-  transition: width 300ms ease-in-out;
+  transition: width 100ms ease-in-out;
 }
 
 nav{
@@ -791,7 +830,7 @@ nav.active-2 li:nth-child(2) button{
 
 body.transition-home-projects nav li:first-child a,
 body.transition-home-profile nav li:first-child a{
-  animation: expandLogo 600ms ease-in-out reverse both;
+  animation: expandLogo 6000ms ease-in-out reverse both;
 }
 
 body.transition-home-projects nav li:nth-child(2) button,
@@ -940,5 +979,5 @@ body.loading nav li{
 
 
 .info--description{
-  color: white;
+  color: var(--main-color);
 }

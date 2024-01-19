@@ -7,10 +7,13 @@
     flex-wrap:wrap;
 }
 
+
+
 .information {
     /* margin-top:var(--nav-height);
     position:absolute;
     top:0px; */
+    min-height: calc(100vh - 100vw/49*4 - 100px - var(--nav-height) + 1px);
 }
 .information {
     /* margin-top: var(--nav-height); */

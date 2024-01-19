@@ -15,7 +15,8 @@
 }
 
 
-#logo > div{
+#logo > div,
+#logo > a{
     width: calc(var(--unit)*4 - 1px);
     height:var(--height);
     border:1px solid var(--main-color);
@@ -27,14 +28,14 @@
 #logo:hover > div{
     /* height:50vh; */
 }
-#logo > div:hover{
+#logo > div:hover,
+#logo > a:hover{
     width: 300px;
     /* border-right:1px solid red; */
 }
-#logo > div:hover + div{
-    /* border-left:0px solid red; */
-}
-#logo > div:first-child{
+
+#logo > div:first-child,
+#logo > a:first-child{
     border-left:0px;
 }
 #logo .gap{
@@ -49,16 +50,14 @@
 }
 
 
-#logo > div:hover > div{
-    /* background: red; */
-}
-
-#logo > div > div{
+#logo > div > div,
+#logo > a > div{
     width: var(--unit);
     height: var(--unit);
     /* border: 1px dashed red; */
     border: 1px solid var(--main-color);
     position: absolute;
+    background: var(--bg);
 }
 #logo .a div:first-child{
     top: var(--unit);
@@ -124,6 +123,14 @@
 }
 
 #logo .i div{
-    top: 50%;
+    top: 50%;   
     transform:translateY(-50%);
+}
+
+.heroImage{
+    opacity:0;
+}
+
+#logo > *:hover .heroImage{
+    opacity:1;
 }

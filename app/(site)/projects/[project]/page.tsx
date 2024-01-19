@@ -10,7 +10,10 @@ import { PortableText } from "@portabletext/react";
 import AboutScript from "./ProjectScript";
 import imageUrlBuilder from '@sanity/image-url';
 import ProjectGalleryImage from "../../components/ProjectGalleryImage";
+import ProjectInfoModule from "../../components/ProjectInfoModule";
 import InteractiveLogo from "../../components/global/InteractiveLogo";
+
+
 // import { Dimensions } from 'react-native';
 import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, PromiseLikeOfReactNode, Key } from "react";
 import './project.css'
@@ -55,6 +58,7 @@ export default async function Project({ params }: Props) {
     dataset: "production",
   });
   
+  
   function urlFor(source: string) {
     return builder.image(source);
   }
@@ -66,7 +70,19 @@ export default async function Project({ params }: Props) {
       {/* <div id="before"></div> */}
       <div id="after"></div>
       <div className="section hero relative">
-            <Image
+            {project.coverImage?.white ?
+              <Image
+                className="hero-image WHITE"
+                width='0'
+                height='0'
+                sizes='100vw'
+                src={project.coverImage?.image}
+                alt={project.coverImage?.alt || project.name}
+                style={{ background: 'white', objectFit: 'contain', width: '100%', height: '100%' }}
+                priority
+              />
+              :
+              <Image
                 className="hero-image"
                 layout='fill'
                 objectFit='cover'
@@ -74,6 +90,7 @@ export default async function Project({ params }: Props) {
                 alt={project.coverImage?.alt || project.name}
                 priority
               />
+            }
             <svg width="100%" height="100%" id="svg">
                 <mask id="mask">
                     <rect x="0" y="0" width="100%" height="100%" fill="black" />
@@ -121,73 +138,70 @@ export default async function Project({ params }: Props) {
                 </g>
             </svg>
         </div>
-        {/* <div className="cd-body"> */}
-          <div className="section info">
-              <div className="info--header">
-                  <h1>{project.name}</h1>
-                  <div className="meta-data">
-                  {project.metadata && project.metadata.map((d, index) => (
-                      <h2 key={index}>{d}</h2>
-                    ))}
-                  </div>
-              </div>
-              <div className="info--description">
-                <PortableText value={project.description} />
-              </div>
-          </div>
-          {/* <div className="section gallery"> */}
+          <ProjectInfoModule 
+            name={project.name} 
+            metadata={project.metadata} 
+            description={project.description} 
+          />
 
               {project.gallery && project.gallery.map((item, index) => {
                 const randomStyleNumber = Math.floor(Math.random() * 11) + 1;
                 
 
-                if (item._type === 'image' && item.caption) {
-                  const imageUrl = urlFor(item.image)
-                   .height(200) // set the height to 200px
-                   .url(); // get the URL
-                  return (
-                    <div key={index} className="image-container-outer relative">
-                      <div className={`image-container-inner relative style${randomStyleNumber}`} data-width="500" data-height="100">
-                        <ProjectGalleryImage
-                            key={index}
-                            // src={item.image}
-                            src={imageUrl}
-                            alt={item.alt || project.name}
-                            fit={item.fit}
-                        />
-                      </div>
-                      <div className="caption">
-                          {item.caption}
-                      </div>
-                    </div>
-                  );
-                } else if (item._type === 'image') {
-                  return (
-                    <div key={index} className="image-container-outer relative">
-                      <div className={`image-container-inner relative style${randomStyleNumber}`}>
-                        <ProjectGalleryImage
-                            key={index}
-                            src={item.image}
-                            alt={item.alt || project.name}
-                            fit={item.fit}
-                        />
-                      </div>
-                    </div>
-                  );
+                if (item._type === 'image'){
+                  
+                   const optimizedSrc = urlFor(item.image)
+                    .width(1800)  // Set desired width
+                    .auto('format') // Automatic format selection (e.g., WebP)
+                    .url();
+
+                  if (item.caption){
+                  
+                      return (
+                        <div key={index} className="image-container-outer relative">
+                          <div className={`image-container-inner relative style${randomStyleNumber}`} data-width="500" data-height="100">
+                            <ProjectGalleryImage
+                                key={index}
+                                src={optimizedSrc} 
+                                alt={item.alt || project.name}
+                                fit={item.fit}
+                            />
+                          </div>
+                          <div className="caption">
+                              {item.caption}
+                          </div>
+                        </div>
+                      );
+                  } else {
+                      return (
+                        <div key={index} className="image-container-outer relative">
+                          <div className={`image-container-inner relative style${randomStyleNumber}`}>
+                          { item.image &&  
+                            <ProjectGalleryImage
+                                key={index}
+                                src={optimizedSrc} 
+                                alt={item.alt || project.name}
+                            />
+                          }
+                          </div>
+                        </div>
+                      );
+                  }
+
                 } else if (item._type === 'vimeoVideoLink') {
-                  return (
-                    <div key={index}>
-                      <iframe
-                        src={item.vimeo}
-                        title={item.title}
-                        width="640"
-                        height="360"
-                        frameBorder="0"
-                        allowFullScreen
-                      ></iframe>
-                    </div>
-                  );
-                }
+                      return (
+                        <div key={index}>
+                          <iframe
+                            src={item.vimeo}
+                            title={item.title}
+                            width="640"
+                            height="360"
+                            frameBorder="0"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                      );
+                  }
                 return null;
               })}
           {/* </div> */}

@@ -18,11 +18,11 @@
   .projectLinks:first-child{
     mix-blend-mode:multiply;
     border-left: 1px solid var(--grey);
-    pointer-events: none;
+    /* pointer-events: none; */
   }
   .projectLinks:first-child a{
     /* color: transparent; */
-    color: rgba(255,0,0,0.4);
+    /* color: rgba(255,0,0,0.4); */
   }
   
   .projectLinks+.projectLinks{
@@ -33,6 +33,13 @@
   .projectLinks+.projectLinks .li a{
     /* background: var(--bg); */
     /* color: transparent; */
+  }
+  .additionalLine{
+    border-bottom: 1px dotted var(--grey);
+    height: 27.6667px;
+    padding: var(--pad_y) var(--pad_x);
+    /* background: red; */
+    order:1000001;
   }
 
   @keyframes listEnter {
@@ -56,7 +63,7 @@
 
   .lined .li{
     border-bottom: 1px dotted var(--grey);
-    pointer-events:none;
+    /* pointer-events:none; */
   }
   
   .a{
@@ -64,8 +71,9 @@
     width: 600px;
     display: block;
     opacity:0;
-    pointer-events: none;
+    /* pointer-events: none; */
     padding: var(--pad_y) var(--pad_x);
+    color: grey;
   }
   
   .a svg{

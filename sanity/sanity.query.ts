@@ -52,7 +52,7 @@ export async function getSingleProject(slug: string) {
       _id,
       name,
       location,
-      coverImage { alt, "image": asset->url },
+      coverImage { alt, "image": asset->url, white },
       metadata,
       description,
       "gallery": gallery.images[] {

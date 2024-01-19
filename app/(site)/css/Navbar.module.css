@@ -171,7 +171,7 @@
     top:50%;
     right:0px;
     transform:translateY(-50%);
-    background: var(--bg);
+    background: transparent;
     text-transform:lowercase;
     line-height:1.1;
     transition: margin 200ms;

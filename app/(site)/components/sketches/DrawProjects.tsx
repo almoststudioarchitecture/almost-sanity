@@ -29,10 +29,18 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
     cnv = p.createCanvas(window.innerWidth/2, window.innerHeight/2);
 
     maskGraphics = p.createGraphics(p.width, p.height);
+    maskGraphics.width = p.width;
+    maskGraphics.height = p.height;
     maskGraphics.clear();
     p.strokeJoin(p.ROUND);
 
     p.noLoop();
+
+   
+    // maskGraphics.pixelDensity(2);
+    // p.pixelDensity(2); 
+    maskGraphics.pixelDensity(1);
+    p.pixelDensity(1); 
 
   }
 
@@ -61,9 +69,11 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
         p.noLoop(); // Optional: Additional safety to ensure noLoop is called if mouse is not pressed
     }
 
+
     if (!imageDrawn) {
         p.background('#F8F8F8');
         p.stroke('black');
+        p.strokeWeight(1);
 
         const gap = 30;
         for (let x=0;x<p.width;x+=gap){
@@ -91,14 +101,15 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
                 let displayImage: p5.Image = cnvImage.get();
                 
                 // Create a new p5.Image from maskGraphics
-                let maskImage: p5.Image = p.createImage(p.width/2, p.height/2);
-                maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0,0, p.width, p.height);
+                let maskImage: p5.Image = p.createImage(p.width, p.height);
+                maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, p.width, p.height); 
 
                 // // Apply the mask to displayImage
                 displayImage.mask(maskImage);
 
                 // Draw the masked image
-                p.image(displayImage, 0,0, p.width, p.height);
+                // p.image(displayImage, 0, 0, p.width*2, p.height*2);
+                p.image(displayImage, 0, 0, p.width, p.height);
                 // p.pop();
 
         p.push();

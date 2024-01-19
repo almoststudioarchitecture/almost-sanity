@@ -27,13 +27,6 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   let slug: any;
 
 
-  let cursorWeightDifference = 15;
-  let cursorWeightChange = 0;
-  const cursorWeightChangeDuration = 10; // Duration over which the cursor weight changes
-  let framesSinceMousePressed = 0;
-
-
-
   const builder = imageUrlBuilder({
     projectId: "oogp23sh",
     dataset: "production",
@@ -55,20 +48,13 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
         slug = cnvParent.getAttribute("data-slug");
       }
 
-    //   console.log(cnvParent);
+      console.log(cnvParent);
 
-      // maskGraphics = p.createGraphics(p.width * window.devicePixelRatio, p.height * window.devicePixelRatio);
-      // maskGraphics.pixelDensity(p.pixelDensity());
       maskGraphics = p.createGraphics(p.width, p.height);
       maskGraphics.clear();
       p.strokeJoin(p.ROUND);
 
       p.noLoop();
-      p.rectMode(p.CENTER)
-
-      p.pixelDensity(2);
-
-      maskGraphics.pixelDensity(2);
     }
 
   }
@@ -88,23 +74,13 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     }
   }
   
-  // p.mousePressed = function(event: MouseEvent) {
-  //   console.log("mouse pressed")
-  //   handleCanvasInteraction(event);
-  // }
-
   p.mousePressed = function(event: MouseEvent) {
-    console.log("mouse pressed")
-    cursorWeightChange = cursorWeightDifference; // Increase the cursor weight by 20 pixels
-    framesSinceMousePressed = 0; // Reset the frame count
     handleCanvasInteraction(event);
   }
   
   p.touchStarted = function(event: TouchEvent) {
     handleCanvasInteraction(event);
   }
-
-
 
   // Function to handle touch events
   function touchHandler(event: TouchEvent, type: string) {
@@ -126,12 +102,9 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     if (!mousePressedOverCanvas) {
         p.noLoop(); // Optional: Additional safety to ensure noLoop is called if mouse is not pressed
     }
-
-    console.log(path);
-
     if (!imageDrawn) {
         // console.log
-        drawImageCover(img, p.width/2, p.height/2);
+        drawImageCover(img, p.width, p.height);
         // p.image(img, 0,0,p.width, p.height)
         cnvImage = p.get();
         cnvImage.loadPixels();
@@ -144,25 +117,15 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
         p.clear();
         if (mousePressedOverCanvas) {
             updateStrokeProperties();
-            if (path.length==0){
-              addPointToPath(p.mouseX-2, p.mouseY-2);
-              addPointToPath(p.mouseX+2, p.mouseY-2);
-            } else {
-              if (p.frameCount%2<0.5){
-                addPointToPath(p.mouseX, p.mouseY);
-              }
-            }
-            // addPointToPath(p.mouseX, p.mouseY);
+            addPointToPath(p.mouseX, p.mouseY);
         }
 
-        drawPathsOnMask(maskGraphics, path, cursorRadius, 1);
-
-        p.image(maskGraphics,0,0,p.width,p.height);
+        drawPathsOnMask(maskGraphics, path, cursorRadius);
 
 
         let stringified = JSON.stringify(path);
         localStorage.setItem(slug, stringified);
-        // console.log(localStorage);
+        console.log(localStorage);
 
           
         // p.push();
@@ -170,16 +133,17 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
             
             // // Create a new p5.Image from maskGraphics
             let maskImage: p5.Image = p.createImage(p.width, p.height);
-            
-            maskImage.loadPixels();
-            maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, maskGraphics.width, maskGraphics.height); 
+            maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, p.width, p.height); 
+
 
             // // Apply the mask to displayImage
             displayImage.mask(maskImage);
 
-            // // // Draw the masked image
-            p.image(displayImage, 0, 0, p.width*2, p.height*2);
+            // // Draw the masked image
+            p.image(displayImage, 0, 0, p.width, p.height);
+            // p.image(maskImage, 0, 0, p.width, p.height);
 
+            // p.pop();
         p.push();
         p.blendMode(p.HARD_LIGHT);
         p.image(maskGraphics, 0, 0, p.width, p.height);
@@ -203,40 +167,38 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     y: number;
   }
   
-  function drawPathsOnMask(graphics: p5.Graphics, path: Point[], weight: number, scale:number) {
+  function drawPathsOnMask(graphics: p5.Graphics, path: Point[], weight: number) {
       graphics.clear();
-      const dynamicWeight = weight + cursorWeightChange;
-      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightLight, 127, 235, -1, scale);
-      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 127, 80, 1, scale);
-      drawPathWithOffset(graphics, path, dynamicWeight, 127, 0, scale);
+      drawNonLinearShadows(graphics, path, weight, shadowHeightLight, 127, 235, -1);
+      drawNonLinearShadows(graphics, path, weight, shadowHeightDark, 127, 80, 1);
+      drawPathWithOffset(graphics, path, weight, 127, 0);
   }
 
-  function drawNonLinearShadows(graphics: p5.Graphics, path: Point[], weight: number, shadowHeight: number, startColor: number, endColor: number, yOffsetMultiplier: number, scale:number) {
+  function drawNonLinearShadows(graphics: p5.Graphics, path: Point[], weight: number, shadowHeight: number, startColor: number, endColor: number, yOffsetMultiplier: number) {
     for (let i = shadowHeight; i >= 0; i--) {
         let ratio = i / shadowHeight;
         let nonLinearRatio = p.pow(ratio, shadowHeight === shadowHeightLight ? 1.6 : 2);
         let colorValue = p.map(nonLinearRatio, 0, 1, startColor, endColor);
-        drawPathWithOffset(graphics, path, weight, colorValue, i * yOffsetMultiplier, scale);
+        drawPathWithOffset(graphics, path, weight, colorValue, i * yOffsetMultiplier);
     }
 }
 
-    function drawPathWithOffset(graphics: p5.Graphics, path: Point[], weight: number, c: number, yOffset: number, scale:number) {
+function drawPathWithOffset(graphics: p5.Graphics, path: Point[], weight: number, c: number, yOffset: number) {
 
         graphics.stroke(c, c, c);
-        graphics.strokeWeight(weight*scale);
+        graphics.strokeWeight(weight);
         graphics.noFill();
 
         if (path.length > 1) {
             graphics.beginShape();
-            graphics.curveVertex(path[0].x*scale, (path[0].y + yOffset)*scale); 
+            graphics.curveVertex(path[0].x, path[0].y + yOffset); 
             for (let point of path) {
-                graphics.curveVertex(point.x*scale, (point.y + yOffset)*scale);
+                graphics.curveVertex(point.x, point.y + yOffset);
             }
-            graphics.curveVertex(path[path.length - 1].x*scale, (path[path.length - 1].y + yOffset)*scale);
+            graphics.curveVertex(path[path.length - 1].x, path[path.length - 1].y + yOffset);
             graphics.endShape();
         }
     }
-    
 
     function addPointToPath(x: number, y: number) {
         const point: Point = { x, y };
@@ -246,15 +208,18 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     }
 
     function updateStrokeProperties() {
-      if (framesSinceMousePressed < cursorWeightChangeDuration) {
-          framesSinceMousePressed++;
-          // Gradually increase the cursor weight change over 30 frames
-          cursorWeightChange = (cursorWeightDifference * framesSinceMousePressed) / cursorWeightChangeDuration;
-      } else {
-          // Maintain the cursor weight change at the maximum after 30 frames
-          cursorWeightChange = cursorWeightDifference;
-      }
-  }
+        // cursorElement.style.width = cursorRadius + "px";
+        // cursorElement.style.height = cursorRadius + "px";
+        // strokeShrink = p.max(strokeShrink - 0.1, 0);
+        // if (isReordered){
+        //     cursorRadius = gridWeight;
+        // } else {
+        //     cursorRadius = p.max(cursorRadius - strokeShrink, startWeight - weightDiff);
+        // }
+        
+
+    }
+
     function drawImageCover(theImg: p5.Image, canvasWidth: number, canvasHeight: number) {
 
         let canvasRatio = canvasWidth / canvasHeight;
@@ -262,16 +227,14 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
         let drawWidth, drawHeight, drawX, drawY;
 
         if (canvasRatio > imageRatio) {
-            // Wider canvas, image needs to cover width-wise
             drawWidth = canvasWidth;
             drawHeight = theImg.height * (canvasWidth / theImg.width);
             drawX = 0;
-            drawY = (canvasHeight - drawHeight) / 2; // Center vertically
+            drawY = (canvasHeight - drawHeight);
         } else {
-            // Taller canvas, image needs to cover height-wise
             drawHeight = canvasHeight;
             drawWidth = theImg.width * (canvasHeight / theImg.height);
-            drawX = (canvasWidth - drawWidth) / 2; // Center horizontally
+            drawX = (canvasWidth - drawWidth);
             drawY = 0;
         }
 
