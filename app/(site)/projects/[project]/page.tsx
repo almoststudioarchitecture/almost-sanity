@@ -151,7 +151,7 @@ export default async function Project({ params }: Props) {
                 if (item._type === 'image'){
                   
                    const optimizedSrc = urlFor(item.image)
-                    .width(1800)  // Set desired width
+                    .width(1200)  // Set desired width
                     .auto('format') // Automatic format selection (e.g., WebP)
                     .url();
 

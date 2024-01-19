@@ -269,6 +269,7 @@
     .list{
         display:block;
         border-bottom:0px;
+        height: var(--nav-height);
     }
     .listItem{
         border-right:0px;

@@ -677,7 +677,12 @@ nav.active-3{
 }
 
 nav.active-4 li{
-  background: transparent;
+  /* background: transparent; */
+  transform:translateY(-1px);
+}
+
+nav.active-4 li:first-child{
+  z-index:100;
 }
 
 nav.active-4:before{
@@ -816,6 +821,15 @@ nav.active-3.hoveringOthers li:nth-child(3) button{
 
   nav:not(.active-3) li:nth-child(3){
       border-bottom:1px solid var(--main-color);
+  }
+
+  .list-container{
+    mix-blend-mode: inherit;
+  }
+
+  .home--visible{
+    color: var(--main-color);
+    /* transition: color 300ms; */
   }
 
 }

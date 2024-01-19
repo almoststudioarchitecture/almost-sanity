@@ -75,6 +75,12 @@
     padding: var(--pad_y) var(--pad_x);
     color: grey;
   }
+
+  @media screen and (max-width: 420px){
+    .a{
+      color: var(--main-color);
+    }
+  }
   
   .a svg{
     display:none;
