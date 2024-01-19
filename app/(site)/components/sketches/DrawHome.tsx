@@ -148,7 +148,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
               addPointToPath(p.mouseX-2, p.mouseY-2);
               addPointToPath(p.mouseX+2, p.mouseY-2);
             } else {
-              if (p.frameCount%2<0.5){
+              if (p.frameCount%3<0.5){
                 addPointToPath(p.mouseX, p.mouseY);
               }
             }
