@@ -113,10 +113,93 @@ function enableLink(element: HTMLElement) {
         p.stroke('black');
         p.strokeWeight(1);
 
-        const gap = 30;
-        for (let x=0;x<p.width;x+=gap){
-            p.line(x, 0, x, p.height)
-        }
+        let determiner = p.random();
+
+        // console.log(determiner);
+
+        if (determiner < 0.1){
+            const gap = 30;
+            for (let x=0;x<p.width;x+=gap){
+                p.line(x, 0, x, p.height)
+            }
+        } else if (determiner < 0.2){
+            const gap = 30;
+            for (let x=0;x<p.width;x+=gap){
+                p.line(x, 0, x, p.height)
+            }
+            for (let y=0;y<p.height;y+=gap){
+              p.line(0, y, p.height, y)
+          }
+        } else if (determiner < 0.3){
+          const gap = 30;
+          for (let x = 0; x <= p.width; x += gap) {
+            p.line(x, 0, 0, x);
+          }
+        } else if (determiner < 0.4){
+          const gap = 30;
+          for (let x = 0; x <= p.width; x += gap) {
+            p.line(x, 0, 0, x);
+          }
+          for (let y = 0; y <= p.height; y += gap) {
+            p.line(0, y, y, 0);
+          }
+        } else if (determiner < 0.5){
+          const gap = 60;
+            for (let x=0;x<p.width;x+=gap){
+                p.line(x, 0, x, p.height)
+            }
+        } else if (determiner < 0.6){
+          const gap = 20;
+          for (let y=0;y<p.height;y+=gap){
+            p.line(0, y, p.height, y)
+          }
+        } else if (determiner < 0.7){
+          for (let y = 0; y <= p.height; y += 10) {
+            p.line(0, y, y, 0);
+          }
+        } else if (determiner < 0.8){
+          const gap = 30;
+          const diagonalLength = Math.sqrt(p.width * p.width + p.height * p.height);
+
+          // 60-degree lines
+          // for (let x = 0; x <= diagonalLength; x += gap) {
+          //     // Calculate the y-coordinate for the 60-degree angle
+          //     let y60 = x * Math.tan(Math.PI / 3); // 60 degrees in radians
+
+          //     // Draw the line from (x, 0) to (0, p.height - y60)
+          //     p.line(x, 0, 0, p.height - y60);
+          // }
+
+          // -60-degree lines
+          for (let x = 0; x <= diagonalLength; x += gap) {
+              // Calculate the y-coordinate for the -60-degree angle
+              let yMinus60 = x * Math.tan(-Math.PI / 3); // -60 degrees in radians
+
+              // Draw the line from (x, p.height) to (0, yMinus60)
+              p.line(x, p.height, 0, yMinus60);
+          }
+
+        } else if (determiner < 0.9){
+          const gap = 16;
+          for (let x=0;x<p.width;x+=gap){
+              p.line(x, 0, x, p.height)
+          }
+          for (let y=0;y<p.height;y+=gap){
+            p.line(0, y, p.height, y)
+          }
+        } else {
+          const gap = 30;
+          for (let x=0;x<p.width;x+=gap){
+              p.line(x, 0, x, p.height)
+          }
+          for (let y=0;y<p.height;y+=gap){
+            p.line(0, y, p.height, y)
+          }
+
+        } 
+
+
+
 
         cnvImage = p.get();
         
