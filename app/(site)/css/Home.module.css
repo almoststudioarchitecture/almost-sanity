@@ -81,7 +81,7 @@
     opacity:0;
     /* pointer-events: none; */
     padding: var(--pad_y) var(--pad_x);
-    /* color: grey; */
+    color: grey;
   }
 
   @media screen and (max-width: 420px){

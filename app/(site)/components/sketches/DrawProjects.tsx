@@ -45,8 +45,8 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
    
     // maskGraphics.pixelDensity(2);
     // p.pixelDensity(2); 
-    maskGraphics.pixelDensity(2);
-    p.pixelDensity(2); 
+    maskGraphics.pixelDensity(window.devicePixelRatio);
+    p.pixelDensity(window.devicePixelRatio); 
 
   }
 

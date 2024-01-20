@@ -66,9 +66,11 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
       p.noLoop();
       p.rectMode(p.CENTER)
 
-      p.pixelDensity(2);
+      // console.log(window.devicePixelRatio);
 
-      maskGraphics.pixelDensity(2);
+      p.pixelDensity(window.devicePixelRatio);
+
+      maskGraphics.pixelDensity(window.devicePixelRatio);
     }
 
   }
