@@ -30,6 +30,7 @@
 .hero img{
     /* object-position: top left; */
     object-position: center;
+    animation: fadeIn 800ms 300ms linear both;
 }
 
 .info{
@@ -97,16 +98,22 @@
 } */
 
 .projectInner{
-    height: calc(100vh - var(--nav-height));
-    overflow-y: scroll;
+    /* height: calc(100vh - var(--nav-height));
+    overflow-y: scroll; */
     /* margin-top: var(--nav-height); */
     /* --main-color:white; */
 }
 
+.enable-snap {
+    scroll-snap-type: y mandatory;
+}
+
 .projectInner{
     scroll-snap-type: y mandatory;
-    height: calc(100vh - var(--nav-height));
-    overflow-y: scroll;
+    max-height:calc(100vh - var(--nav-height));
+    overflow-y: auto;
+    /* height: calc(100vh - var(--nav-height)); */
+    /* overflow-y: scroll; */
     /* scroll-padding-top:var(--nav-height) */
 }
 

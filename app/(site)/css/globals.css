@@ -503,7 +503,7 @@ a{
     height: calc(100vh - var(--nav-height));
     width: calc(var(--profile-width) + var(--projects-width) + calc(var(--pad_x)*4) + 2px);
     overflow-y:scroll;
-    mix-blend-mode:multiply;
+    /* mix-blend-mode:multiply; */
     transition: background 300ms;
 
 }

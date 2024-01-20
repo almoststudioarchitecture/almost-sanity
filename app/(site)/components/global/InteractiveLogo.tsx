@@ -37,7 +37,7 @@ export default function InteractiveLogo() {
     const handleScroll = () => {
       // if (!isClient) return;
 
-      console.log("hello world")
+      // console.log("hello world")
 
       const logoElements = document.querySelectorAll(`.interactiveLogo > *`);
       const logoElement = document.querySelector('.interactiveLogo');
@@ -61,11 +61,11 @@ export default function InteractiveLogo() {
 
         if (elementTop < window.innerHeight-startLogoHeight){
 
-          console.log(elementTop,
-            window.innerHeight-startLogoHeight,
-            window.innerHeight,
-            startLogoHeight,
-            stretchAmt)
+          // console.log(elementTop,
+          //   window.innerHeight-startLogoHeight,
+          //   window.innerHeight,
+          //   startLogoHeight,
+          //   stretchAmt)
 
           let newHeight = map(
             elementTop,
@@ -75,7 +75,7 @@ export default function InteractiveLogo() {
             stretchAmt
           );
 
-          console.log(newHeight)
+          // console.log(newHeight)
 
           logoElements.forEach(element => {
             if (element instanceof HTMLElement) {

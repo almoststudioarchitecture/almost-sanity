@@ -15,11 +15,19 @@
     transition: transform 400ms ease-in-out;
     transform: translateX(-100%);
   }
-  .projectLinks:first-child{
-    mix-blend-mode:multiply;
+  .projectLinks{
+    /* mix-blend-mode:multiply; */
     border-left: 1px solid var(--grey);
+    transition: color 300ms;
     /* pointer-events: none; */
   }
+
+  .projectLinks:hover{
+    /* mix-blend-mode:multiply; */
+    border-left: 1px solid var(--main-color);
+    /* pointer-events: none; */
+  }
+
   .projectLinks:first-child a{
     /* color: transparent; */
     /* color: rgba(255,0,0,0.4); */
@@ -73,7 +81,7 @@
     opacity:0;
     /* pointer-events: none; */
     padding: var(--pad_y) var(--pad_x);
-    color: grey;
+    /* color: grey; */
   }
 
   @media screen and (max-width: 420px){

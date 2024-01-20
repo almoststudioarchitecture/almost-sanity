@@ -94,7 +94,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   // }
 
   p.mousePressed = function(event: MouseEvent) {
-    console.log("mouse pressed")
+    // console.log("mouse pressed")
     cursorWeightChange = cursorWeightDifference; // Increase the cursor weight by 20 pixels
     framesSinceMousePressed = 0; // Reset the frame count
     handleCanvasInteraction(event);
@@ -127,7 +127,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
         p.noLoop(); // Optional: Additional safety to ensure noLoop is called if mouse is not pressed
     }
 
-    console.log(path);
+    // console.log(path);
 
     if (!imageDrawn) {
         // console.log

@@ -10,6 +10,7 @@ interface ProjectInfoModuleProps {
 
 function ProjectInfoModule({ name, metadata, description }: ProjectInfoModuleProps) {
   useEffect(() => {
+    
     const projectInnerDiv = document.querySelector('.projectInner');
     if (!projectInnerDiv) return;
 
@@ -26,6 +27,7 @@ function ProjectInfoModule({ name, metadata, description }: ProjectInfoModulePro
     };
 
     projectInnerDiv.addEventListener('scroll', handleScroll);
+    handleScroll();
 
     return () => {
       projectInnerDiv.removeEventListener('scroll', handleScroll);

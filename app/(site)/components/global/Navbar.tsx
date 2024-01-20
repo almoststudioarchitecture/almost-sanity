@@ -144,7 +144,7 @@ export default function Navbar() {
     // Function to handle navigation click
     const handleNavClick = (newPath: string) => {
         // if (typeof window !== "undefined") {
-            console.log("." + currentPath + ".");
+            // console.log("." + currentPath + ".");
             if (newPath === currentPath) {
                 // If the clicked link is for the current page, toggle the open state
                 if (document.documentElement.clientWidth < 420) {
