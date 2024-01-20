@@ -36,6 +36,19 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, srcSet
     const [mouseIsMoving, setIsMoving] = useState(false);
     const [mouseIsDown, setIsDown] = useState(false);
 
+    const [isTouchScreen, setIsTouchScreen] = useState(false);
+
+
+    useEffect(() => {
+        // Check if the device is a touch screen
+        const touchScreenQuery = window.matchMedia('(hover: none)');
+        setIsTouchScreen(touchScreenQuery.matches);
+
+        // console.log(isTouchScreen);
+
+    }, []);
+
+
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
       setDragStart({ x: e.clientX, y: e.clientY });
       setIsDragging(false);
@@ -104,7 +117,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, srcSet
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className={project.coverImage.white ? 'white' : ''}>
             </img>
-            <DynamicApp cursorRadius={30} />
+            {!isTouchScreen && <DynamicApp cursorRadius={30} />}
             <div className="projectInfo">
             <div className="projectName" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 {project.name}<ArrowTopRight></ArrowTopRight>
