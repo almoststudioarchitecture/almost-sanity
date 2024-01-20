@@ -14,6 +14,7 @@
     /* background: rgba(248, 248, 248, 0.7); */
     mix-blend-mode: exclusion;
 }
+
   
 .cursor:before, .cursor:after {
     content: '';
