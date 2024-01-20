@@ -68,9 +68,12 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
 
       // console.log(window.devicePixelRatio);
 
-      p.pixelDensity(window.devicePixelRatio);
+      // p.pixelDensity(window.devicePixelRatio);
 
-      maskGraphics.pixelDensity(window.devicePixelRatio);
+      // maskGraphics.pixelDensity(window.devicePixelRatio);
+
+      maskGraphics.pixelDensity(2);
+      p.pixelDensity(2); 
     }
 
   }
