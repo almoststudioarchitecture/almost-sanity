@@ -148,7 +148,7 @@ export default function Projects() {
 
               let sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
               if (windowWidth < 450){
-                sizeX = Math.ceil(windowWidth*window.devicePixelRatio);
+                sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
               }
 
               // console.log(sizeX);

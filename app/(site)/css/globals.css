@@ -356,6 +356,14 @@ body{
   opacity: 1;
   position: relative;
   animation: canvasImage 600ms 200ms linear both;
+  width: 50vw;
+  height: 50vh;
+}
+
+@media screen and (max-width: 450px){
+  .canvases.gridded .canvas-container img{
+    width: 100vw;
+  }
 }
 
 @keyframes canvasImage{
@@ -366,6 +374,7 @@ body{
     opacity:1;
   }
 }
+
 
 .canvases.gridded img.white{
   object-fit: contain;

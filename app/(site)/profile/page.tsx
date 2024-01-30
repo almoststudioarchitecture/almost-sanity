@@ -16,14 +16,6 @@ import Head from 'next/head';
 export default async function About() {
   const profile: ProfileType[] = await getProfile();
 
-  // const components = {
-  //   marks: {
-  //     // Ex. 1: customizing common block types
-  //     p: ({children}) => <p>{children}</p>,
-  //     strong: ({children}) => <strong>{children}</strong>,
-  //   },
-  // }
-
 
   return (
     <>
