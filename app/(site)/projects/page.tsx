@@ -147,6 +147,9 @@ export default function Projects() {
               const originalIndex = projects.findIndex(p => p.slug === project.slug);
 
               let sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
+              if (windowWidth < 450){
+                sizeX = Math.ceil(windowWidth*window.devicePixelRatio);
+              }
 
               // console.log(sizeX);
 

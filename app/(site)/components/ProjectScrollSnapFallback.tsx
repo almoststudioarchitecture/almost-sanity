@@ -183,11 +183,12 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                                 <h1>THIS IS A VIMEO VIDEO</h1>
                             </div>
                             );
-                    } else {
-                        return (
-                            <h1>THIS IS A TEST VIDEO</h1>
-                        )
-                    }
+                    } 
+                    // else {
+                    //     return (
+                    //         <h1>THIS IS A TEST VIDEO</h1>
+                    //     )
+                    // }
                     return null;
                     })}
         </div>
