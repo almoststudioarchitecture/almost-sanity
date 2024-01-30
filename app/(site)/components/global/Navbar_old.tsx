@@ -9,12 +9,18 @@ import { usePathname } from 'next/navigation';
 import styles from '../../css/Navbar.module.css';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState, useRef } from 'react';
+// import { useRouter } from 'next/router'; // Import useRouter
+
 
 
 const TRANSITION_SPEED = 1000;
 
 
 export default function Navbar() {
+    // const [currentPath, setCurrentPath] = useState('');
+    // const [previousPath, setPreviousPath] = useState('');
+    // const pathname = usePathname(); // Use usePathname hook
+    // const initialLoadRef = useRef(true);
 
     const [currentPath, setCurrentPath] = useState('');
     const [previousPath, setPreviousPath] = useState('');
@@ -31,6 +37,15 @@ export default function Navbar() {
     const closeNav = () => {
         setIsNavOpen(false);
     };
+
+    // Event handler for the first nav item
+    // const handleFirstNavToggle = () => {
+    //     if (window.innerWidth < 450) {
+    //         setIsNavOpen(!isNavOpen); // Toggle only for small screens
+    //     }
+    //     handleNavClick('home'); // Continue with nav click handling
+    // };
+
 
     useEffect(() => {
         // Add the 'loading' class on initial load
@@ -128,17 +143,19 @@ export default function Navbar() {
 
     // Function to handle navigation click
     const handleNavClick = (newPath: string) => {
-            if (newPath === currentPath || (currentPath == 'other' && !isNavOpen)) {
+        // if (typeof window !== "undefined") {
+            // console.log("." + currentPath + ".");
+            if (newPath === currentPath) {
                 // If the clicked link is for the current page, toggle the open state
                 if (document.documentElement.clientWidth < 450) {
                     setIsNavOpen(!isNavOpen);
-                    
                 }
             } else {
                 // If the clicked link is for a different page, close the nav and navigate
                 closeNav();
                 navigateTo(newPath);
             }
+        // }
     };
 
     // Navigation logic abstracted into a function for reusability
@@ -158,6 +175,7 @@ export default function Navbar() {
         }
 
         router.push(url);
+        // Update path states
         setPreviousPath(currentPath);
         setCurrentPath(newPath);
     };
@@ -166,12 +184,78 @@ export default function Navbar() {
 
     // Function to be called when Projects tab is clicked
     const onProjectsClick = () => {
+        // if (previousPath === '' /* replace with the path of your home tab */) {
+        //     // Code to execute when navigating from Home to Projects
+        //     console.log("Navigated from Home to Projects");
+        //     document.body.classList.add("gridded");
+        //     document.body.classList.add("path-projects");
+        //     document.body.classList.remove("path-");
+        //     let activeNavTab = document.querySelector("nav a.active");
+        //     if (activeNavTab){
+        //         activeNavTab.classList.remove("active")
+        //     }
+        //     const canvases = document.querySelectorAll<HTMLElement>(".canvas-container");
+            
+        //     canvases.forEach(canvas => {
+        //         let orderStr = canvas.getAttribute("data-order") as string;
+        //         let order = parseInt(orderStr);
+        //         let canvasElement = canvas.querySelector("canvas");
+        //         let imgElement = canvas.querySelector("img");
+        //         let canvasesElem = document.querySelector<HTMLElement>(".canvases");
+
+        //         console.log(canvas);
+
+        //         // Apply styles for reordered state
+        //         canvas.style.left = order % 2 === 0 ? window.innerWidth / 2 - 1 + "px" : "-1px";
+        //         canvas.style.display = "block";
+        //         // canvas.style.backgroundImage = `url(${canvas.getAttribute("data-href")})`
+                
+        //         if (canvasElement) {
+        //             canvasElement.style.width = window.innerWidth / 2 + "px";
+        //             canvasElement.style.height = window.innerHeight / 2 + "px";
+        //         }
+
+        //         if (imgElement){
+        //             imgElement.style.display = "block";
+        //             setTimeout(function(){
+        //                 imgElement!.style.opacity = "1";
+        //             },5)
+        //         }
+
+        //         let topValue = Math.floor(order / 2) * window.innerHeight / 2 - 1;
+        //         console.log("top value " + topValue)
+        //         canvas.style.top = topValue + "px";
+
+        //         if (canvasesElem){
+        //             canvasesElem.classList.add("gridded");
+        //         }
+                
+        //         // const canvasesElem = document.querySelector(".canvases");
+        //         // if (canvasesElem !== null) {
+        //         //     canvasesElem.classList.add("gridded");
+        //         // }
+        //     });
+        // }
         setActiveLinkIndex(2);
     };
 
     const onProfileClick = () => {
         setActiveLinkIndex(3);
     }
+
+    // const getActiveClass = (path: string) => {
+    //     // return pathname === path ? `${styles.active}` : '';
+    //     return pathname === path ? `active` : '';
+    // };
+
+    // const getActiveClass = (path: string, index: number) => {
+    //     const isActive = pathname === path;
+    //     if (isActive) {
+    //         setActiveLinkIndex(index); // Update active link index
+    //     }
+    //     return isActive ? `active` : '';
+    // };
+
     const getActiveClass = (path: string) => {
         return pathname === path ? 'active' : '';
     };
@@ -185,7 +269,9 @@ export default function Navbar() {
         <nav className={`${styles.nav} ${navClass} ${initialLoadRef.current ? 'initial-load' : ''}`} data-hide-cursor='true'>
         <ul className={styles.list}>
             <li className={`${styles.listItem} ${isNavOpen ? styles.open : ''}`}> {/* Toggle class here */}
-                <button className={`${styles.link}`} onClick={() => handleNavClick('')}>
+                {/* <Link href="/" className={`${styles.link} ${getActiveClass('/')}`}> */}
+                {/* <Link href="/" className={`${styles.link}`}  onClick={() => handleNavClick('home')}> */}
+                <Link href="/" className={`${styles.link}`} onClick={() => handleNavClick('')}>
                     <div className={styles.inner}><span>A</span><span>l</span><span>m</span><span>o</span><span>s</span><span>t</span><span> </span><span>S</span><span>t</span><span>u</span><span>d</span><span>i</span><span>o</span></div>
                     <Image 
                         className={`${styles.icon} ${styles.iconDraw}`}
@@ -194,7 +280,7 @@ export default function Navbar() {
                         height={25} 
                         alt="logo" 
                     />
-                </button>
+                </Link>
             </li>
             <li className={styles.listItem}>
                     {/* <button className={`${styles.link}`} onClick={onProjectsClick}> */}

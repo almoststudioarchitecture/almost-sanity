@@ -84,7 +84,7 @@
     color: grey;
   }
 
-  @media screen and (max-width: 420px){
+  @media screen and (max-width: 450px){
     .a{
       color: var(--main-color);
     }
@@ -121,7 +121,7 @@
 
   
   
-  @media screen and (max-width: 420px){
+  @media screen and (max-width: 450px){
     .projectLinks{
       width:100%;
       border-left:0px;

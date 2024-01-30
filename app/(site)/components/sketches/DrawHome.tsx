@@ -66,16 +66,27 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
       p.noLoop();
       p.rectMode(p.CENTER)
 
-      // console.log(window.devicePixelRatio);
+      
 
       // p.pixelDensity(window.devicePixelRatio);
 
       // maskGraphics.pixelDensity(window.devicePixelRatio);
 
-      maskGraphics.pixelDensity(2);
-      p.pixelDensity(2); 
+      console.log(window.devicePixelRatio)
+
+      // maskGraphics.pixelDensity(window.devicePixelRatio/2);
+      // p.pixelDensity(window.devicePixelRatio); 
+
+      console.log(p.pixelDensity());
+      console.log(maskGraphics.pixelDensity())
+      // document.querySelector(".verticalLine").innerHTML= p.pixelDensity() + ", " + maskGraphics.pixelDensity() + ", " + window.devicePixelRatio
     }
 
+  }
+
+  p.windowResized = function(){
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+    maskGraphics.resizeCanvas(p.windowWidth, p.windowHeight);
   }
   
 
@@ -107,6 +118,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   
   p.touchStarted = function(event: TouchEvent) {
     handleCanvasInteraction(event);
+    console.log("device pixel ratio:" + window.devicePixelRatio);
   }
 
 

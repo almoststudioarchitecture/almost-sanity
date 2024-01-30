@@ -673,7 +673,7 @@
 
 // // document.getElementById("navLink_draw").addEventListener("click", function(e){
 // //   e.preventDefault();
-// //   if (window.innerWidth < 420){
+// //   if (window.innerWidth < 450){
 // //     document.getElementById("nav").classList.toggle("open");
 // //   }
 // // })

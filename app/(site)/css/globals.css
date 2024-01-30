@@ -343,7 +343,7 @@ body{
   overflow: hidden;
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 450px){
   .canvases.path-projects .canvas-container,
   .canvases.gridded .canvas-container{
     width: 100vw;
@@ -443,7 +443,7 @@ body{
   transition: height 400ms;
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 450px){
   .verticalLine{
     opacity: 0;
   }
@@ -495,7 +495,7 @@ a{
   display: none !important;
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 450px){
 
   .path-projects #cursor{
       display:none !important;
@@ -539,7 +539,7 @@ body.path- .list-container{
   animation: moveIn 300ms 1s ease-out both;
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 450px){
   body.path- .list-container{
       animation:none;
       /* transform:translateX(100%); */
@@ -764,19 +764,19 @@ nav{
 /* ON DRAW PAGE */
 
  /* Loading */
-body.loading nav.active-1 li:first-child a{
+body.loading nav.active-1 li:first-child button{
   animation: expandLogo 600ms 1s ease-in-out both;
 }
 
 
 
  /* After Loaded */
-nav.active-1 li:first-child a{
+nav.active-1 li:first-child button{
   transition: width 100ms linear;
   width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
 }
 
-nav.active-1.hoveringOthers li:first-child a{
+nav.active-1.hoveringOthers li:first-child button{
   width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
 }
 
@@ -790,7 +790,7 @@ nav.active-3.hoveringOthers li:nth-child(3) button{
 
 
 
-@media screen and (min-width: 420px){
+@media screen and (min-width: 450px){
   
 
     nav.active-1 li:nth-child(2):hover button,
@@ -817,7 +817,7 @@ nav.active-3.hoveringOthers li:nth-child(3) button{
 }
 
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 450px){
 
   nav.active-1 li:first-child,
   nav.active-2 li:nth-child(2),
@@ -855,8 +855,8 @@ nav.active-2 li:nth-child(2) button{
   width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
 }
 
-body.transition-home-projects nav li:first-child a,
-body.transition-home-profile nav li:first-child a{
+body.transition-home-projects nav li:first-child button,
+body.transition-home-profile nav li:first-child button{
   animation: expandLogo 6000ms ease-in-out reverse both;
 }
 
@@ -897,7 +897,7 @@ nav.active-3 li:nth-child(3) a{
   /* width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px) */
 }
 
-body.loading .listItem:first-child a.active{
+body.loading .listItem:first-child button.active{
   width: var(--logo-width);
   animation: expandLogo 800ms 1s ease-in-out both;
 }
@@ -923,8 +923,8 @@ body.loading .listItem:first-child a.active{
 }
 
 
-@media screen and (max-width: 420px){
-  nav.active-1 li:first-child a,
+@media screen and (max-width: 450px){
+  nav.active-1 li:first-child button,
   nav.active-2 li:nth-child(2) button,
   nav.active-3 li:nth-child(3) button{
     width: 100%;

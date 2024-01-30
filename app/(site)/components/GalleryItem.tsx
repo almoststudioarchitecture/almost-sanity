@@ -13,6 +13,18 @@ import React, { useRef, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router';
 
+import imageUrlBuilder from '@sanity/image-url';
+
+
+const builder = imageUrlBuilder({
+  projectId: "oogp23sh",
+  dataset: "production",
+});
+
+function urlFor(source: string) {
+  return builder.image(source);
+}
+
 
 
 const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').then((mod) => mod.Sketch), {
@@ -20,12 +32,13 @@ const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').t
 });
 
 type GalleryItemProps = {
+    // src: string;
     project: ProjectType;
     optimizedSrc: string;
-    srcSet: string;
+    altText: string;
 };
 
-const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, srcSet }) => {
+const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, altText }) => {
 
     // console.log("GalleryItem Props:", { project, optimizedSrc, srcSet });
 
@@ -98,6 +111,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, srcSet
       }, [isDragging]); // Add dependencies if necessary
 
       
+      // {console.log(optimizedSrc)}
   
       
   
@@ -111,12 +125,17 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, srcSet
             //     e.preventDefault();
             // }}
             >
-            <img 
+            <Image 
+                // src={optimizedSrc} 
                 src={optimizedSrc} 
-                srcSet={srcSet}
-                sizes="(max-width: 768px) 100vw, 50vw"
+                // srcSet={srcSet}
+                width="0"
+                height="0"
+                alt={altText}
+                style={{width: '50vw', height:'50vh'}}
+                sizes="(max-width: 450px) 100vw, 50vw"
                 className={project.coverImage.white ? 'white' : ''}>
-            </img>
+            </Image>
             {!isTouchScreen && <DynamicApp cursorRadius={30} />}
             <div className="projectInfo">
             <div className="projectName" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

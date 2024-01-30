@@ -34,7 +34,7 @@
     width:calc(100% - 30px);
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 450px){
     .list li:hover .inner{
         width:100%;
     }
@@ -249,7 +249,7 @@
     0%{ width: var(--profile-width);}
     100%{ width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
 } */
-@media screen and (max-width: 420px){
+@media screen and (max-width: 450px){
     /* border top line */
     /* .nav:before{
         content: '';

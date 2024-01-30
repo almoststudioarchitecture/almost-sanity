@@ -30,11 +30,11 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
  
   
   p.setup = () => {
-    cnv = p.createCanvas(window.innerWidth, window.innerHeight);
+    cnv = p.createCanvas(window.innerWidth/2, window.innerHeight/2);
 
     cnvParent = cnv.elt;
 
-    maskGraphics = p.createGraphics(p.width/2, p.height/2);
+    maskGraphics = p.createGraphics(p.width, p.height);
     maskGraphics.width = p.width;
     maskGraphics.height = p.height;
     maskGraphics.clear();
@@ -43,8 +43,8 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
     p.noLoop();
 
    
-    maskGraphics.pixelDensity(2);
-    p.pixelDensity(2); 
+    // maskGraphics.pixelDensity(2);
+    // p.pixelDensity(2); 
     // maskGraphics.pixelDensity(window.devicePixelRatio);
     // p.pixelDensity(window.devicePixelRatio); 
 
@@ -57,7 +57,7 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
         // Disable the link
         parentLink.style.pointerEvents = 'none';
     }
-    console.log("disabled");
+    // console.log("disabled");
     return parentLink;
 }
 
@@ -105,7 +105,7 @@ function enableLink(element: HTMLElement) {
         p.noLoop(); // Optional: Additional safety to ensure noLoop is called if mouse is not pressed
     }
 
-    console.log(dragged);
+    // console.log(dragged);
 
 
     if (!imageDrawn) {
@@ -224,8 +224,8 @@ function enableLink(element: HTMLElement) {
                 let displayImage: p5.Image = cnvImage.get();
                 
                 // Create a new p5.Image from maskGraphics
-                let maskImage: p5.Image = p.createImage(p.width, p.height);
-                maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, p.width*2, p.height*2); 
+                let maskImage: p5.Image = p.createImage(p.width*window.devicePixelRatio, p.height*window.devicePixelRatio);
+                maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0, 0, maskGraphics.width, maskGraphics.height); 
                 // maskImage.resize(p.width*4, p.height*4);
 
                 // // Apply the mask to displayImage
@@ -244,7 +244,7 @@ function enableLink(element: HTMLElement) {
   p.mouseDragged = function() {
     dragged = true;
     // Disable the link
-    console.log("dragging");
+    // console.log("dragging");
     disableLink(cnvParent);
   }
   p.mouseReleased = function() {

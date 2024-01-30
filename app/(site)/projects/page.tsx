@@ -35,12 +35,40 @@ function urlFor(source: string) {
   return builder.image(source);
 }
 
+
 export default function Projects() {
   const [projects, setProjects] = useState<ProjectType[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [mouseIsMoving, setIsMoving] = useState(false);
   const [mouseIsDown, setIsDown] = useState(false);
+
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  // Function to update the window width
+  const updateWindowWidth = () => {
+    // if (window.devicePixelRatio < 1.9){
+    //   setWindowWidth(window.innerWidth);
+    // } else if (window.devicePixelRatio < 2.9){
+    //   setWindowWidth(window.innerWidth*2);
+    // } else if (window.devicePixelRatio == 3){
+    //   setWindowWidth(window.innerWidth*3);
+    // } else {
+      setWindowWidth(window.innerWidth);
+    // }
+  };
+
+
+  useEffect(() => {
+    // Set initial size
+    updateWindowWidth();
+
+    // Add resize event listener
+    window.addEventListener('resize', updateWindowWidth);
+
+    // Cleanup function
+    return () => window.removeEventListener('resize', updateWindowWidth);
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setDragStart({ x: e.clientX, y: e.clientY });
@@ -118,11 +146,15 @@ export default function Projects() {
               // Find the original index of the project
               const originalIndex = projects.findIndex(p => p.slug === project.slug);
 
+              let sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
+
+              // console.log(sizeX);
 
                 // Generate optimized image URL
                 const optimizedSrc = urlFor(project.coverImage.image)
-                .width(800)  // Set desired width
-                .auto('format') // Automatic format selection (e.g., WebP)
+                .width(sizeX)  // Set desired width
+                .auto('format')
+                .quality(100) // Automatic format selection (e.g., WebP)
                 .url();
 
                 const srcSet = `
@@ -132,9 +164,12 @@ export default function Projects() {
                   ${urlFor(project.coverImage.image).width(1600).url()} 1600w,
                 `;
 
+                // console.log(project.coverImage.alt);
+
                 return (
                   <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}>
-                    <GalleryItem optimizedSrc={optimizedSrc} srcSet={srcSet} project={project} ></GalleryItem>
+                    
+                    <GalleryItem optimizedSrc={optimizedSrc} project={project} altText={project.coverImage.alt ?? ''}></GalleryItem>
                   </div>
                 );
               })}

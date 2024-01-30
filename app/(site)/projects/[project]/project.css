@@ -112,9 +112,6 @@
     scroll-snap-type: y mandatory;
     max-height:calc(100vh - var(--nav-height));
     overflow-y: auto;
-    /* height: calc(100vh - var(--nav-height)); */
-    /* overflow-y: scroll; */
-    /* scroll-padding-top:var(--nav-height) */
 }
 
 .projectInner > *{
@@ -161,6 +158,11 @@
     height:calc(100vh - var(--nav-height));
     width:100%;
     background:black;
+    overflow: hidden;
+}
+
+.image-container-inner img{
+    background: black;
 }
 
 .image-container-inner.style1{

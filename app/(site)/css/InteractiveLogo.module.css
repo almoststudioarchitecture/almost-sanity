@@ -1,22 +1,45 @@
 #logo{
-    --unit: calc(100vw/49);
-    --height: calc(100vw/49*4);
-    display:flex;
-    /* position:absolute; */
     bottom:0px;
+    --unit: calc(100vw/49);
+   
+    margin-top: 100px;
+    height:calc(100vh - var(--nav-height) + 1px);
+}
+
+#logo, .logoInner{
+    display:flex;
+    --height: calc(100vw/49*4);
+    /* position:absolute; */
+    
     /* flex-wrap:wrap; */
     /* margin-top:50vh; */
     /* height:50vh; */
-    height:calc(100vh - var(--nav-height) + 1px);
+    
     /* margin-top: var(--nav-height); */
     align-items: flex-start;
     max-width:100vw;
+}
+
+
+.logoInner{
+    --unit: calc(100vw/30);
+    --height: calc(100vw/30*2);
+    /* height:calc((100vh - var(--nav-height)) + 1px); */
+    align-items: flex-end;
+}
+.logoInner:first-child{
     margin-top: 100px;
+}
+.logoContainerSm{
+    display:flex;
+    bottom:0px;
 }
 
 
 #logo > div,
-#logo > a{
+#logo > a,
+.logoInner > div,
+.logoInner > a{
     width: calc(var(--unit)*4 - 1px);
     height:var(--height);
     border:1px solid var(--main-color);
@@ -25,17 +48,33 @@
     transition:width 300ms;
     /* border-bottom:0px; */
 }
-#logo:hover > div{
-    /* height:50vh; */
+
+.logoInner > div,
+.logoInner > a{
+    width: calc(var(--unit)*8 - 1px);
+    /* height:calc(var(--height)/2); */
+    height:calc(var(--height));
+    /* border-bottom: 0; */
+    /* border-bottom:0px; */
 }
+
+.logoInner:first-child > div,
+.logoInner:first-child > a{
+    border-bottom: 0;
+}
+
 #logo > div:hover,
-#logo > a:hover{
+#logo > a:hover,
+.logoInner > div:hover,
+.logoInner > a:hover{
     width: 300px;
     /* border-right:1px solid red; */
 }
 
 #logo > div:first-child,
-#logo > a:first-child{
+#logo > a:first-child,
+.logoInner > div:first-child,
+.logoInner > a:first-child{
     border-left:0px;
 }
 #logo .gap{
@@ -51,7 +90,9 @@
 
 
 #logo > div > div,
-#logo > a > div{
+#logo > a > div,
+.logoInner > div > div,
+.logoInner > a > div{
     width: var(--unit);
     height: var(--unit);
     /* border: 1px dashed red; */
@@ -59,70 +100,70 @@
     position: absolute;
     background: var(--bg);
 }
-#logo .a div:first-child{
+.a div:first-child{
     top: var(--unit);
     left: 50%;
     transform:translateX(-50%);
 }
-#logo .a div:nth-child(2){
+.a div:nth-child(2){
     left: 50%;
     transform:translateX(-50%);
 }
 
-#logo .right{
+.right{
     right:-1px;
     /* border-right-color: var(--bg); */
 }
 
-#logo .left{
+.left{
     left:-1px;
     /* border-left-color: var(--bg); */
 }
 
-#logo .top{
+.top{
     top:-1px;
     /* border-top-color: var(--bg); */
 }
 
-#logo .bottom{
+.bottom{
     bottom: -1px;
     /* border-bottom-color: var(--bg); */
 }
 
-#logo .center{
+.center{
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
 }
 
-#logo .m div:first-child{
+.m div:first-child{
     left: calc(var(--unit)*0.5);
 }
 
-#logo .m div:nth-child(2){
+.m div:nth-child(2){
     right: calc(var(--unit)*0.5);
 }
 
-#logo .s div:first-child{
+.s div:first-child{
     top: var(--unit);
 }
 
-#logo .s div:nth-child(2){
+.s div:nth-child(2){
     bottom: var(--unit);
 }
 
-#logo .u div{
+.u div{
     left:50%;
     transform:translateX(-50%);
 }
 
-#logo .d div:last-child{
+.d div:last-child{
     left:var(--unit);
     top: 50%;
     transform:translateY(-50%);
 }
 
-#logo .i div{
+.i div{
     top: 50%;   
     transform:translateY(-50%);
 }
@@ -131,6 +172,7 @@
     opacity:0;
 }
 
-#logo > *:hover .heroImage{
+#logo > *:hover .heroImage,
+.logoInner > *:hover .heroImage{
     opacity:1;
 }
