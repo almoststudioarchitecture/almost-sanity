@@ -52,6 +52,35 @@
     background: var(--bg);
     transition: background 300ms;
   }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body:-webkit-scrollbar {
+  display: none;
+}
+
+body::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-track {
+  display: none;
+}
+
+
+body {
+  width: calc(100vw - (100vw - 100%));
+  overflow-x:none;
+}
+
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
   body.path-other{
     --main-color: black;
     --bg: var(--bg-color);
@@ -308,8 +337,8 @@ body{
 
 .canvases.path-projects .canvas-container,
 .canvases.gridded .canvas-container{
-  width: 50vw;
-  height: 50vh;
+  width: 50%;
+  height: 50dvh;
   background-size:cover;
   background-position:center;
 }
@@ -672,6 +701,17 @@ body.gridded {
   --main-color: black;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+body.path-projects::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body.path-projects {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 body.path-projects nav{
   position:sticky;
 }
@@ -976,14 +1016,14 @@ nav li:nth-child(3){
 /* Hide scrollbar for Chrome, Safari and Opera */
 body::-webkit-scrollbar,
 .list-container::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 body,
 .list-container {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;   /* Firefox */
 }
 
 
