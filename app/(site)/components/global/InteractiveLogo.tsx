@@ -187,7 +187,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[0].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -199,7 +199,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[1].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -212,7 +212,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[2].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -224,7 +224,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[3].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -237,7 +237,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[4].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -250,7 +250,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[5].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -265,7 +265,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[6].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -278,7 +278,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[7].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -290,7 +290,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[8].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -303,7 +303,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[9].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -317,7 +317,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[10].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -329,7 +329,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[11].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -348,7 +348,7 @@ export default function InteractiveLogo() {
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[0].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -360,7 +360,7 @@ export default function InteractiveLogo() {
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[1].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -373,7 +373,7 @@ export default function InteractiveLogo() {
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[2].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -385,7 +385,7 @@ export default function InteractiveLogo() {
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[3].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -398,7 +398,7 @@ export default function InteractiveLogo() {
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[4].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -411,7 +411,7 @@ export default function InteractiveLogo() {
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[5].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -427,7 +427,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[6].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -440,7 +440,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[7].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -452,7 +452,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[8].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -465,7 +465,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[9].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -479,7 +479,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[10].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -491,7 +491,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[11].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}

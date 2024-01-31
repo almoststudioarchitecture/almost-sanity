@@ -55,7 +55,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
   //     objFit = 'contain'
   //   }
   //   if (imageAspectRatio > browserAspectRatio) {
-  //     imageStyle = { width: '100vw', height: 'auto', borderTop: "4px solid white", borderBottom: "4px solid white" };
+  //     imageStyle = { width: '100dvw', height: 'auto', borderTop: "4px solid white", borderBottom: "4px solid white" };
   //   } else {
   //     imageStyle = { width: 'auto', height: '100%', borderLeft: "4px solid white", borderRight: "4px solid white" };
   //   }
@@ -82,7 +82,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
 
     //     if (imageAspectRatio > browserAspectRatio) {
     //       // Image is wider than the browser
-    //       img.style.width = "100vw";
+    //       img.style.width = "100dvw";
     //       img.style.height = "auto";
     //       img.style.borderTop = "4px solid white";
     //       img.style.borderBottom = "4px solid white";
@@ -96,7 +96,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
     //     }
     //   }
     // } else {
-    //       img.style.width = "100vw";
+    //       img.style.width = "100dvw";
     //       img.style.height = "auto";
     //       img.style.borderTop = "4px solid white";
     //       img.style.borderBottom = "4px solid white";
@@ -186,7 +186,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
         // height='0'
         // height={100}
         // fill
-        // sizes="100vw"
+        // sizes="100dvw"
         // objectFit='contain'
         // objectFit={fit || 'contain'}
         onLoadingComplete={handleLoadingComplete}

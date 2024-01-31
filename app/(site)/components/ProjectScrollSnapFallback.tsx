@@ -58,7 +58,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                     className="hero-image WHITE"
                     width='0'
                     height='0'
-                    sizes='100vw'
+                    sizes='100dvw'
                     src={project.coverImage?.image}
                     alt={project.coverImage?.alt || project.name}
                     style={{ background: 'white', objectFit: 'contain', width: '100%', height: '100%' }}

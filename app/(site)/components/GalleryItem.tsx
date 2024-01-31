@@ -132,8 +132,8 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, altTex
                 width="0"
                 height="0"
                 alt={altText}
-                // style={{width: '50vw', height:'50vh'}}
-                sizes="(max-width: 450px) 100vw, 50vw"
+                // style={{width: '50dvw', height:'50vh'}}
+                sizes="(max-width: 450px) 100dvw, 50dvw"
                 className={project.coverImage.white ? 'white' : ''}>
             </Image>
             {!isTouchScreen && <DynamicApp cursorRadius={30} />}

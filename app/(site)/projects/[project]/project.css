@@ -2,16 +2,16 @@
 
 .section{
     border-bottom: 1px solid var(--main-color);
-    width:100vw;
-    /* width: calc(100vw - var(--pad)*2); */
-    /* width: calc(100vw - var(--nav-height)); */
-    /* width: calc(100vw - var(--nav-height) * 2); */
+    width:100dvw;
+    /* width: calc(100dvw - var(--pad)*2); */
+    /* width: calc(100dvw - var(--nav-height)); */
+    /* width: calc(100dvw - var(--nav-height) * 2); */
     /* margin-left: var(--nav-height); */
     transition:background 300ms, border 300ms;
 }
 .hero{
     height: calc(100vh - 160px);
-    /* width: 100vw; */
+    /* width: 100dvw; */
     transition: margin 300ms, height 300ms;
     margin-top: calc(var(--nav-height)*-1);
     animation: hero 600ms 1s ease-out both;

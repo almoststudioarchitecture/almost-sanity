@@ -69,7 +69,7 @@ body::-webkit-scrollbar-track {
 
 
 body {
-  width: calc(100vw - (100vw - 100%));
+  width: calc(100dvw - (100dvw - 100%));
   overflow-x:none;
 }
 
@@ -166,7 +166,7 @@ body {
 }
 
 #drawInHere>.svgWrapper {
-  width: 100vw;
+  width: 100dvw;
   height: 100vh;
   position: absolute;
   top:0;
@@ -195,7 +195,7 @@ body {
   mix-blend-mode: hard-light;
 }
 #drawInHere image{
-  width:100vw;
+  width:100dvw;
   height: 100vh;
   position:relative;
 }
@@ -363,7 +363,7 @@ body{
 }
 
 .canvases.gridded .canvas-container{
-  width: 50vw;
+  width: 50%;;
   height: 50vh;
   background-size:cover;
   background-position:center;
@@ -375,7 +375,7 @@ body{
 @media screen and (max-width: 450px){
   .canvases.path-projects .canvas-container,
   .canvases.gridded .canvas-container{
-    width: 100vw;
+    width: 100dvw;
   }
 }
 
@@ -385,13 +385,13 @@ body{
   opacity: 1;
   position: relative;
   animation: canvasImage 600ms 200ms linear both;
-  width: 50vw;
+  width: 50dvw;
   height: 50vh;
 }
 
 @media screen and (max-width: 450px){
   .canvases.gridded .canvas-container img{
-    width: 100vw;
+    width: 100dvw;
   }
 }
 
@@ -679,7 +679,7 @@ body.path-projects .verticalLine{
 
 @keyframes lineExpand{
   0%{ width: 0px;}
-  100%{ width: 100vw;}
+  100%{ width: 100dvw;}
 }
 @keyframes navItemAppear{
   0%{ opacity: 0;}
@@ -710,6 +710,16 @@ body.path-projects::-webkit-scrollbar {
 body.path-projects {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+html, body {
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 body.path-projects nav{
@@ -748,7 +758,7 @@ nav.active-4 li:first-child{
 }
 
 nav.active-4:before{
-  width: 100vw;
+  width: 100dvw;
   height: var(--nav-height);
   display:block;
   background: var(--bg);
@@ -822,19 +832,19 @@ body.loading nav.active-1 li:first-child button{
  /* After Loaded */
 nav.active-1 li:first-child button{
   transition: width 100ms linear;
-  width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
+  width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
 }
 
 nav.active-1.hoveringOthers li:first-child button{
-  width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
+  width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
 }
 
 nav.active-2.hoveringOthers li:nth-child(2) button{
-  width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
+  width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
 }
 
 nav.active-3.hoveringOthers li:nth-child(3) button{
-  width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
+  width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
 }
 
 
@@ -901,7 +911,7 @@ nav.active-3.hoveringOthers li:nth-child(3) button{
 
 nav.active-2 li:nth-child(2) button{
   transition: width 100ms linear;
-  width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
+  width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
 }
 
 body.transition-home-projects nav li:first-child button,
@@ -912,7 +922,7 @@ body.transition-home-profile nav li:first-child button{
 body.transition-home-projects nav li:nth-child(2) button,
 body.transition-profile-projects nav li:nth-child(2) button{
   animation: expandProjects 600ms ease-in-out both;
-  /* width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
+  /* width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
 }
 
 
@@ -920,13 +930,13 @@ body.transition-profile-projects nav li:nth-child(2) button{
 
 nav.active-3 li:nth-child(3) button{
   transition: width 100ms linear;
-  width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px);
+  width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px);
 }
 
 /* Transition home to profile */
 body.transition-home-profile nav li:nth-child(3) button{
   animation: expandProfile 600ms ease-in-out both;
-  /* width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
+  /* width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
 }
 
 body.transition-profile-projects nav li:nth-child(3) button,
@@ -936,14 +946,14 @@ body.transition-profile-home nav li:nth-child(3) button{
 
 
 nav.active-2 li:first-child a{
-  /* width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px); */
+  /* width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px); */
   /* animation: expandLogo 600ms 100ms ease-in-out reverse both; */
-  /* width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
+  /* width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
 }
 nav li:nth-child(3) .active,
 nav.active-3 li:nth-child(3) a{
   /* animation: expandProfile 600ms 1s ease-in-out both; */
-  /* width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px) */
+  /* width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px) */
 }
 
 body.loading .listItem:first-child button.active{
@@ -954,7 +964,7 @@ body.loading .listItem:first-child button.active{
 @keyframes expandLogo{
   0%{ width: calc(var(--logo-width) + var(--pad_x)*2)}
   100%{ 
-    width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
+    width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
   }
 }
 
@@ -962,13 +972,13 @@ body.loading .listItem:first-child button.active{
   /* 0%{ width: var(--projects-width);} */
   0%{ width: calc(var(--projects-width) + var(--pad_x)*2)}
   100%{
-    width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px)
+    width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px)
   }
-  /* 100%{ width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*2 - 2px);} */
+  /* 100%{ width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*2 - 2px);} */
 }
 @keyframes expandProfile{
   0%{ width: var(--profile-width);}
-  100%{ width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
+  100%{ width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
 }
 
 
@@ -1006,7 +1016,7 @@ nav li:nth-child(3){
 
 @keyframes lineExpand{
   0%{ width: 0px;}
-  100%{ width: 100vw;}
+  100%{ width: 100dvw;}
 }
 @keyframes navItemAppear{
   0%{ opacity: 0;}
@@ -1029,7 +1039,7 @@ body,
 
 nav:after {
   content: '';
-  width: 100vw;
+  width: 100dvw;
   border-bottom: 1px solid var(--main-color);
   position: absolute;
 }
@@ -1045,7 +1055,7 @@ body.loading nav li{
 
 @keyframes lineExpand{
   0%{ width: 0px;}
-  100%{ width: 100vw;}
+  100%{ width: 100dvw;}
 }
 
 @keyframes navItemAppear{
