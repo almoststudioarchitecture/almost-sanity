@@ -6,8 +6,8 @@ const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMont
 const config: ClientConfig = {
   projectId: "oogp23sh",
   dataset: "production",
-  apiVersion: formattedDate,
-  useCdn: false,
+  // apiVersion: formattedDate,
+  // useCdn: false,
 };
 
 const client = createClient(config);
