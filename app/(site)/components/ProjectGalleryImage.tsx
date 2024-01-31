@@ -39,7 +39,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
   }, []);
 
   useEffect(() => {
-      setDevicePixelRatio(window.devicePixelRatio);
+      setDevicePixelRatio(window.devicePixelRatio*0.75);
   }, []);
 
   // const imageAspectRatio = w / h; // Use provided width and height
