@@ -1,5 +1,5 @@
 import {defineConfig} from 'sanity'
-import {deskTool, StructureBuilder} from 'sanity/desk'
+import {structureTool, StructureBuilder} from 'sanity/structure'
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 // import { defineConfig } from "sanity";
 // import { deskTool } from "sanity/desk";
@@ -13,7 +13,7 @@ export default defineConfig({
   basePath: "/edit",
   // plugins: [deskTool()],
   plugins: [
-    deskTool({
+    structureTool({
       structure: (S, context) => {
         return S.list()
           .title('Content')
