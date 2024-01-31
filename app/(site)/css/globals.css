@@ -713,7 +713,7 @@ body.path-projects {
 }
 
 html, body {
-  overflow-y: scroll;
+  overflow-y: visible;
   scrollbar-width: none;
 }
 

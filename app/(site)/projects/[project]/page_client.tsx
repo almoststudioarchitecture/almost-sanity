@@ -109,7 +109,7 @@
 //                 className="hero-image WHITE"
 //                 width='0'
 //                 height='0'
-//                 sizes='100dvw'
+//                 sizes='100vw'
 //                 src={project.coverImage?.image}
 //                 alt={project.coverImage?.alt || project.name}
 //                 style={{ background: 'white', objectFit: 'contain', width: '100%', height: '100%' }}

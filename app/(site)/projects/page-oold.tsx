@@ -146,7 +146,7 @@
                       <img 
                         src={optimizedSrc} 
                         srcSet={srcSet}
-                        sizes="(max-width: 768px) 100dvw, 50dvw"
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className={project.coverImage.white ? 'white' : ''}></img>
                       <DynamicApp cursorRadius={30} />
                       <div className="projectInfo">

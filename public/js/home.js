@@ -515,11 +515,11 @@
 // //       document.getElementById("line-v1").style.right = "-1px";
 // //       document.getElementById("line-v2").style.right = "-1px";
 // //     } else if (column == 2){
-// //       document.getElementById("line-v1").style.right = "100dvw";
+// //       document.getElementById("line-v1").style.right = "100vw";
 // //       document.getElementById("line-v2").style.right = "-1px";
 // //     } else if (column == 3){
-// //       document.getElementById("line-v1").style.right = "100dvw";
-// //       document.getElementById("line-v2").style.right = "100dvw";
+// //       document.getElementById("line-v1").style.right = "100vw";
+// //       document.getElementById("line-v2").style.right = "100vw";
 // //     }
 
 // //     if (cursorY < line1Top) {
