@@ -132,7 +132,6 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, altTex
                 width="0"
                 height="0"
                 alt={altText}
-                unoptimized
                 // style={{width: '50vw', height:'50vh'}}
                 sizes="(max-width: 450px) 100vw, 50vw"
                 className={project.coverImage.white ? 'white' : ''}>
