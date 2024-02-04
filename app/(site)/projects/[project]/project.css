@@ -58,7 +58,7 @@
     font-size: 1.5rem;
     color: var(--main-color);
     letter-spacing: -0.02em;
-    cursor: pointer;
+    /* cursor: pointer; */
     margin-bottom: 0.5rem;
 }
 

@@ -6,6 +6,7 @@ import { getProjects } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
 import Link from 'next/link';
 import Image from 'next/image';
+import project from '@/schemas/project';
 
 export default function InteractiveLogo() {
   // const [isClient, setIsClient] = useState(false);
@@ -53,13 +54,13 @@ export default function InteractiveLogo() {
         if (!target.closest('.letter')) return; // Ignore clicks outside .interactiveLogo divs
 
         const letters = document.querySelectorAll('.letter');
-        console.log(letters);
+        // console.log(letters);
         letters.forEach(div => {
           // console.log("removed preview class")
           div.classList.remove(styles.preview); // Remove preview class from all divs
         });
-        console.log("add preview class")
-        console.log(target);
+        // console.log("add preview class")
+        // console.log(target);
         let thisLetter = target.closest('.letter');
         if (thisLetter){
           thisLetter.classList.add(styles.preview); // Add preview class to clicked div
@@ -81,7 +82,9 @@ export default function InteractiveLogo() {
       const letters = document.querySelectorAll(".letter")
       const logoElements = document.querySelectorAll(`.interactiveLogo > *`);
       const logoElementContainers = document.querySelectorAll(`.interactiveLogo`);
-      const logoElement = document.querySelector('.logoElement');
+      const logoElement = document.querySelector<HTMLElement>('.logoElement');
+      const isProjectPage = document.querySelector('.projectInner') ? true : false;
+      // console.log(isProjectPage);
       const viewportBottom = window.scrollY + window.innerHeight;
       const pageHeight = Math.max(
         document.body.scrollHeight,
@@ -110,37 +113,40 @@ export default function InteractiveLogo() {
         
         const rect = logoElement.getBoundingClientRect();
         const elementTop = rect.top;
+        
 
         if (windowWidth > 700){
 
-          if (elementTop < window.innerHeight-startLogoHeight){
+          // if (!isProjectPage){
+            // if (1 == 1){
+            // this is not the project page
+              if (elementTop < window.innerHeight-startLogoHeight){
 
-            let newHeight = Math.min(
-                map(
-                  elementTop,
-                  window.innerHeight-startLogoHeight,
-                  0,
-                  startLogoHeight,
-                  stretchAmt
-                ), 
-                window.innerHeight-27
-            );
-  
-  
-            logoElements.forEach(element => {
-              if (element instanceof HTMLElement) {
-                element.style.height = newHeight + "px";
+                let newHeight = Math.min(
+                    map(
+                      elementTop,
+                      window.innerHeight-startLogoHeight,
+                      0,
+                      startLogoHeight,
+                      stretchAmt
+                    ), 
+                    window.innerHeight-27
+                );
+      
+      
+                logoElements.forEach(element => {
+                  if (element instanceof HTMLElement) {
+                    element.style.height = newHeight + "px";
+                  }
+                });
+      
+              } else {
+                  logoElements.forEach(element => {
+                    if (element instanceof HTMLElement) {
+                      element.style.height = startLogoHeight + "px";
+                    }
+                  })
               }
-            });
-  
-          } else {
-              logoElements.forEach(element => {
-                if (element instanceof HTMLElement) {
-                  element.style.height = startLogoHeight + "px";
-                }
-              })
-          }
-
         } else {
           // console.log(elementTop, window.innerHeight-startLogoHeightSm*2, startLogoHeightSm);
           if (elementTop <= (window.innerHeight-startLogoHeightSm*2)){
@@ -199,8 +205,12 @@ export default function InteractiveLogo() {
       return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
     }
 
-    if (typeof window !== undefined) {
+    const projectInnerElem = document.querySelector(".projectInner");
+    if (typeof window !== undefined && !projectInnerElem) {
       window.addEventListener('scroll', handleScroll);
+    } else if (typeof window !== undefined && projectInnerElem){
+      window.addEventListener('scroll', handleScroll);
+      projectInnerElem.addEventListener('scroll', handleScroll);
     }
 
     return () => {
@@ -447,7 +457,7 @@ export default function InteractiveLogo() {
                     />
                     <Link href={`/projects/${projects[3].slug}`}></Link>
                 </div>
-                <div className={styles.s}>
+                <div className={`letter ${styles.s}`}>
                     <div className={styles.right}></div>
                     <div className={styles.left}></div>
                     <Image
@@ -461,7 +471,7 @@ export default function InteractiveLogo() {
                     />
                     <Link href={`/projects/${projects[4].slug}`}></Link>
                 </div>
-                <div className={`${styles.t} ${styles.end}`}>
+                <div className={`letter ${styles.t} ${styles.end}`}>
                     <div className={`${styles.bottom} ${styles.left}`}></div>
                     <div className={`${styles.bottom} ${styles.right}`}></div>
                     <Image
@@ -478,7 +488,7 @@ export default function InteractiveLogo() {
             </div>
             <div className={`${styles.logoInner} interactiveLogo`}>
 
-              <div className={styles.s}>
+              <div className={`letter ${styles.s}`}>
                   <div className={styles.right}></div>
                   <div className={styles.left}></div>
                   <Image
@@ -492,7 +502,7 @@ export default function InteractiveLogo() {
                   />
                   <Link href={`/projects/${projects[6].slug}`}></Link>
               </div>
-              <Link href={`/projects/${projects[7].slug}`} className={styles.t}>
+              <div className={`letter ${styles.t}`}>
                   <div className={`${styles.bottom} ${styles.left}`}></div>
                   <div className={`${styles.bottom} ${styles.right}`}></div>
                   <Image
@@ -504,8 +514,9 @@ export default function InteractiveLogo() {
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                   />
-              </Link>
-              <Link href={`/projects/${projects[8].slug}`} className={styles.u}>
+                  <Link href={`/projects/${projects[7].slug}`} ></Link>
+              </div>
+              <div className={`letter ${styles.u}`}>
                   <div className={styles.top}></div>
                   <Image
                           className={styles.heroImage}
@@ -516,8 +527,9 @@ export default function InteractiveLogo() {
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                   />
-              </Link>
-              <Link href={`/projects/${projects[9].slug}`} className={styles.d}>
+                  <Link href={`/projects/${projects[8].slug}`} ></Link>
+              </div>
+              <div className={`letter ${styles.d}`}>
                   <div className={`${styles.right} ${styles.top}`}></div>
                   <div className={`${styles.right} ${styles.bottom}`}></div>
                   <Image
@@ -530,8 +542,9 @@ export default function InteractiveLogo() {
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                   />
                   <div></div>
-              </Link>
-              <Link href={`/projects/${projects[10].slug}`} className={styles.i}>
+                  <Link href={`/projects/${projects[9].slug}`} ></Link>
+              </div>
+              <div className={`letter ${styles.i}`}>
                   <div className={styles.left}></div>
                   <div className={styles.right}></div>
                   <Image
@@ -543,8 +556,9 @@ export default function InteractiveLogo() {
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                   />
-              </Link>
-              <Link href={`/projects/${projects[11].slug}`} className={styles.o}>
+                  <Link href={`/projects/${projects[10].slug}`} ></Link>
+              </div>
+             <div className={`letter ${styles.o}`}>
                   <div className={styles.center}></div>
                   <Image
                           className={styles.heroImage}
@@ -555,7 +569,8 @@ export default function InteractiveLogo() {
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                   />
-              </Link>
+                   <Link href={`/projects/${projects[11].slug}`} ></Link>
+              </div>
           </div>
         </div>
       )}

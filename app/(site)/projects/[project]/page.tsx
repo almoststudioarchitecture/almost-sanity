@@ -139,7 +139,7 @@ export default async function Project({ params }: Props) {
                 </svg>
             </div>
       <ProjectScrollSnap project={project} />
-      <InteractiveLogo />
+      {/* <InteractiveLogo /> */}
     </main>
     
     </>

@@ -18,8 +18,9 @@
     /* margin-top: var(--nav-height); */
     align-items: flex-start;
     max-width:100dvw;
+    position:relative;
+    background: var(--bg);
 }
-
 
 .logoInner{
     --unit: calc(100dvw/30);

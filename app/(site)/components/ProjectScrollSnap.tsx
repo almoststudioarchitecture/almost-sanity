@@ -8,6 +8,7 @@ import Link from 'next/link';
 import type { ProjectType } from "@/types";
 import ProjectGalleryImage from "./ProjectGalleryImage";
 import ProjectInfoModule from "./ProjectInfoModule";
+import InteractiveLogo from "./global/InteractiveLogo";
 import Image from "next/image";
 import React, { useRef, useEffect, useState } from 'react';
 
@@ -207,6 +208,9 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                     } 
                     return null;
                     })}
+
+
+      <InteractiveLogo />
         </div>
     );
 };
