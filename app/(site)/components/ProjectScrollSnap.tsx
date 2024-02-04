@@ -18,10 +18,27 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
     const projectInnerRef = useRef<HTMLDivElement>(null);
     const [isAtTop, setIsAtTop] = useState(true);
 
+    // const handleScroll = () => {
+    //     if (projectInnerRef.current) {
+    //         const rect = projectInnerRef.current.getBoundingClientRect();
+    //         setIsAtTop(rect.top <= 25);
+    //     }
+    // };
+
     const handleScroll = () => {
         if (projectInnerRef.current) {
             const rect = projectInnerRef.current.getBoundingClientRect();
-            setIsAtTop(rect.top <= 25);
+            // Determine if the div is at the top of the page
+            const atTop = rect.top <= 28; // You might adjust this value to 0 or a small positive number if needed
+
+            setIsAtTop(atTop);
+
+            // Add or remove "scrollable" class based on the position
+            if (atTop) {
+                projectInnerRef.current.classList.add('scrollable');
+            } else {
+                projectInnerRef.current.classList.remove('scrollable');
+            }
         }
     };
 
@@ -33,6 +50,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
         }
         window.addEventListener('scroll', handleScroll, { passive: true });
 
+        // Initial check to set the correct state/class
         handleScroll();
 
         // Cleanup function
@@ -44,21 +62,23 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
         };
     }, []);
 
+
     // Style object to conditionally apply styles based on the isAtTop state
     const scrollStyle: React.CSSProperties = isAtTop
-        ? { pointerEvents: "none" }
+        // ? { pointerEvents: "none" }
+        ? { pointerEvents: "inherit" }
         : { pointerEvents: "inherit" };
 
     return (
         <div className="projectInner" ref={projectInnerRef} style={scrollStyle}>
-            <div id="after"></div>
-            <div className="section hero relative">
+                    <div id="after"></div>
+            {/* <div className="section hero relative">
                 {project.coverImage?.white ?
                     <Image
                     className="hero-image WHITE"
                     width='0'
                     height='0'
-                    sizes='100vw'
+                    sizes='100dvw'
                     src={project.coverImage?.image}
                     alt={project.coverImage?.alt || project.name}
                     style={{ background: 'white', objectFit: 'contain', width: '100%', height: '100%' }}
@@ -120,7 +140,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                         <path></path>
                     </g>
                 </svg>
-            </div>
+            </div> */}
                 <ProjectInfoModule 
                 name={project.name} 
                 metadata={project.metadata} 

@@ -85,9 +85,16 @@ body {
     --main-color: black;
     --bg: var(--bg-color);
   }
+  body.path-other nav{
+    position:sticky;
+  }
   body.path-other.scrolled{
     --bg: black;
     --main-color: white;
+  }
+
+  body.path-other.scrolled .projectInner{
+    /* scroll-snap-type: y mandatory; */
   }
 
   body.path-other .interactiveLogo{
@@ -713,7 +720,7 @@ body.path-projects {
 }
 
 html, body {
-  overflow-y: visible;
+  /* overflow-y: scroll; */
   scrollbar-width: none;
 }
 

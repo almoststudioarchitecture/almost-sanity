@@ -2,28 +2,41 @@
 
 .section{
     border-bottom: 1px solid var(--main-color);
-    width:100vw;
-    /* width: calc(100vw - var(--pad)*2); */
-    /* width: calc(100vw - var(--nav-height)); */
-    /* width: calc(100vw - var(--nav-height) * 2); */
+    width:100dvw;
+    /* width: calc(100dvw - var(--pad)*2); */
+    /* width: calc(100dvw - var(--nav-height)); */
+    /* width: calc(100dvw - var(--nav-height) * 2); */
     /* margin-left: var(--nav-height); */
     transition:background 300ms, border 300ms;
 }
 .hero{
     height: calc(100vh - 160px);
-    /* width: 100vw; */
+    /* width: 100dvw; */
     transition: margin 300ms, height 300ms;
     margin-top: calc(var(--nav-height)*-1);
     animation: hero 600ms 1s ease-out both;
+    top:var(--nav-height);
     
 }
 
 @keyframes hero{
     0%{
-        height: calc(100vh - 40px);
+        /* height: calc(100vh - 40px); */
+        height: calc(100dvh);
     }
     100%{
-        height: calc(100vh - 160px);
+        height: calc(100dvh - 160px);
+    }
+} 
+
+@keyframes heroMargin{
+    0%{
+        /* height: calc(100vh - 40px); */
+        margin-top:calc(100vh - 40px - var(--nav-height));
+    }
+    100%{
+        /* height: calc(100vh - 160px); */
+        margin-top:calc(100vh - 160px - var(--nav-height));
     }
 } 
 
@@ -36,6 +49,8 @@
 .info{
     padding: var(--pad);
     padding-top: 0.4em;
+    background: var(--bg);
+    border-top: 1px solid var(--main-color);
 }
 
 .section.info h1{
@@ -106,16 +121,37 @@
 
 .enable-snap {
     scroll-snap-type: y mandatory;
+    /* scroll-snap-type: y proximity; */
 }
 
 .projectInner{
     scroll-snap-type: y mandatory;
+    /* scroll-snap-type: y proximity; */
     max-height:calc(100vh - var(--nav-height));
-    overflow-y: auto;
+    max-height: calc(100vh - var(--nav-height) + 1px);
+    /* max-height:calc(100vh); */
+    /* overflow-y: auto; */
+    overflow:hidden;
+    /* margin-top:calc(100vh - 160px); */
+    animation: heroMargin 600ms 1s ease-out both;
+
+    /* position: sticky;
+    top: var(--nav-height);
+    overflow-y: hidden; */
 }
 
+.projectInner.scrollable{
+    overflow-y:auto;
+}
+
+/* .projectInner > .image-container-outer{
+    scroll-snap-align: start;
+} */
 .projectInner > *{
     scroll-snap-align: start;
+}
+.projectInner > .image-container-inner:first-of-type{
+    /* scroll-snap-align: unset; */
 }
 .info{
     /* scroll-snap-align: none; */
