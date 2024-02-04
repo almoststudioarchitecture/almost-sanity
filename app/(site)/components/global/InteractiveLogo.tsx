@@ -8,12 +8,22 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function InteractiveLogo() {
+  // const [isClient, setIsClient] = useState(false);
+  // const [projects, setProjects] = useState<ProjectType[]>([]);
+  // const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+
+
   const [isClient, setIsClient] = useState(false);
   const [projects, setProjects] = useState<ProjectType[]>([]);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+  const [openedLinkId, setOpenedLinkId] = useState<string | null>(null);
+  // const router = useRouter();
 
 
-
+  // Detect if device has coarse pointer (touch screen)
+  const hasCoarsePointer = () => {
+    return window.matchMedia('(pointer: coarse)').matches;
+  };
   
   // const startLogoHeight = window.innerWidth/49*4+4;
 
@@ -33,6 +43,31 @@ export default function InteractiveLogo() {
       if (isClient) {
         loadProjects();
       }
+
+      // Add click event listener to .interactiveLogo divs
+      const addPreviewClass = (event: MouseEvent): void => {
+        const target = event.target as HTMLElement;
+
+        // console.log("add preview class")
+        // const target = event.target; // The clicked div
+        if (!target.closest('.letter')) return; // Ignore clicks outside .interactiveLogo divs
+
+        const letters = document.querySelectorAll('.letter');
+        console.log(letters);
+        letters.forEach(div => {
+          // console.log("removed preview class")
+          div.classList.remove(styles.preview); // Remove preview class from all divs
+        });
+        console.log("add preview class")
+        console.log(target);
+        let thisLetter = target.closest('.letter');
+        if (thisLetter){
+          thisLetter.classList.add(styles.preview); // Add preview class to clicked div
+        }
+      };
+
+      
+
           
 
       const startLogoHeight = window.innerWidth / 49 * 4 + 4;
@@ -43,6 +78,7 @@ export default function InteractiveLogo() {
 
       // console.log("hello world")
 
+      const letters = document.querySelectorAll(".letter")
       const logoElements = document.querySelectorAll(`.interactiveLogo > *`);
       const logoElementContainers = document.querySelectorAll(`.interactiveLogo`);
       const logoElement = document.querySelector('.logoElement');
@@ -55,6 +91,19 @@ export default function InteractiveLogo() {
         document.documentElement.offsetHeight
       );
       const stretchAmt = window.innerHeight;
+
+
+      // const logoElements = document.querySelectorAll('.interactiveLogo > *');
+      
+      letters.forEach((letter: Element) => {
+        if (letter instanceof HTMLElement) {
+          // if (hasCoarsePointer){
+            letter.addEventListener('click', addPreviewClass);
+            // logo.addEventListener('touchstart', addPreviewClass);
+          // }
+        }
+      });
+
 
 
       if (logoElement){
@@ -93,19 +142,21 @@ export default function InteractiveLogo() {
           }
 
         } else {
-          console.log(elementTop, window.innerHeight-startLogoHeightSm)
-          if (elementTop < window.innerHeight-startLogoHeightSm){
-
-            let newHeight = Math.min(
+          // console.log(elementTop, window.innerHeight-startLogoHeightSm*2, startLogoHeightSm);
+          if (elementTop <= (window.innerHeight-startLogoHeightSm*2)){
+            // console.log("do the thing");
+            let newHeight = 0.5 + Math.min(
                 map(
                   elementTop,
-                  window.innerHeight-startLogoHeightSm,
-                  0,
+                  window.innerHeight-startLogoHeightSm*2,
+                  27,
                   startLogoHeightSm,
                   (stretchAmt - 27)/2
                 ), 
-                (window.innerHeight-27)/2
+                (window.innerHeight-27)/2 - 1
             );
+
+            // console.log(newHeight);
   
             logoElements.forEach(element => {
               if (element instanceof HTMLElement) {
@@ -139,6 +190,7 @@ export default function InteractiveLogo() {
           window.removeEventListener('resize', handleResize);
         }
       };
+      
 
     };
     // };
@@ -187,7 +239,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[0].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -199,7 +251,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[1].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -212,7 +264,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[2].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -224,7 +276,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[3].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -237,7 +289,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[4].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -250,7 +302,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[5].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -265,7 +317,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[6].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -278,7 +330,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[7].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -290,7 +342,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[8].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -303,7 +355,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[9].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -317,7 +369,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[10].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -329,7 +381,7 @@ export default function InteractiveLogo() {
                               className={styles.heroImage}
                               width='0'
                               height='0'
-                              sizes='100vw'
+                              sizes='100dvw'
                               src={projects[11].coverImage.image}
                               alt='test'
                               style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -341,98 +393,105 @@ export default function InteractiveLogo() {
         // JSX for window width less than 700px
         <div id={styles.logoContainerSm} className="logoElement">
           <div className={`${styles.logoInner} interactiveLogo`}>
-                <Link href={`/projects/${projects[0].slug}`} className={styles.a}>
+                <div className={`letter ${styles.a}`}>
                     <div></div>
                     <div className={styles.bottom}></div>
                     <Image
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[0].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                     />
-                </Link>
-                <Link href={`/projects/${projects[1].slug}`} className={styles.l}>
+                    <Link href={`/projects/${projects[0].slug}`}></Link>
+                </div>
+                <div className={`letter ${styles.l}`}>
                     <div className={`${styles.top} ${styles.right}`}></div>
                     <Image
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[1].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                     />
-                </Link>
-                <Link href={`/projects/${projects[2].slug}`} className={styles.m}>
+                    <Link href={`/projects/${projects[1].slug}`}></Link>
+                </div>
+                <div className={`letter ${styles.m}`}>
                     <div className={styles.bottom}></div>
                     <div className={styles.bottom}></div>
                     <Image
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[2].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                     />
-                </Link>
-                <Link href={`/projects/${projects[3].slug}`} className={styles.o}>
+                    <Link href={`/projects/${projects[2].slug}`}></Link>
+                </div>
+                <div className={`letter ${styles.o}`}>
                     <div className={styles.center}></div>
                     <Image
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[3].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                     />
-                </Link>
-                <Link href={`/projects/${projects[4].slug}`} className={styles.s}>
+                    <Link href={`/projects/${projects[3].slug}`}></Link>
+                </div>
+                <div className={styles.s}>
                     <div className={styles.right}></div>
                     <div className={styles.left}></div>
                     <Image
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[4].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                     />
-                </Link>
-                <Link href={`/projects/${projects[5].slug}`} className={`${styles.t} ${styles.end}`}>
+                    <Link href={`/projects/${projects[4].slug}`}></Link>
+                </div>
+                <div className={`${styles.t} ${styles.end}`}>
                     <div className={`${styles.bottom} ${styles.left}`}></div>
                     <div className={`${styles.bottom} ${styles.right}`}></div>
                     <Image
                             className={styles.heroImage}
                             width='0'
                             height='0'
-                            sizes='100vw'
+                            sizes='100dvw'
                             src={projects[5].coverImage.image}
                             alt='test'
                             style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                     />
-                </Link>
+                    <Link href={`/projects/${projects[5].slug}`}></Link>
+                </div>
             </div>
             <div className={`${styles.logoInner} interactiveLogo`}>
 
-              <Link href={`/projects/${projects[6].slug}`} className={styles.s}>
+              <div className={styles.s}>
                   <div className={styles.right}></div>
                   <div className={styles.left}></div>
                   <Image
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[6].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                   />
-              </Link>
+                  <Link href={`/projects/${projects[6].slug}`}></Link>
+              </div>
               <Link href={`/projects/${projects[7].slug}`} className={styles.t}>
                   <div className={`${styles.bottom} ${styles.left}`}></div>
                   <div className={`${styles.bottom} ${styles.right}`}></div>
@@ -440,7 +499,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[7].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -452,7 +511,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[8].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -465,7 +524,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[9].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -479,7 +538,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[10].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
@@ -491,7 +550,7 @@ export default function InteractiveLogo() {
                           className={styles.heroImage}
                           width='0'
                           height='0'
-                          sizes='100vw'
+                          sizes='100dvw'
                           src={projects[11].coverImage.image}
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}

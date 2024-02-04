@@ -34,7 +34,7 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
 
     cnvParent = cnv.elt;
 
-    maskGraphics = p.createGraphics(p.width, p.height);
+    maskGraphics = p.createGraphics(window.innerWidth/2, window.innerHeight/2);
     maskGraphics.width = p.width;
     maskGraphics.height = p.height;
     maskGraphics.clear();
@@ -223,13 +223,16 @@ function enableLink(element: HTMLElement) {
         // p.push();
                 let displayImage: p5.Image = cnvImage.get();
                 
+                p.push();
                 // Create a new p5.Image from maskGraphics
-                let maskImage: p5.Image = p.createImage(p.width*window.devicePixelRatio, p.height*window.devicePixelRatio);
-                maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0, 0, maskGraphics.width, maskGraphics.height); 
+                let maskImage: p5.Image = p.createImage(p.width/window.devicePixelRatio, p.height/window.devicePixelRatio);
+                maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0, 0, p.width, p.height); 
+                // maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, maskImage.width, maskImage.height); 
                 // maskImage.resize(p.width*4, p.height*4);
 
                 // // Apply the mask to displayImage
                 displayImage.mask(maskImage);
+                p.pop();
 
                 // Draw the masked image
                 p.image(displayImage, 0, 0, p.width, p.height);

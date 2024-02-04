@@ -185,14 +185,17 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
         // p.push();
             let displayImage: p5.Image = cnvImage.get();
             
+            p.push();
             // // Create a new p5.Image from maskGraphics
-            let maskImage: p5.Image = p.createImage(p.width, p.height);
+            // let maskImage: p5.Image = p.createImage(p.width, p.height);
+            let maskImage: p5.Image = p.createImage(p.width/window.devicePixelRatio, p.height/window.devicePixelRatio);
             
             maskImage.loadPixels();
-            maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, maskGraphics.width, maskGraphics.height); 
+            maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, maskImage.width, maskImage.height); 
 
             // // Apply the mask to displayImage
             displayImage.mask(maskImage);
+            p.pop();
 
             // // // Draw the masked image
             p.image(displayImage, 0, 0, p.width*2, p.height*2);
