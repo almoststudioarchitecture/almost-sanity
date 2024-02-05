@@ -42,6 +42,8 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
 
     p.noLoop();
 
+    p.pixelDensity(1);
+
    
     // maskGraphics.pixelDensity(2);
     // p.pixelDensity(2); 
@@ -225,8 +227,8 @@ function enableLink(element: HTMLElement) {
                 
                 p.push();
                 // Create a new p5.Image from maskGraphics
-                let maskImage: p5.Image = p.createImage(p.width/window.devicePixelRatio, p.height/window.devicePixelRatio);
-                maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0, 0, p.width, p.height); 
+                let maskImage: p5.Image = p.createImage(p.width/2, p.height/2);
+                maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0, 0, p.width/2, p.height/2); 
                 // maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, maskImage.width, maskImage.height); 
                 // maskImage.resize(p.width*4, p.height*4);
 

@@ -194,7 +194,7 @@
     --stripesFg: #444444;
     --stripesBg: #000000;
     border-bottom:1px solid #555555;
-    height:calc(100vh - var(--nav-height));
+    height:calc(100dvh - var(--nav-height));
     width:100%;
     background:black;
     overflow: hidden;
