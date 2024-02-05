@@ -159,12 +159,14 @@ const project = {
               ],
             },
             { type: 'object', 
-              title: 'Vimeo Video Link',
+              title: 'Vimeo Video: 9-digit url ID',
+              name: 'vimeoVideoLink',
               fields: [
                 {
                   type: 'string', 
                   name: 'vimeo', 
-                  title: 'Vimeo Video Link'
+                  title: 'Vimeo Video Link',
+                  description: 'Paste only the nine digits found at the end of the vimeo url video. e.g. "219512790"'
                 },
                 {
                   type: 'string',

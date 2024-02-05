@@ -69,7 +69,7 @@ export default async function Project({ params }: Props) {
   return (
     <>
     <main>
-                    <div className="section hero fixed">
+                    {/* <div className="section hero fixed">
                 {project.coverImage?.white ?
                     <Image
                     className="hero-image WHITE"
@@ -137,7 +137,7 @@ export default async function Project({ params }: Props) {
                         <path></path>
                     </g>
                 </svg>
-            </div>
+            </div> */}
       <ProjectScrollSnap project={project} />
       {/* <InteractiveLogo /> */}
     </main>

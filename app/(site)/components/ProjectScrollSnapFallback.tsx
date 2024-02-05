@@ -171,16 +171,16 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
 
                     } else if (item._type === 'vimeoVideoLink') {
                             return (
-                            <div key={index}>
-                                <iframe
+                            <div key={index} className="image-container-outer relative">
+                                {/* <iframe
                                 src={item.vimeo}
                                 title={item.title}
                                 width="640"
                                 height="360"
                                 frameBorder="0"
                                 allowFullScreen
-                                ></iframe>
-                                <h1>THIS IS A VIMEO VIDEO</h1>
+                                ></iframe> */}
+                                <iframe src="https://player.vimeo.com/video/904999130?h=87a8d62c9e?portrait=0&amp;autoplay=1&amp;muted=1&amp;loop=1&amp;portrait=0&amp;byline=0&amp;title=0&amp;muted=1" frameBorder="0" allow="autoplay"></iframe>
                             </div>
                             );
                     } 

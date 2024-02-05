@@ -73,7 +73,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
     return (
         <div className="projectInner" ref={projectInnerRef} style={scrollStyle}>
                     <div id="after"></div>
-            {/* <div className="section hero relative">
+            <div className="section hero fixed">
                 {project.coverImage?.white ?
                     <Image
                     className="hero-image WHITE"
@@ -141,7 +141,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                         <path></path>
                     </g>
                 </svg>
-            </div> */}
+            </div>
                 <ProjectInfoModule 
                 name={project.name} 
                 metadata={project.metadata} 
@@ -151,6 +151,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                     {project.gallery && project.gallery.map((item, index) => {
                     const randomStyleNumber = Math.floor(Math.random() * 11) + 1;
 
+                    console.log(item);
                     
 
                     if (item._type === 'image'){
@@ -191,18 +192,10 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                             );
                         }
 
-                    } else if (item._type === 'vimeoVideoLink') {
+                    } else if (item.vimeo) {
                             return (
-                            <div key={index}>
-                                <iframe
-                                src={item.vimeo}
-                                title={item.title}
-                                width="640"
-                                height="360"
-                                frameBorder="0"
-                                allowFullScreen
-                                ></iframe>
-                                <h1>THIS IS A VIMEO VIDEO</h1>
+                            <div key={index} className="vimeo-container image-container-outer relative">
+                                <iframe src="https://player.vimeo.com/video/904999130?h=87a8d62c9e?portrait=0&autoplay=1&muted=1&loop=1&portrait=0&byline=0&title=0&muted=1&background=1&controls=0" frameBorder="0" style={{width:"100%", height:"100%"}} allow="autoplay"></iframe>
                             </div>
                             );
                     } 

@@ -60,14 +60,9 @@ export async function getSingleProject(slug: string) {
         alt,
         "image": asset->url,
         caption,
+        vimeo,
         fit
       },
-      "vimeoGallery": gallery.vimeoVideoLinks[] {
-        _type,
-        vimeo,
-        title,
-        caption
-      }
     }`,
     { slug }
   );

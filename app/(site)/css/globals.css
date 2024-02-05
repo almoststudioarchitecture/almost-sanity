@@ -1074,3 +1074,18 @@ body.loading nav li{
 .info--description{
   color: var(--main-color);
 }
+
+.vimeo-container{
+    position: relative;
+    left: 50vw;
+    top: 50vh;
+    transform: translate(-50%, -50%);
+
+    width: 100dvw;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--bg);
+
+}
