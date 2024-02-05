@@ -81,11 +81,14 @@
     flex-wrap: wrap;
     /* gap: 24px; */
     color: var(--main-color);
-    > *{
+}
+
+.section.info .meta-data > *{
         margin-right: 24px;
         margin-bottom: 12px;
-    }
+        display:block;
 }
+
 
 /* @media screen and max-width:  */
 
