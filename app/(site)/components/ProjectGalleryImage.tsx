@@ -182,7 +182,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
         alt={alt}
         width={width}
         height={height}
-        quality={100}
+        quality={90}
         // height='0'
         // height={100}
         // fill
