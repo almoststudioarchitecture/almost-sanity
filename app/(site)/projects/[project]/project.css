@@ -32,11 +32,11 @@
 @keyframes heroMargin{
     0%{
         /* height: calc(100vh - 40px); */
-        margin-top:calc(100vh - 40px - var(--nav-height));
+        margin-top:calc(100dvh - 40px - var(--nav-height));
     }
     100%{
         /* height: calc(100vh - 160px); */
-        margin-top:calc(100vh - 160px - var(--nav-height));
+        margin-top:calc(100dvh - 160px - var(--nav-height));
     }
 } 
 
