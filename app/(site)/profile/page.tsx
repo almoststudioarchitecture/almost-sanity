@@ -65,17 +65,37 @@ export default async function About() {
                       <PortableText value={data.partner2} />
                     </div>
                 </div>
-                <div className="cols inline" id="teamSection">
+                {/* <div className="cols inline" id="teamSection">
                     <div className="box">
                       <strong>Team</strong>
                     </div>
                     {data.team.map((teamMember, index) => (
                       <button className="box"  key={index}>
                         {teamMember.title}
-                        {/* <Image className="icon icon-info" src={InfoIcon} width={16} height={16} alt="info" /> */}
                       </button>
                     ))}
-                </div>
+                </div> */}
+                {data.team && data.team.length > 0 && (
+                  <>
+                    <div className="cols inline" id="teamSection">
+                      <div className="box">
+                        <strong>Team</strong>
+                      </div>
+                      {data.team.map((teamMember, index) => (
+                        <button className="box" key={index}>
+                          {teamMember.title}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="cols" id="teamBios">
+                      {data.team.map((teamMember, index) => (
+                        <div className="box one-third bio" key={index} data-member={teamMember.title}>
+                          <p><strong>{teamMember.title}</strong> {teamMember.bio}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
                 <div className="cols" id="teamBios">
                     {data.team.map((teamMember, index) => (
                         <div className="box one-third bio" key={index} data-member={teamMember.title}>

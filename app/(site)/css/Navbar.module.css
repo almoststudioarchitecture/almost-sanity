@@ -12,7 +12,7 @@
 /* Default styles without animation */
 /* .nav:after {
     content: '';
-    width: 100vw;
+    width: 100dvw;
     border-bottom: 1px solid var(--main-color);
     position: absolute;
 } */
@@ -104,15 +104,15 @@
 
 /* @keyframes expandLogo{
     0%{ width: calc(var(--logo-width) + var(--pad_x)*2)}
-    100%{ width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px)}
+    100%{ width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px)}
 }
 @keyframes expandProjects{
     0%{ width: var(--projects-width);}
-    100%{ width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*2 - 2px);}
+    100%{ width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*2 - 2px);}
 }
 @keyframes expandProfile{
     0%{ width: var(--profile-width);}
-    100%{ width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
+    100%{ width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
 } */
 
 .listItem:nth-child(2){
@@ -221,7 +221,7 @@
 
 /* @keyframes lineExpand{
     0%{ width: 0px;}
-    100%{ width: 100vw;}
+    100%{ width: 100dvw;}
 }
 
 @keyframes navItemAppear{
@@ -231,7 +231,7 @@
 
 /* @keyframes lineExpand{
     0%{ width: 0px;}
-    100%{ width: 100vw;}
+    100%{ width: 100dvw;}
 }
 @keyframes navItemAppear{
     0%{ opacity: 0;}
@@ -239,21 +239,21 @@
 } */
 /* @keyframes expandLogo{
     0%{ width: var(--logo-width);}
-    100%{ width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*2 - 2px);}
+    100%{ width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*2 - 2px);}
 }
 @keyframes expandProjects{
     0%{ width: var(--projects-width);}
-    100%{ width: calc(100vw - var(--logo-width) - var(--profile-width) - var(--pad_x)*2 - 2px);}
+    100%{ width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*2 - 2px);}
 }
 @keyframes expandProfile{
     0%{ width: var(--profile-width);}
-    100%{ width: calc(100vw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
+    100%{ width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
 } */
 @media screen and (max-width: 450px){
     /* border top line */
     /* .nav:before{
         content: '';
-        width: 100vw;
+        width: 100dvw;
         height:1px;
         border-top: 1px solid var(--main-color);
         position: absolute;
@@ -329,7 +329,7 @@
 /* .shorten{
     background: black;
     transition: width 200ms;
-    width: calc(100vw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px - 30px);
+    width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px - 30px);
 } */
 
 

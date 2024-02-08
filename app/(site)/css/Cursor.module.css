@@ -6,7 +6,7 @@
     height: 150px;
     position: fixed;
     top: 50vh;
-    left: 50vw;
+    left: 50dvw;
     transform: translate(-50%,-50%);
     pointer-events: none;
     z-index: 100;

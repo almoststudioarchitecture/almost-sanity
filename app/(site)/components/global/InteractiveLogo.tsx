@@ -532,6 +532,7 @@ export default function InteractiveLogo() {
               <div className={`letter ${styles.d}`}>
                   <div className={`${styles.right} ${styles.top}`}></div>
                   <div className={`${styles.right} ${styles.bottom}`}></div>
+                  <div className={`${styles.center}`}></div>
                   <Image
                           className={styles.heroImage}
                           width='0'
@@ -541,7 +542,6 @@ export default function InteractiveLogo() {
                           alt='test'
                           style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
                   />
-                  <div></div>
                   <Link href={`/projects/${projects[9].slug}`} ></Link>
               </div>
               <div className={`letter ${styles.i}`}>
