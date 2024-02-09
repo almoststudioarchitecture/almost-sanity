@@ -61,7 +61,8 @@ export async function getSingleProject(slug: string) {
         "image": asset->url,
         caption,
         vimeo,
-        fit
+        fit,
+        videoType
       },
     }`,
     { slug }

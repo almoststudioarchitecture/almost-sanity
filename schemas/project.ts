@@ -169,6 +169,18 @@ const project = {
                   description: 'Paste only the nine digits found at the end of the vimeo url video. e.g. "219512790"'
                 },
                 {
+                  type: 'string', 
+                  name: 'videoType', 
+                  title: 'Type of Video',
+                  options: {
+                    list: [
+                      {title: 'Mood Video', value: 'mood', description: "No sound, no play button, just a moving image"},
+                      {title: 'Video with Controls', value: 'functional', description: "Includes sound and video controls."}
+                    ],
+                    layout: "radio",
+                  },
+                },
+                {
                   type: 'string',
                   name: 'title',
                   title: 'Title for Reference',

@@ -65,12 +65,13 @@ interface GalleryImage {
 interface VimeoVideoLink {
   _type: 'vimeoVideoLink'; // This indicates it's a Vimeo video link item
   vimeo: string;
+  videoType: string;
   title: string;
   caption: string;
 }
 
 interface TeamMember {
-  _type: 'teamMember'; // This indicates it's a Vimeo video link item
+  _type: 'teamMember';
   title: string;
   bio: string;
 }

@@ -149,7 +149,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
 
     if (imageAspectRatio > browserAspectRatio) {
       // Image is wider than browser
-      console.log("image is wider than the browser")
+      // console.log("image is wider than the browser")
       width = windowWidth;
       height = (naturalHeight / naturalWidth) * windowWidth;
       borderY = '3px solid white';
@@ -158,7 +158,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
       newOptimizedSrc = newOptimizedSrc.width(targetWidth);
     } else {
       // Image is taller than browser
-      console.log("image is taller than the browser")
+      // console.log("image is taller than the browser")
       height = (windowHeight - 21);
       width = (naturalWidth / naturalHeight) * (windowHeight - 21);
       borderX = '3px solid white';
@@ -167,13 +167,13 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
       newOptimizedSrc = newOptimizedSrc.height(targetHeight);
     }
   } else {
-    console.log("image aspect ratio smaller than browser aspect ratio")
+    // console.log("image aspect ratio smaller than browser aspect ratio")
     width = windowWidth;
     height = (windowHeight - 21);    
     newOptimizedSrc = newOptimizedSrc.width(targetWidth);
   }
 
-  console.log(width, height)
+  // console.log(width, height)
 
   // console.log(newOptimizedSrc.url());
 
