@@ -121,8 +121,8 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
   // Calculate image dimensions
   const { width: naturalWidth, height: naturalHeight } = getImageDimensions(image);
   
-  const targetWidth = Math.round(windowWidth * windowDevicePixelRatio);
-  const targetHeight = Math.round((windowHeight - 21) * windowDevicePixelRatio);
+  const targetWidth = Math.round(windowWidth * windowDevicePixelRatio*1.5);
+  const targetHeight = Math.round((windowHeight - 21) * windowDevicePixelRatio*1.5);
   let width = naturalWidth;
   let height = naturalHeight;
   let borderX = '0px'; // Default values
