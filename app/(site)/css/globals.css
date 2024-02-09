@@ -391,7 +391,7 @@ body{
   display: block;
   opacity: 1;
   position: relative;
-  animation: canvasImage 600ms 200ms linear both;
+  animation: canvasImage 600ms 500ms linear both;
   width: 50dvw;
   height: 50vh;
 }
