@@ -868,8 +868,8 @@ nav.active-3.hoveringOthers li:nth-child(3) button{
       width: calc(var(--profile-width) + var(--hoverGap) + var(--pad_x)*2);
     }
 
-    nav.active-2 li:first-child:hover a,
-    nav.active-3 li:first-child:hover a{
+    nav.active-2 li:first-child:hover button,
+    nav.active-3 li:first-child:hover button{
       width: calc(var(--logo-width) + var(--hoverGap) + var(--pad_x)*2);
     }
 

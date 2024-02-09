@@ -32,6 +32,12 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   const cursorWeightChangeDuration = 10; // Duration over which the cursor weight changes
   let framesSinceMousePressed = 0;
 
+  p.windowResized = function(){
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+    
+    // maskGraphics.resizeCanvas(p.windowWidth, p.windowHeight);
+  }
+
 
 
   const builder = imageUrlBuilder({
@@ -86,10 +92,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
 
   }
 
-  p.windowResized = function(){
-    p.resizeCanvas(p.windowWidth, p.windowHeight);
-    maskGraphics.resizeCanvas(p.windowWidth, p.windowHeight);
-  }
+  
   
 
   function handleCanvasInteraction(event: MouseEvent | TouchEvent) {

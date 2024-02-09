@@ -22,21 +22,21 @@
 @keyframes hero{
     0%{
         /* height: calc(100vh - 40px); */
-        height: calc(100dvh);
+        height: calc(100vh);
     }
     100%{
-        height: calc(100dvh - 160px);
+        height: calc(100vh - 160px);
     }
 } 
 
 @keyframes heroMargin{
     0%{
         /* height: calc(100vh - 40px); */
-        margin-top:calc(100dvh - 40px - var(--nav-height));
+        margin-top:calc(100vh - 40px - var(--nav-height));
     }
     100%{
         /* height: calc(100vh - 160px); */
-        margin-top:calc(100dvh - 160px - var(--nav-height));
+        margin-top:calc(100vh - 160px - var(--nav-height));
     }
 } 
 
@@ -194,7 +194,7 @@
     --stripesFg: #444444;
     --stripesBg: #000000;
     border-bottom:1px solid #555555;
-    height:calc(100dvh - var(--nav-height));
+    height:calc(100vh - var(--nav-height));
     width:100%;
     background:black;
     overflow: hidden;

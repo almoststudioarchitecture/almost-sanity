@@ -121,13 +121,15 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
   // Calculate image dimensions
   const { width: naturalWidth, height: naturalHeight } = getImageDimensions(image);
   
-  const targetWidth = windowWidth * windowDevicePixelRatio;
-  const targetHeight = (windowHeight - 21) * windowDevicePixelRatio;
+  const targetWidth = Math.round(windowWidth * windowDevicePixelRatio);
+  const targetHeight = Math.round((windowHeight - 21) * windowDevicePixelRatio);
   let width = naturalWidth;
   let height = naturalHeight;
   let borderX = '0px'; // Default values
   let borderY = '0px'; // Default values
   let assignedFit = 'inherit'; 
+
+  console.log(targetWidth,targetHeight);
 
   let optimizedSrc = urlFor(image)
   // .width(width)  // Set desired width
@@ -147,6 +149,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
 
     if (imageAspectRatio > browserAspectRatio) {
       // Image is wider than browser
+      console.log("image is wider than the browser")
       width = windowWidth;
       height = (naturalHeight / naturalWidth) * windowWidth;
       borderY = '3px solid white';
@@ -155,6 +158,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
       newOptimizedSrc = newOptimizedSrc.width(targetWidth);
     } else {
       // Image is taller than browser
+      console.log("image is taller than the browser")
       height = (windowHeight - 21);
       width = (naturalWidth / naturalHeight) * (windowHeight - 21);
       borderX = '3px solid white';
@@ -163,10 +167,13 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
       newOptimizedSrc = newOptimizedSrc.height(targetHeight);
     }
   } else {
+    console.log("image aspect ratio smaller than browser aspect ratio")
     width = windowWidth;
     height = (windowHeight - 21);    
     newOptimizedSrc = newOptimizedSrc.width(targetWidth);
   }
+
+  console.log(width, height)
 
   // console.log(newOptimizedSrc.url());
 
@@ -180,8 +187,8 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
       <Image 
         src={newOptimizedSrc.url()}
         alt={alt}
-        width={width}
-        height={height}
+        width={Math.round(width)}
+        height={Math.round(height)}
         quality={90}
         // height='0'
         // height={100}
