@@ -15,6 +15,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   let img: p5.Image;
 //   let maskGraphics: Image | Element | Framebuffer;
   let maskGraphics: p5.Graphics;
+  let shadow: p5.Graphics;
   let path: Point[] = [];
   let imageDrawn = false;
   let mousePressedOverCanvas = false;
@@ -26,6 +27,42 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   let cnvParent: HTMLElement;
   let slug: any;
 
+  let maskShader: any;
+
+
+let maskVert = `
+attribute vec3 aPosition;
+attribute vec2 aTexCoord;
+
+uniform mat4 uProjectionMatrix;
+uniform mat4 uModelViewMatrix;
+
+varying vec2 vTexCoord;
+
+void main() {
+  vec4 positionVec4 = vec4(aPosition, 1.0);
+  gl_Position = uProjectionMatrix * uModelViewMatrix * positionVec4;
+  vTexCoord = aTexCoord;
+}
+`;
+
+let maskFrag = `
+precision highp float;
+
+varying vec2 vTexCoord;
+uniform sampler2D maskTex;
+uniform sampler2D imageTex;
+
+void main(){
+  vec4 mask = texture2D(maskTex, vTexCoord);
+  vec4 image = texture2D(imageTex, vTexCoord);
+
+  // use the alpha to mask between the images
+  // or another color channel if you want...
+  gl_FragColor = vec4(image.rgb, mask.a);
+}`
+
+
 
   let cursorWeightDifference = 15;
   let cursorWeightChange = 0;
@@ -34,8 +71,6 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
 
   p.windowResized = function(){
     p.resizeCanvas(p.windowWidth, p.windowHeight);
-    
-    // maskGraphics.resizeCanvas(p.windowWidth, p.windowHeight);
   }
 
 
@@ -54,40 +89,26 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   
   p.setup = () => {
     if (typeof window !== "undefined" && typeof document !== "undefined") {
-      cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+      // cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+      cnv = p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);
+      
 
       cnvParent = cnv.canvas.closest(".canvas-container");
       if (cnvParent){
         slug = cnvParent.getAttribute("data-slug");
       }
 
-    //   console.log(cnvParent);
+      maskShader = p.createShader(maskVert, maskFrag);
 
-      // maskGraphics = p.createGraphics(p.width * window.devicePixelRatio, p.height * window.devicePixelRatio);
-      // maskGraphics.pixelDensity(p.pixelDensity());
       maskGraphics = p.createGraphics(p.width, p.height);
       maskGraphics.clear();
+      shadow = p.createGraphics(p.width, p.height);
+      shadow.clear();
       p.strokeJoin(p.ROUND);
 
       p.noLoop();
       p.rectMode(p.CENTER)
 
-      console.log(p.VERSION);
-
-      // p.pixelDensity(1);
-
-      // p.pixelDensity(window.devicePixelRatio);
-
-      // maskGraphics.pixelDensity(window.devicePixelRatio);
-
-      // console.log(window.devicePixelRatio)
-
-      // maskGraphics.pixelDensity(window.devicePixelRatio/2);
-      // p.pixelDensity(window.devicePixelRatio); 
-
-      // console.log(p.pixelDensity());
-      // console.log(maskGraphics.pixelDensity())
-      // document.querySelector(".verticalLine").innerHTML= p.pixelDensity() + ", " + maskGraphics.pixelDensity() + ", " + window.devicePixelRatio
     }
 
   }
@@ -177,42 +198,59 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
             // addPointToPath(p.mouseX, p.mouseY);
         }
 
-        drawPathsOnMask(maskGraphics, path, cursorRadius, 1);
+            drawPathsOnMaskLight(maskGraphics, path, cursorRadius, 1);
+            p.image(maskGraphics,0,0,p.width,p.height);
 
-        p.image(maskGraphics,0,0,p.width,p.height);
-
-
-        let stringified = JSON.stringify(path);
-        localStorage.setItem(slug, stringified);
-        // console.log(localStorage);
-
-          
-        // p.push();
             let displayImage: p5.Image = cnvImage.get();
-            
-            // // Create a new p5.Image from maskGraphics
-            // let maskImage: p5.Image = p.createImage(p.width, p.height);
+
             let maskImage: p5.Image = p.createImage(p.width, p.height);
+
+            p.clear();
+
+            drawPathsOnMaskDark(shadow, path, cursorRadius, 1);
+            p.image(shadow,0,0,p.width,p.height);
             
             maskImage.loadPixels();
             maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, maskImage.width, maskImage.height); 
 
+            p.clear();
+
             // // Apply the mask to displayImage
-            displayImage.mask(maskImage);
+            // displayImage.mask(maskImage);
 
             // // // Draw the masked image
-            p.image(displayImage, 0, 0, p.width, p.height);
+            // p.image(displayImage, 0, 0, p.width, p.height);
+
+            shaderMask(displayImage, maskGraphics);
 
         p.push();
-        p.blendMode(p.HARD_LIGHT);
-        p.image(maskGraphics, 0, 0, p.width, p.height);
+        p.blendMode(p.SCREEN);
+        // p.translate(-p.width/2, -p.height/2)
+        p.image(maskGraphics, 0 - p.width/2, 0 - p.height/2, p.width, p.height);
+        p.pop();
+
+        p.push();
+        p.blendMode(p.MULTIPLY);
+        // p.translate(-p.width/2, -p.height/2)
+        p.image(shadow, 0 - p.width/2, 0 - p.height/2, p.width, p.height);
         p.pop();
     }
-    // p.clear();
     // if (img) {
     //   p.image(img, pos.x, pos.y);
     // }
   };
+
+  function shaderMask(image: p5.Image, mask: any): void {
+    p.push();
+    p.noStroke();
+    p.shader(maskShader);
+    // p.translate(p.width/2, p.height/2);
+    maskShader.setUniform('maskTex', mask);
+    maskShader.setUniform('imageTex', image);
+    p.plane(p.width, p.height);
+    p.pop();
+  }
+
   p.mouseReleased = function(){
     p.noLoop();
   }
@@ -226,12 +264,20 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     y: number;
   }
   
-  function drawPathsOnMask(graphics: p5.Graphics, path: Point[], weight: number, scale:number) {
+  function drawPathsOnMaskLight(graphics: p5.Graphics, path: Point[], weight: number, scale:number) {
       graphics.clear();
       const dynamicWeight = weight + cursorWeightChange;
-      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightLight, 127, 235, -1, scale);
-      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 127, 80, 1, scale);
-      drawPathWithOffset(graphics, path, dynamicWeight, 127, 0, scale);
+      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightLight, 0, 235, -1, scale);
+      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 0, 50, 1, scale);
+      drawPathWithOffset(graphics, path, dynamicWeight, 0, 0, scale);
+  }
+
+  function drawPathsOnMaskDark(graphics: p5.Graphics, path: Point[], weight: number, scale:number) {
+    graphics.clear();
+    const dynamicWeight = weight + cursorWeightChange;
+    // drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightLight, 255, 235, -1, scale);
+    drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 255, 100, 1, scale);
+    drawPathWithOffset(graphics, path, dynamicWeight, 255, 0, scale);
   }
 
   function drawNonLinearShadows(graphics: p5.Graphics, path: Point[], weight: number, shadowHeight: number, startColor: number, endColor: number, yOffsetMultiplier: number, scale:number) {
@@ -298,7 +344,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
             drawY = 0;
         }
 
-        p.image(theImg, drawX, drawY, drawWidth, drawHeight);
+        p.image(theImg, drawX - drawWidth/2, drawY - drawHeight/2, drawWidth, drawHeight);
     }
 
 

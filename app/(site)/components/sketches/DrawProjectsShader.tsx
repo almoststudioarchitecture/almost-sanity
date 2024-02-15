@@ -27,10 +27,48 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
 
   let dragged = false;
 
+
+  let maskShader: any;
+
+
+  let maskVert = `
+  attribute vec3 aPosition;
+  attribute vec2 aTexCoord;
+  
+  uniform mat4 uProjectionMatrix;
+  uniform mat4 uModelViewMatrix;
+  
+  varying vec2 vTexCoord;
+  
+  void main() {
+    vec4 positionVec4 = vec4(aPosition, 1.0);
+    gl_Position = uProjectionMatrix * uModelViewMatrix * positionVec4;
+    vTexCoord = aTexCoord;
+  }
+  `;
+  
+  let maskFrag = `
+  precision highp float;
+  
+  varying vec2 vTexCoord;
+  uniform sampler2D maskTex;
+  uniform sampler2D imageTex;
+  
+  void main(){
+    vec4 mask = texture2D(maskTex, vTexCoord);
+    vec4 image = texture2D(imageTex, vTexCoord);
+  
+    // use the alpha to mask between the images
+    // or another color channel if you want...
+    gl_FragColor = vec4(image.rgb, mask.a);
+  }`
+  
  
   
   p.setup = () => {
-    cnv = p.createCanvas(window.innerWidth/2, window.innerHeight/2);
+    cnv = p.createCanvas(window.innerWidth/2, window.innerHeight/2, p.WEBGL);
+
+    maskShader = p.createShader(maskVert, maskFrag);
 
     cnvParent = cnv.elt;
 
@@ -42,7 +80,7 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
 
     p.noLoop();
 
-    p.pixelDensity(1);
+    // p.pixelDensity(1);
 
    
     // maskGraphics.pixelDensity(2);
@@ -118,19 +156,21 @@ function enableLink(element: HTMLElement) {
         let determiner = p.random();
 
         // console.log(determiner);
+        p.push();
+        p.translate(-p.width/2, -p.height/2);
 
         if (determiner < 0.1){
             const gap = 30;
-            for (let x=0;x<p.width;x+=gap){
-                p.line(x, 0, x, p.height)
+            for (let x=0;x<p.width*2;x+=gap){
+                p.line(x, 0, x, p.height*2)
             }
         } else if (determiner < 0.2){
             const gap = 30;
-            for (let x=0;x<p.width;x+=gap){
-                p.line(x, 0, x, p.height)
+            for (let x=0;x<p.width*2;x+=gap){
+                p.line(x, 0, x, p.height*2)
             }
-            for (let y=0;y<p.height;y+=gap){
-              p.line(0, y, p.height, y)
+            for (let y=0;y<p.height*2;y+=gap){
+              p.line(0, y, p.height*2, y)
           }
         } else if (determiner < 0.3){
           const gap = 30;
@@ -139,24 +179,24 @@ function enableLink(element: HTMLElement) {
           }
         } else if (determiner < 0.4){
           const gap = 30;
-          for (let x = 0; x <= p.width; x += gap) {
+          for (let x = 0; x <= p.width*2; x += gap) {
             p.line(x, 0, 0, x);
           }
-          for (let y = 0; y <= p.height; y += gap) {
+          for (let y = 0; y <= p.height*2; y += gap) {
             p.line(0, y, y, 0);
           }
         } else if (determiner < 0.5){
           const gap = 60;
-            for (let x=0;x<p.width;x+=gap){
-                p.line(x, 0, x, p.height)
+            for (let x=0;x<p.width*2;x+=gap){
+                p.line(x, 0, x, p.height*2)
             }
         } else if (determiner < 0.6){
           const gap = 20;
-          for (let y=0;y<p.height;y+=gap){
-            p.line(0, y, p.height, y)
+          for (let y=0;y<p.height*2;y+=gap){
+            p.line(0, y, p.height*2, y)
           }
         } else if (determiner < 0.7){
-          for (let y = 0; y <= p.height; y += 10) {
+          for (let y = 0; y <= p.height*2; y += 10) {
             p.line(0, y, y, 0);
           }
         } else if (determiner < 0.8){
@@ -200,6 +240,7 @@ function enableLink(element: HTMLElement) {
 
         } 
 
+        p.pop();
 
 
 
@@ -225,7 +266,7 @@ function enableLink(element: HTMLElement) {
         // p.push();
                 let displayImage: p5.Image = cnvImage.get();
                 
-                p.push();
+
                 // Create a new p5.Image from maskGraphics
                 let maskImage: p5.Image = p.createImage(p.width/2, p.height/2);
                 maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0, 0, p.width/2, p.height/2); 
@@ -233,19 +274,32 @@ function enableLink(element: HTMLElement) {
                 // maskImage.resize(p.width*4, p.height*4);
 
                 // // Apply the mask to displayImage
-                displayImage.mask(maskImage);
-                p.pop();
+                // displayImage.mask(maskImage);
 
                 // Draw the masked image
-                p.image(displayImage, 0, 0, p.width, p.height);
+                // p.image(displayImage, 0, 0, p.width, p.height);
+                shaderMask(displayImage, maskGraphics);
 
         p.push();
-        p.blendMode(p.HARD_LIGHT);
-        p.image(maskGraphics, 0, 0, p.width, p.height);
+        p.blendMode(p.MULTIPLY);
+        p.image(maskGraphics, -p.width/2, -p.height/2, p.width, p.height);
         p.pop();
     }
     // p.ellipse(100,100,60,60)
   };
+
+  function shaderMask(image: p5.Image, mask: any): void {
+    p.push();
+    p.noStroke();
+    p.shader(maskShader);
+    // p.translate(p.width/2, p.height/2);
+    maskShader.setUniform('maskTex', mask);
+    maskShader.setUniform('imageTex', image);
+    p.plane(p.width, p.height);
+    p.pop();
+  }
+
+
   p.mouseDragged = function() {
     dragged = true;
     // Disable the link
@@ -276,9 +330,9 @@ p.touchEnded = function() {
   
     function drawPathsOnMask(graphics: p5.Graphics, path: Point[], weight: number) {
         graphics.clear();
-        drawNonLinearShadows(graphics, path, weight, shadowHeightLight, 127, 80, -1);
-        drawNonLinearShadows(graphics, path, weight, shadowHeightDark, 127, 80, 1);
-        drawPathWithOffset(graphics, path, weight, 127, 0);
+        drawNonLinearShadows(graphics, path, weight, shadowHeightLight, 255, 80, -1);
+        drawNonLinearShadows(graphics, path, weight, shadowHeightDark, 255, 80, 1);
+        drawPathWithOffset(graphics, path, weight, 255, 0);
     }
 
     function drawNonLinearShadows(graphics: p5.Graphics, path: Point[], weight: number, shadowHeight: number, startColor: number, endColor: number, yOffsetMultiplier: number) {

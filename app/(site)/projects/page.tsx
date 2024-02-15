@@ -148,7 +148,7 @@ export default function Projects() {
               // Find the original index of the project
               const originalIndex = projects.findIndex(p => p.slug === project.slug);
 
-              if (originalIndex < 6){
+
                 
               let sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
               if (windowWidth < 450){
@@ -181,7 +181,7 @@ export default function Projects() {
                 );
 
 
-              }
+
 
               })}
             </div>
