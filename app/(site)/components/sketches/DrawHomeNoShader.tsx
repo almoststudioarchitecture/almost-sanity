@@ -26,42 +26,6 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   let cnvParent: HTMLElement;
   let slug: any;
 
-  let maskShader: any;
-
-
-let maskVert = `
-attribute vec3 aPosition;
-attribute vec2 aTexCoord;
-
-uniform mat4 uProjectionMatrix;
-uniform mat4 uModelViewMatrix;
-
-varying vec2 vTexCoord;
-
-void main() {
-  vec4 positionVec4 = vec4(aPosition, 1.0);
-  gl_Position = uProjectionMatrix * uModelViewMatrix * positionVec4;
-  vTexCoord = aTexCoord;
-}
-`;
-
-let maskFrag = `
-precision highp float;
-
-varying vec2 vTexCoord;
-uniform sampler2D maskTex;
-uniform sampler2D imageTex;
-
-void main(){
-  vec4 mask = texture2D(maskTex, vTexCoord);
-  vec4 image = texture2D(imageTex, vTexCoord);
-
-  // use the alpha to mask between the images
-  // or another color channel if you want...
-  gl_FragColor = vec4(image.rgb, mask.a);
-}`
-
-
 
   let cursorWeightDifference = 15;
   let cursorWeightChange = 0;
@@ -90,16 +54,12 @@ void main(){
   
   p.setup = () => {
     if (typeof window !== "undefined" && typeof document !== "undefined") {
-      // cnv = p.createCanvas(p.windowWidth, p.windowHeight);
-      cnv = p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);
-      
+      cnv = p.createCanvas(p.windowWidth, p.windowHeight);
 
       cnvParent = cnv.canvas.closest(".canvas-container");
       if (cnvParent){
         slug = cnvParent.getAttribute("data-slug");
       }
-
-      maskShader = p.createShader(maskVert, maskFrag);
 
     //   console.log(cnvParent);
 
@@ -226,7 +186,6 @@ void main(){
         localStorage.setItem(slug, stringified);
         // console.log(localStorage);
 
-    
           
         // p.push();
             let displayImage: p5.Image = cnvImage.get();
@@ -234,42 +193,26 @@ void main(){
             // // Create a new p5.Image from maskGraphics
             // let maskImage: p5.Image = p.createImage(p.width, p.height);
             let maskImage: p5.Image = p.createImage(p.width, p.height);
-
-            p.clear();
             
             maskImage.loadPixels();
             maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, maskImage.width, maskImage.height); 
 
             // // Apply the mask to displayImage
-            // displayImage.mask(maskImage);
+            displayImage.mask(maskImage);
 
             // // // Draw the masked image
-            // p.image(displayImage, 0, 0, p.width, p.height);
-
-            shaderMask(displayImage, maskGraphics);
+            p.image(displayImage, 0, 0, p.width, p.height);
 
         p.push();
-        p.blendMode(p.SCREEN);
-        // p.translate(-p.width/2, -p.height/2)
-        p.image(maskGraphics, 0 - p.width/2, 0 - p.height/2, p.width, p.height);
+        p.blendMode(p.HARD_LIGHT);
+        p.image(maskGraphics, 0, 0, p.width, p.height);
         p.pop();
     }
+    // p.clear();
     // if (img) {
     //   p.image(img, pos.x, pos.y);
     // }
   };
-
-  function shaderMask(image: p5.Image, mask: any): void {
-    p.push();
-    p.noStroke();
-    p.shader(maskShader);
-    // p.translate(p.width/2, p.height/2);
-    maskShader.setUniform('maskTex', mask);
-    maskShader.setUniform('imageTex', image);
-    p.plane(p.width, p.height);
-    p.pop();
-  }
-
   p.mouseReleased = function(){
     p.noLoop();
   }
@@ -286,9 +229,9 @@ void main(){
   function drawPathsOnMask(graphics: p5.Graphics, path: Point[], weight: number, scale:number) {
       graphics.clear();
       const dynamicWeight = weight + cursorWeightChange;
-      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightLight, 0, 235, -1, scale);
-      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 0, 80, 1, scale);
-      drawPathWithOffset(graphics, path, dynamicWeight, 0, 0, scale);
+      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightLight, 127, 235, -1, scale);
+      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 127, 80, 1, scale);
+      drawPathWithOffset(graphics, path, dynamicWeight, 127, 0, scale);
   }
 
   function drawNonLinearShadows(graphics: p5.Graphics, path: Point[], weight: number, shadowHeight: number, startColor: number, endColor: number, yOffsetMultiplier: number, scale:number) {
@@ -355,7 +298,7 @@ void main(){
             drawY = 0;
         }
 
-        p.image(theImg, drawX - drawWidth/2, drawY - drawHeight/2, drawWidth, drawHeight);
+        p.image(theImg, drawX, drawY, drawWidth, drawHeight);
     }
 
 
