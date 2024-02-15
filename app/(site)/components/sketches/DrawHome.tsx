@@ -268,15 +268,15 @@ void main(){
       graphics.clear();
       const dynamicWeight = weight + cursorWeightChange;
       drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightLight, 0, 235, -1, scale);
-      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 0, 80, 1, scale);
+      drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 0, 50, 1, scale);
       drawPathWithOffset(graphics, path, dynamicWeight, 0, 0, scale);
   }
 
   function drawPathsOnMaskDark(graphics: p5.Graphics, path: Point[], weight: number, scale:number) {
     graphics.clear();
     const dynamicWeight = weight + cursorWeightChange;
-    drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightLight, 255, 235, -1, scale);
-    drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 255, 80, 1, scale);
+    // drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightLight, 255, 235, -1, scale);
+    drawNonLinearShadows(graphics, path, dynamicWeight, shadowHeightDark, 255, 100, 1, scale);
     drawPathWithOffset(graphics, path, dynamicWeight, 255, 0, scale);
   }
 
