@@ -143,9 +143,13 @@ export default function Projects() {
             >
             {/* <Sketch cursorRadius={40} /> */}
             {projects.map((project, index) => {
+
+
               // Find the original index of the project
               const originalIndex = projects.findIndex(p => p.slug === project.slug);
 
+              if (originalIndex < 6){
+                
               let sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
               if (windowWidth < 450){
                 sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
@@ -175,6 +179,10 @@ export default function Projects() {
                     <GalleryItem optimizedSrc={optimizedSrc} project={project} altText={project.coverImage.alt ?? ''}></GalleryItem>
                   </div>
                 );
+
+
+              }
+
               })}
             </div>
 
