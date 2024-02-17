@@ -140,7 +140,7 @@ useEffect(() => {
 }, []);
 
 
-  const iframeRef = useRef(null);
+const iframeRef = useRef<HTMLIFrameElement>(null);
   // Function to add the "drawing" class to the body
   const startDrawing = () => {
     document.body.classList.add("drawing");
