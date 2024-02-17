@@ -1,8 +1,7 @@
 import * as React from "react";
-import { ReactP5Wrapper } from "@p5-wrapper/react";
-import { P5CanvasInstance } from "@p5-wrapper/react";
+import { ReactP5Wrapper, P5CanvasInstance } from "@p5-wrapper/react";
 import imageUrlBuilder from '@sanity/image-url';
-import p5, { Image, Element, Framebuffer } from "p5";
+import p5, { Image } from "p5";
 
 // Define an interface for the props
 interface AppProps {

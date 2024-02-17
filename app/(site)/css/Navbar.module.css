@@ -9,6 +9,16 @@
     display: flex;
 }
 
+.list li:first-child{
+    order:2;
+}
+.list li:nth-child(2){
+    order:1;
+}
+.list li:nth-child(3){
+    order:3;
+}
+
 /* Default styles without animation */
 /* .nav:after {
     content: '';

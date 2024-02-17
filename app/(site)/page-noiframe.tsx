@@ -7,15 +7,26 @@
 // import Draw from "./components/Draw";
 // import Job from "./components/Job";
 import { getProjects } from "@/sanity/sanity.query";
+// import Layout, { siteTitle } from './layout';
 import Head from 'next/head';
 import type { ProjectType } from "@/types";
+// import Script from 'next/script';
 import DrawCursor from './components/DrawCursor';
 import styles from './css/Home.module.css';
+// import { useEffect } from 'react';
 import ProjectListItem from "./components/ProjectListItem";
-import { useEffect, useState, useRef } from 'react';
+// import DrawLayout from './components/global/DrawLayout'; // Adjust the path as needed
+import { useEffect, useState } from 'react';
+// import P5Wrapper from 'p5-wrapper';
+// import p5 from 'p5'
+// import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
+// import { App } from './components/sketches/DrawHome';
 import imageUrlBuilder from '@sanity/image-url';
+import dynamic from 'next/dynamic'
 
-
+const DynamicApp = dynamic(() => import('./components/sketches/DrawHome').then((mod) => mod.App), {
+  ssr: false, // This will disable server-side rendering for this component
+});
 
 
 export default function Home() {
@@ -140,45 +151,6 @@ useEffect(() => {
 }, []);
 
 
-  const iframeRef = useRef(null);
-  // Function to add the "drawing" class to the body
-  const startDrawing = () => {
-    document.body.classList.add("drawing");
-  };
-
-  // Function to remove the "drawing" class from the body
-  const stopDrawing = () => {
-    document.body.classList.remove("drawing");
-  };
-  useEffect(() => {
-    // Handler for messages from the iframe
-    const handleMessage = (event: { source: any; data: string; }) => {
-      // Check if the message is from the expected iframe
-      if (iframeRef.current && event.source === iframeRef.current.contentWindow) {
-        if (event.data === 'mousedown') {
-          startDrawing();
-        } else if (event.data === 'mouseup') {
-          stopDrawing();
-        }
-      }
-    };
-
-  // Add event listeners for mouse and touch events
-  // Add event listeners for window and message events
-  if (typeof window !== 'undefined') {
-    window.addEventListener('message', handleMessage, false);
-  }
-
-  // Return a cleanup function to remove the event listeners
-  return () => {
-    if (typeof window !== 'undefined') {
-      window.removeEventListener('message', handleMessage, false);
-    }
-  };
-}, []); // Empty dependency array means this effect runs once on mount and cleanup on unmount
-
-
-
 
 function shuffleArray<T>(array: T[]): T[] {
     let currentIndex = array.length, randomIndex;
@@ -294,15 +266,42 @@ const addRandomProject = () => {
           <div className="verticalLine"></div>
           <div className="canvases">
 
-          <iframe 
-            ref={iframeRef}
-            id="myIFrame"
-            src="https://almost-studio-coming-soon.netlify.app/draw/" 
-            style={{width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0}} 
-            title="Draw Tool Almost Studio">
-          </iframe>
+          {displayedProjects.map((project) => {
+            // Using the slug as a key since it should be unique
+            const imageUrl = builder.image(project.coverImage.image)
+                .width(1500)
+                .height(Math.floor((9 / 16) * 1200))
+                .fit("crop")
+                .auto("format")
+                .url()
+                   
+            return (
+              <div key={project.slug} className="canvas-container" id={`container-${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
+                {typeof window !== 'undefined' && (
+                  <DynamicApp imageUrl={imageUrl} cursorRadius={cursorRadius} />
+                )}
+              </div>
+            );
+          })}
             
           </div>
+
+          <div className="list-container">
+                <ul className={`home--projectLinks ${styles.projectLinks} ${styles.lined}`}>
+                  {projects && projects.map((project, index) => (
+                      <ProjectListItem key={index} project={project} index={index} />
+                  ))}
+                  {renderAdditionalLines()} {/* Call the function here */}
+                </ul>
+                {/* <ul className={`home--projectLinks ${styles.projectLinks}`} id="projectLinks">
+                  {projects && projects.map((project, index) => (
+                      <ProjectListItem key={index} project={project} index={index} />
+                  ))}
+                </ul> */}
+          </div>
+          
+          
+          {showDrawCursor && <DrawCursor cursorSize={cursorRadius} />}
           
           
           </main>

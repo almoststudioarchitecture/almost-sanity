@@ -1,14 +1,10 @@
-// components/Layout.js
 'use client';
 
 import React, { useEffect, useState, ReactNode } from 'react';
 import { getProjects } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
-import Script from 'next/script';
-import DrawCursor from '../DrawCursor';
 import ProjectListItem from "../ProjectListItem";
 import styles from '../../css/Home.module.css';
-import p5 from 'p5';
 
 
 type DrawLayoutProps = {
@@ -75,18 +71,15 @@ const DrawLayout = ({ children }: DrawLayoutProps) => {
                 </ul>
           </div>
           {/* <DrawCursor /> */}
-          {/* <Script
+            {/* <script
             // type="module" 
             // async
-            src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"
+            src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"
             /> */}
-            <script
-            // type="module" 
-            // async 
-            // strategy='lazyOnload'
+            {/* <script
             src="/js/sketch.js" async
             />
-            
+             */}
 
         {/* Placeholder for page-specific content */}
         {/* {children} */}

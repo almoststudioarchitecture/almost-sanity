@@ -146,6 +146,10 @@ body {
   z-index:99;
 } */
 
+body.drawing nav{
+  z-index:0 !important;
+}
+
 /* Hover over svgs */
 #drawInHere .svgWrapper.hover svg{
   filter: drop-shadow( 1px 3px 2px rgba(0, 0, 0, .3));
@@ -290,6 +294,8 @@ h1{
   /* border-bottom:1px solid black; */
   /* border: 1px solid black; */
 }
+
+
 
 
 .p5Canvas{

@@ -67,12 +67,6 @@ export default async function Project({ params }: Props) {
 
   return (
     <>
-    <Head>
-        <title>{`Almost Studio – ${project.name}`}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"></meta>
-        {/* <meta name="description" content={project.description} /> */}
-        {/* Here you could dynamically set other head tags based on project data */}
-    </Head>
     <main>
       <ProjectScrollSnap project={project} />
       {/* <InteractiveLogo /> */}
