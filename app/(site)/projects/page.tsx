@@ -186,7 +186,7 @@ export default function Projects() {
               })}
             </div>
 
-            {!isHoveringProjectName && <DrawCursor cursorSize={30} />} 
+            {/* {!isHoveringProjectName && <DrawCursor cursorSize={30} />}  */}
 
             </main>         
         </>
