@@ -151,7 +151,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                     {project.gallery && project.gallery.map((item, index) => {
                     const randomStyleNumber = Math.floor(Math.random() * 11) + 1;
 
-                    console.log(item);
+                    // console.log(item);
                     
 
                     if (item._type === 'image'){

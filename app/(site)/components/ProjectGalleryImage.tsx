@@ -129,7 +129,7 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
   let borderY = '0px'; // Default values
   let assignedFit = 'inherit'; 
 
-  console.log(targetWidth,targetHeight);
+  // console.log(targetWidth,targetHeight);
 
   let optimizedSrc = urlFor(image)
   // .width(width)  // Set desired width

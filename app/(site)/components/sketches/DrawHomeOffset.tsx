@@ -48,7 +48,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
         slug = cnvParent.getAttribute("data-slug");
       }
 
-      console.log(cnvParent);
+      // console.log(cnvParent);
 
       maskGraphics = p.createGraphics(p.width, p.height);
       maskGraphics.clear();
@@ -125,7 +125,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
 
         let stringified = JSON.stringify(path);
         localStorage.setItem(slug, stringified);
-        console.log(localStorage);
+        // console.log(localStorage);
 
           
         // p.push();

@@ -71,7 +71,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
       p.noLoop();
       p.rectMode(p.CENTER)
 
-      console.log(p.VERSION);
+      // console.log(p.VERSION);
 
       // p.pixelDensity(1);
 

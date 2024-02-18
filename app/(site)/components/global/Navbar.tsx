@@ -128,13 +128,13 @@ export default function Navbar() {
 
     // Function to handle navigation click
     const handleNavClick = (newPath: string) => {
-            console.log("handle nav click");
+            // console.log("handle nav click");
             if (newPath === currentPath || (currentPath == 'other' && !isNavOpen)) {
-                console.log("new path is current path OR current path is Other and the nav is not open")
+                // console.log("new path is current path OR current path is Other and the nav is not open")
                 // If the clicked link is for the current page, toggle the open state
                 if (document.documentElement.clientWidth < 450) {
                     setIsNavOpen(!isNavOpen);
-                    console.log("set is nav open")
+                    // console.log("set is nav open")
                 } else {
                     closeNav();
                     navigateTo(newPath);
@@ -143,7 +143,7 @@ export default function Navbar() {
                 // If the clicked link is for a different page, close the nav and navigate
                 closeNav();
                 navigateTo(newPath);
-                console.log("close nav, navigate")
+                // console.log("close nav, navigate")
             }
     };
 
