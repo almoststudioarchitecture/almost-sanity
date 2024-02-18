@@ -14,6 +14,7 @@ import styles from './css/Home.module.css';
 import ProjectListItem from "./components/ProjectListItem";
 import { useEffect, useState, useRef } from 'react';
 import imageUrlBuilder from '@sanity/image-url';
+import Link from 'next/link';
 
 
 
@@ -81,6 +82,7 @@ export default function Home() {
 
   // Initialize cursorRadius with a default value
   const [cursorRadius, setCursorRadius] = useState(200); // default value
+  
 
   // Update the cursor radius based on the client width after component mounts
   useEffect(() => {
@@ -139,6 +141,10 @@ useEffect(() => {
   }
 }, []);
 
+const [linkHref, setLinkHref] = useState('');
+  const [projectName, setProjectName] = useState('');
+  const [projectLocation, setProjectLocation] = useState('');
+
 
 const iframeRef = useRef<HTMLIFrameElement>(null);
   // Function to add the "drawing" class to the body
@@ -149,17 +155,64 @@ const iframeRef = useRef<HTMLIFrameElement>(null);
   // Function to remove the "drawing" class from the body
   const stopDrawing = () => {
     document.body.classList.remove("drawing");
+    // document.body.classList.add("drawn");
   };
   useEffect(() => {
     // Handler for messages from the iframe
-    const handleMessage = (event: { source: any; data: string; }) => {
-      // Check if the message is from the expected iframe
+    // const handleMessage = (event: { source: any; data: string; }) => {
+    //   // Check if the message is from the expected iframe
+    //   if (iframeRef.current && event.source === iframeRef.current.contentWindow) {
+    //     console.log(event);
+    //     if (event.data === 'mousedown') {
+    //       startDrawing();
+    //     } else if (event.data.type === 'mouseup') {
+    //       stopDrawing();
+
+    //       // Update the elements with the received data
+    //       const projectLinkElem = document.getElementById('projectLink') as HTMLAnchorElement;
+    //       const projectNameElem = document.getElementById('projectName');
+    //       const projectLocationElem = document.getElementById('projectLocation');
+
+    //       // console.log(event);
+
+    //       if (projectLinkElem) projectLinkElem.href = `/projects/${event.data.data.slug}`;
+    //       if (projectNameElem) projectNameElem.innerHTML = event.data.data.title;
+    //       if (projectLocationElem) projectLocationElem.innerHTML = `, ${event.data.data.location}`;
+          
+    //     }
+    //   }
+    // };
+
+    interface MessageEventData {
+      type: string;
+      data: {
+        slug: string;
+        title: string;
+        location: string;
+      };
+    }
+
+    const handleMessage = (event: { source: any; data: MessageEventData | string }) => {
       if (iframeRef.current && event.source === iframeRef.current.contentWindow) {
-        if (event.data === 'mousedown') {
-          startDrawing();
-        } else if (event.data === 'mouseup') {
+        const eventData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+
+        if (eventData.type === 'mouseup') {
           stopDrawing();
-        }
+
+            // Step 2: Update state instead of direct DOM manipulation
+            if (eventData.data != null){
+              
+            const newHref = `/projects/${eventData.data.slug}`;
+            const newName = eventData.data.title;
+            const newLocation = `, ${eventData.data.location}`;
+
+            setLinkHref(newHref);
+            setProjectName(newName);
+            setProjectLocation(newLocation);
+          }
+        } else if (eventData.type === 'mousedown') {
+          startDrawing();
+        } 
       }
     };
 
@@ -302,6 +355,15 @@ const addRandomProject = () => {
             title="Draw Tool Almost Studio">
           </iframe>
             
+          </div>
+
+          <div className={`draw_name ${projectName ? 'visible' : ''}`}>
+            <h2>
+              <Link id="projectLink" href={linkHref}>
+                    <span id="projectName">{projectName}</span><span id="projectLocation">{projectLocation}</span>
+                    <svg width="12" height="12" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M23.1717 4H9V0H30V21H26V6.82858L2.82843 30.0002H0V27.1717L23.1717 4Z" fill="#FF0000"></path></svg>
+                </Link>
+            </h2>
           </div>
           
           

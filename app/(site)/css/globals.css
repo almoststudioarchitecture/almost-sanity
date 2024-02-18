@@ -146,8 +146,9 @@ body {
   z-index:99;
 } */
 
-body.drawing nav{
-  z-index:0 !important;
+body.drawing nav,
+body.drawing .draw_name{
+  z-index:-1 !important;
 }
 
 /* Hover over svgs */
@@ -1094,4 +1095,37 @@ body.loading nav li{
     overflow: hidden;
     background: var(--bg);
 
+}
+
+
+
+.draw_name{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  text-align: center;
+  padding-bottom:5px;
+  z-index:2;
+  color: var(--main-color);
+  background: var(--bg);
+  /* border-top:1px solid red; */
+  padding-top:4px;
+}
+body.drawing .draw_name{
+  z-index:0;
+}
+.draw_name.visible{
+    border-top:1px solid red;
+}
+.draw_name a svg{
+  display:none;
+}
+.draw_name a:hover svg{
+  display: inline;
+}
+
+.draw_name a svg{
+  height: 10px;
+  width: 10px;
+  margin-left: 3px;
 }
