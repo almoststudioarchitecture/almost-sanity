@@ -88,9 +88,15 @@ body {
   body.path-other nav{
     position:sticky;
   }
+
   body.path-other.scrolled{
     --bg: black;
     --main-color: white;
+  }
+
+  /* body.path-other main, */
+  body.path-other img{
+    touch-action: pan-y;
   }
 
   body.path-other.scrolled .projectInner{
@@ -313,9 +319,12 @@ body.mousedown .canvases{
   body.mousedown main{
     position: fixed;
   }
-  html, body.mousedown {
+  html, body.mousedown, body.drawing {
     /* overflow: hidden; */
     overscroll-behavior: none;
+  }
+  body.drawing {
+    position:fixed;
   }
 }
 body.mousedown nav{

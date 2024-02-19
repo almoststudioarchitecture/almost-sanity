@@ -141,6 +141,8 @@ function ProjectGalleryImage({ image, alt, fit }: ProjectGalleryImageProps) {
     .auto('format')
     .quality(100);
 
+    console.log(fit);
+
   if (fit || (!fit && (naturalWidth < naturalHeight)) || windowWidth < 450) {
     const imageAspectRatio = naturalWidth / naturalHeight;
     const browserAspectRatio = windowWidth / (windowHeight - 21);

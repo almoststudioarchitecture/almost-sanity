@@ -185,6 +185,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                                     // src={optimizedSrc} 
                                     image={item.image} 
                                     alt={item.alt || project.name}
+                                    fit={item.fit}
                                 />
                                 }
                                 </div>
