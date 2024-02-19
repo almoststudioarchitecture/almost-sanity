@@ -14,6 +14,8 @@ import ProjectInfoModule from "../../components/ProjectInfoModule";
 import InteractiveLogo from "../../components/global/InteractiveLogo";
 import ProjectScrollSnap from "../../components/ProjectScrollSnap";
 import Head from 'next/head';
+import Script from 'next/script';
+
 
 
 // import { Dimensions } from 'react-native';
@@ -29,6 +31,10 @@ type Props = {
     project: string;
   };
 };
+
+// useEffect(() => {
+//   window.scrollTo(0, 0);
+// }, []);
 
 // const win = Dimensions.get('window');
 
@@ -68,6 +74,7 @@ export default async function Project({ params }: Props) {
   return (
     <>
     <main>
+      <Script src="/js/scrollToTop.js" strategy="afterInteractive" />
       <ProjectScrollSnap project={project} />
       {/* <InteractiveLogo /> */}
     </main>

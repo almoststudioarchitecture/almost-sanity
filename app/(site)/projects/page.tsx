@@ -152,7 +152,7 @@ export default function Projects() {
                 
               let sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
               if (windowWidth < 450){
-                sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
+                sizeX = Math.ceil(windowWidth*window.devicePixelRatio);
               }
 
               // console.log(sizeX);
@@ -164,12 +164,12 @@ export default function Projects() {
                 .quality(100) // Automatic format selection (e.g., WebP)
                 .url();
 
-                const srcSet = `
-                  ${urlFor(project.coverImage.image).width(400).url()} 400w, 
-                  ${urlFor(project.coverImage.image).width(800).url()} 800w,
-                  ${urlFor(project.coverImage.image).width(1200).url()} 1200w,
-                  ${urlFor(project.coverImage.image).width(1600).url()} 1600w,
-                `;
+                // const srcSet = `
+                //   ${urlFor(project.coverImage.image).width(400).url()} 400w, 
+                //   ${urlFor(project.coverImage.image).width(800).url()} 800w,
+                //   ${urlFor(project.coverImage.image).width(1200).url()} 1200w,
+                //   ${urlFor(project.coverImage.image).width(1600).url()} 1600w,
+                // `;
 
                 // console.log(project.coverImage.alt);
 
