@@ -31,9 +31,10 @@
 .logoInner:first-child{
     margin-top: 100px;
 }
-.logoContainerSm{
-    display:flex;
-    bottom:0px;
+#logoContainerSm{
+    /* display:flex;
+    bottom:0px; */
+    height: calc(100vh - var(--nav-height));
 }
 
 
@@ -97,6 +98,7 @@
         display:block;
     }
 }
+
 
 #logo > div:first-child,
 #logo > a:first-child,

@@ -151,7 +151,7 @@ export default function InteractiveLogo() {
           // console.log(elementTop, window.innerHeight-startLogoHeightSm*2, startLogoHeightSm);
           if (elementTop <= (window.innerHeight-startLogoHeightSm*2)){
             // console.log("do the thing");
-            let newHeight = 0.5 + Math.min(
+            let newHeight = Math.min(
                 map(
                   elementTop,
                   window.innerHeight-startLogoHeightSm*2,
