@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-module.exports = {
+const nextConfig = {
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -11,4 +10,19 @@ module.exports = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: '/',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=1, stale-while-revalidate=59',
+          },
+        ],
+      },
+    ];
+  },
 };
+
+module.exports = nextConfig;
