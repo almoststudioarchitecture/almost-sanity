@@ -10,7 +10,7 @@
     transition:background 300ms, border 300ms;
 }
 .hero{
-    height: calc(100vh - 160px);
+    height: calc(100vh - 159px);
     /* width: 100dvw; */
     transition: margin 300ms, height 300ms;
     margin-top: calc(var(--nav-height)*-1);
@@ -158,8 +158,9 @@
 }
 .info{
     /* scroll-snap-align: none; */
-    max-height: calc(100vh - var(--pad));
-    overflow-y:scroll;
+    /* max-height: calc(100vh - var(--pad)); */
+    scroll-snap-align: none start;
+    /* overflow-y:scroll; */
     animation: fadeIn 600ms linear both;
 }
 

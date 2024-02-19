@@ -46,6 +46,44 @@ export default function Navbar() {
     }, []);
 
 
+    // const [isNavOpen, setIsNavOpen] = useState(false);
+    // const closeNav = () => setIsNavOpen(false);
+
+    // Existing useEffect hooks remain the same
+
+    // Add useEffect for scroll event listener
+    useEffect(() => {
+        const handleScroll = () => {
+            if (isNavOpen) closeNav();
+        };
+
+        // Add scroll listener to the window
+        window.addEventListener('scroll', handleScroll);
+
+        // Identifiers of the elements you want to add listeners to
+        const scrollableElementSelectors = ['.projectInner']; // Replace with your actual selectors
+
+        // Add scroll listeners to specific elements
+        scrollableElementSelectors.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) { // Check if the element is not null
+                element.addEventListener('scroll', handleScroll);
+            }
+        });
+
+        // Cleanup function to remove event listeners
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            scrollableElementSelectors.forEach(selector => {
+                const element = document.querySelector(selector);
+                if (element) { // Check if the element is not null
+                    element.removeEventListener('scroll', handleScroll);
+                }
+            });
+        };
+    }, [isNavOpen]); 
+
+
 
     useEffect(() => {
         // Format the path by removing the leading slash
