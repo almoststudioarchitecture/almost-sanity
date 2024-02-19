@@ -7,8 +7,8 @@ const formattedDate = new Date().toISOString().slice(0, 10);
 const config: ClientConfig = {
   projectId: "oogp23sh",
   dataset: "production",
-  // apiVersion: formattedDate,
-  apiVersion: '2024-02-19',
+  apiVersion: formattedDate,
+  // apiVersion: '2024-02-19',
   useCdn: true,
 };
 
