@@ -42,6 +42,8 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.project;
   const project: ProjectType = await getSingleProject(slug);
+
+  console.log(project);
   
 
   return {
