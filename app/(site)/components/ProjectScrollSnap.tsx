@@ -71,6 +71,8 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
         : { pointerEvents: "inherit" };
 
     return (
+        <>
+        <div className="topSpacer" id="topSpacer"></div>
         <div className="projectInner" ref={projectInnerRef} style={scrollStyle}>
                     <div id="after"></div>
             <div className="section hero fixed">
@@ -214,6 +216,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
 
       <InteractiveLogo />
         </div>
+        </>
     );
 };
 

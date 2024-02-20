@@ -108,7 +108,7 @@ body {
   }
 
   body.path-other main{
-    margin-top:var(--nav-height);
+    /* margin-top:var(--nav-height); */
   }
   
   * {

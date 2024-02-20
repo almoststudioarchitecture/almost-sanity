@@ -25,3 +25,8 @@
 //     })
 //   }
 
+
+let topSpacer = document.getElementById("topSpacer")
+if (topSpacer != null){
+  topSpacer.scrollIntoView();
+}

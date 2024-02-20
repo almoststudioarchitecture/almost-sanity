@@ -40,6 +40,25 @@
     }
 } 
 
+.topSpacer{
+    width:100vw;
+    /* background:red; */
+    background:transparent;
+    height:calc(100vh - 40px - var(--nav-height));
+    animation: topSpacer 600ms 1s ease-out both
+}
+
+@keyframes topSpacer{
+    0%{
+        /* height: calc(100vh - 40px); */
+        height:calc(100vh - 40px - var(--nav-height));
+    }
+    100%{
+        /* height: calc(100vh - 160px); */
+        height:calc(100vh - 160px - var(--nav-height));
+    }
+} 
+
 .hero img{
     /* object-position: top left; */
     object-position: center;
@@ -136,7 +155,7 @@
     /* overflow-y: auto; */
     overflow:hidden;
     /* margin-top:calc(100vh - 160px); */
-    animation: heroMargin 600ms 1s ease-out both;
+    /* animation: heroMargin 600ms 1s ease-out both; */
 
     /* position: sticky;
     top: var(--nav-height);
