@@ -351,7 +351,7 @@ const addRandomProject = () => {
           <iframe 
             ref={iframeRef}
             id="myIFrame"
-            src="https://almost-studio-coming-soon.netlify.app/draw/" 
+            src="https://almost-studio-coming-soon.netlify.app/instagram/" 
             style={{width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0}} 
             title="Draw Tool Almost Studio">
           </iframe>
