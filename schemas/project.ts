@@ -35,6 +35,12 @@ const project = {
       validation: (rule) => rule.required(),
     }),
     {
+      name: "shareDescription",
+      title: "Page Share Description",
+      type: "string",
+      description: "One sentence describing the project. Shows up search engines and when you share the website.",
+    },
+    {
       name: "location",
       title: "Location (or other secondary line)",
       type: "string",

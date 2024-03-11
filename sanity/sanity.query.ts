@@ -50,6 +50,7 @@ export async function getSingleProject(slug: string) {
     groq`*[_type == "project" && slug.current == $slug][0]{
       _id,
       name,
+      shareDescription,
       location,
       coverImage { alt, "image": asset->url, white },
       metadata,
