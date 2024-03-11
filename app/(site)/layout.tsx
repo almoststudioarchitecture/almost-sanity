@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Almost Studio is a design practice working on projects between the US and France.",
   openGraph: {
     images:
-      "https://res.cloudinary.com/victoreke/image/upload/v1689893059/docs/og.png",
+      "https://cdn.sanity.io/images/oogp23sh/production/3a718c50f7f615917e97299f70d1e4f266bc4127-1200x630.png",
   },
 };
 
