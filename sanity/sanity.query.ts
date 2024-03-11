@@ -29,8 +29,7 @@ export async function getProjects() {
       coverImage { 
         alt, 
         "image": asset->url,
-        white,
-        focalpoint
+        white
       }
     }`
   );
@@ -96,6 +95,26 @@ const querySiteMeta = `
   }
 }
 `
+
+
+
+export async function getSiteMeta() {
+  return client.fetch(
+    groq`*[_type == "siteMeta"]{
+      "siteName": site_name,
+      "ogDescription": ogDescription,
+      "url": url,
+      "ogTitle": ogTitle,
+      "ogImage": ogImage.asset->url,
+      "description": description,
+      "isGoogleAnalyticsEnabled": isGoogleAnalyticsEnabled,
+      "googleAnalyticsID": googleanalyticsId,
+      "googleSiteVerificationId": googleSiteVerificationId,
+      "isPwa": isPwa
+    }[0]`
+  );
+}
+
 
 
 // export default async function getSiteMeta(

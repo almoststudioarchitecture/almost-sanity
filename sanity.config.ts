@@ -14,7 +14,7 @@ export default defineConfig({
   basePath: "/edit",
   // plugins: [deskTool()],
   plugins: [
-    vercelDeployTool(),
+    // vercelDeployTool(),
     structureTool({
       structure: (S, context) => {
         return S.list()
