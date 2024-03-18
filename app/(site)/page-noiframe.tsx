@@ -22,7 +22,8 @@ import { useEffect, useState } from 'react';
 // import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
 // import { App } from './components/sketches/DrawHome';
 import imageUrlBuilder from '@sanity/image-url';
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
+import Script from 'next/script';
 
 const DynamicApp = dynamic(() => import('./components/sketches/DrawHome').then((mod) => mod.App), {
   ssr: false, // This will disable server-side rendering for this component
@@ -261,6 +262,19 @@ const addRandomProject = () => {
           <Head>
             <title>ALMOST STUDIO</title>
           </Head>
+          <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-K8S3973D6Y"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-K8S3973D6Y');
+          `}
+        </Script>
           
           <main>
           <div className="verticalLine"></div>

@@ -15,7 +15,7 @@ import ProjectListItem from "./components/ProjectListItem";
 import { useEffect, useState, useRef } from 'react';
 import imageUrlBuilder from '@sanity/image-url';
 import Link from 'next/link';
-
+import Script from 'next/script';
 
 
 
@@ -343,6 +343,19 @@ const addRandomProject = () => {
           <Head>
             <title>ALMOST STUDIO</title>
           </Head>
+          <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-K8S3973D6Y"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-K8S3973D6Y');
+          `}
+        </Script>
           
           <main>
           <div className="verticalLine"></div>
