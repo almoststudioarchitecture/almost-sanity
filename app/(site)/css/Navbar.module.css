@@ -56,81 +56,12 @@
     }
 }
 
-/* .list li:first-child:hover .inner{
-    width:calc(100% - 20px);
-} */
-
-/* .list li:nth-child(2):hover .inner{
-    margin-left: -30px;
-} */
-
-.list li:nth-child(2):hover{
-
-}
-
-/* .listItem {
-    border-right: 1px solid var(--main-color);
-    background: var(--bg);
-} */
-
-/* .nav:after {
-    animation: lineExpand 800ms ease-in-out both;
-} */
-
-/* .listItem {
-    animation: navItemAppear 500ms linear both;
-    position:relative;
-} */
-
-/* Styles with animation for initial load */
-
-/* .nav.initial-load:after {
-    animation: lineExpand 800ms ease-in-out both;
-}
-
-.initial-load .listItem {
-    animation: navItemAppear 500ms linear both;
-}
-
-.initial-load .listItem .link{
-    transition-delay: 1s;
-}
-
-
-.listItem:first-child .link{
-    width: calc(var(--logo-width) + var(--pad_x)*2);
-}
-.listItem:nth-child(2) .link{
-    width: calc(var(--projects-width) + var(--pad_x)*2);
-}
-.listItem:nth-child(3) .link{
-    width: calc(var(--profile-width) + var(--pad_x)*2);
-}   
-.listItem .link{
-    transition: width 300ms ease-in-out;
-} */
-
-
-
-/* @keyframes expandLogo{
-    0%{ width: calc(var(--logo-width) + var(--pad_x)*2)}
-    100%{ width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px)}
-}
-@keyframes expandProjects{
-    0%{ width: var(--projects-width);}
-    100%{ width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*2 - 2px);}
-}
-@keyframes expandProfile{
-    0%{ width: var(--profile-width);}
-    100%{ width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
-} */
-
 .listItem:nth-child(2){
     animation-delay:200ms;
 }
 
 .listItem:nth-child(3){
-    animation-delay:400ms;
+    animation-delay:400msż
 }
 
 .link{
@@ -139,11 +70,14 @@
     text-transform: uppercase;
     transition: padding 100ms linear, width 100ms linear; 
     
-    /* white-space: pre; */
     width: 100%;
     padding: var(--pad_y) var(--pad_x);
     display: block;
     overflow: hidden;
+}
+
+.nav.transitioning .link{
+    transition: padding 300ms ease-in-out, width 300ms ease-in-out; 
 }
 
 .inner{
@@ -155,13 +89,9 @@
     transition:width 100ms linear;
 }
 
-/* .link:not(.active):hover{ */
-    /* text-decoration:none; */
-    /* padding-right: 30px; */
-    /* .icon{
-        opacity: 1;
-    } */
-/* } */
+.nav.transitioning .inner{
+    transition:width 300ms ease-in-out;
+}
 
 .icon{
     position: absolute;
@@ -170,6 +100,9 @@
     transition: opacity 100ms, margin 100ms;
     pointer-events: none;
     opacity: 0;
+}
+.nav.transitioning .icon{
+    transition: opacity 300ms, margin 300ms;
 }
 
 .iconInfo{

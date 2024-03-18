@@ -837,6 +837,11 @@ nav li a{
   transition: width 100ms ease-in-out;
 }
 
+body.transitioning nav li button, 
+body.transitioning nav li a{
+  transition: width 300ms ease-in-out;
+}
+
 nav{
   --hoverGap: 30px;
 }
@@ -856,6 +861,10 @@ body.loading nav.active-1 li:first-child button{
 nav.active-1 li:first-child button{
   transition: width 100ms linear;
   width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
+}
+
+body.transitioning nav.active-1 li:first-child button{
+  transition: width 300ms ease-in-out;
 }
 
 nav.active-1.hoveringOthers li:first-child button{
@@ -937,6 +946,10 @@ nav.active-2 li:nth-child(2) button{
   width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
 }
 
+body.transitioning nav.active-2 li:nth-child(2) button{
+  transition: width 300ms ease-in-out;
+}
+
 body.transition-home-projects nav li:first-child button,
 body.transition-home-profile nav li:first-child button{
   animation: expandLogo 6000ms ease-in-out reverse both;
@@ -954,6 +967,10 @@ body.transition-profile-projects nav li:nth-child(2) button{
 nav.active-3 li:nth-child(3) button{
   transition: width 100ms linear;
   width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px);
+}
+
+body.transitioning nav.active-3 li:nth-child(3) button{
+  transition: width 300ms ease-in-out;
 }
 
 /* Transition home to profile */

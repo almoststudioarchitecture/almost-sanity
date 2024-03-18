@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState, useRef } from 'react';
 
 
-const TRANSITION_SPEED = 1000;
+const TRANSITION_SPEED = 400;
 
 
 export default function Navbar() {
@@ -165,28 +165,28 @@ export default function Navbar() {
     }, []);
 
     // Function to handle navigation click
-    const handleNavClick = (newPath: string) => {
-            // console.log("handle nav click");
-            if (newPath === currentPath || (currentPath == 'other' && !isNavOpen)) {
-                // console.log("new path is current path OR current path is Other and the nav is not open")
-                // If the clicked link is for the current page, toggle the open state
-                if (document.documentElement.clientWidth < 450) {
-                    setIsNavOpen(!isNavOpen);
-                    // console.log("set is nav open")
-                } else {
-                    closeNav();
-                    navigateTo(newPath);
-                }
-            } else {
-                // If the clicked link is for a different page, close the nav and navigate
-                closeNav();
-                navigateTo(newPath);
-                // console.log("close nav, navigate")
-            }
-    };
+    // Adjusted handleNavClick function
+const handleNavClick = (newPath: string) => {
+    if (newPath !== currentPath) {
+        // Apply new active class immediately by updating state
+        // (Assuming you have a method like getLinkIndexFromPath to get the index based on newPath)
+        setActiveLinkIndex(getLinkIndexFromPath(newPath));
 
-    // Navigation logic abstracted into a function for reusability
-    const navigateTo = (newPath: React.SetStateAction<string>) => {
+        // Close the nav (if applicable) and navigate after a delay
+        closeNav();
+        navigateTo(newPath);
+    } else {
+        // Handle the case where the current path is clicked (if needed)
+        if (document.documentElement.clientWidth < 450) {
+            setIsNavOpen(!isNavOpen);
+        } else {
+            closeNav();
+        }
+    }
+};
+
+    // Updated navigateTo function
+    const navigateTo = (newPath: string) => {
         let url = '/';
         switch (newPath) {
             case 'home':
@@ -200,11 +200,46 @@ export default function Navbar() {
                 break;
             // Add cases for other paths as needed
         }
-
-        router.push(url);
+    
+        // Immediately add the "transitioning" class to the body and the nav
+        document.body.classList.add("transitioning");
+        const navElement = document.querySelector('nav'); // Adjust selector as needed to target your nav
+        if (navElement) {
+            navElement.classList.add("transitioning");
+        }
+    
+        // Wait for 1000ms before navigating and removing the "transitioning" class
+        setTimeout(() => {
+            // Remove the "transitioning" class
+            document.body.classList.remove("transitioning");
+            if (navElement) {
+                navElement.classList.remove("transitioning");
+            }
+    
+            // Navigate
+            router.push(url);
+        }, TRANSITION_SPEED);
+    
+        // Update the previous and current path state
         setPreviousPath(currentPath);
         setCurrentPath(newPath);
     };
+    
+
+// Helper function to get link index from path
+// This assumes you have a predefined method of associating paths with link indexes
+const getLinkIndexFromPath = (path: string) => {
+    switch (path) {
+        case '':
+            return 1;
+        case 'projects':
+            return 2;
+        case 'profile':
+            return 3;
+        default:
+            return -1; // Or another default index, as appropriate
+    }
+};
 
     
 
