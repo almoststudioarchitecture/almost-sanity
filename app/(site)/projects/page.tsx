@@ -19,6 +19,7 @@ import Script from 'next/script';
 
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic'
 
 
@@ -36,6 +37,8 @@ function urlFor(source: string) {
   return builder.image(source);
 }
 
+const TRANSITION_SPEED: number = 400; // Define your transition speed
+
 
 export default function Projects() {
   const [projects, setProjects] = useState<ProjectType[]>([]);
@@ -45,6 +48,18 @@ export default function Projects() {
   const [mouseIsDown, setIsDown] = useState(false);
 
   const [windowWidth, setWindowWidth] = useState(0);
+
+  const router = useRouter(); // Type is inferred
+
+  const handleProjectClick = (projectSlug: string) => {
+    document.body.classList.add("transitioning");
+
+    setTimeout(() => {
+        document.body.classList.remove("transitioning");
+        router.push(`/projects/${projectSlug}`);
+    }, 400); // Transition speed in milliseconds
+};
+
 
   // Function to update the window width
   const updateWindowWidth = () => {
@@ -128,6 +143,8 @@ export default function Projects() {
   }, [isDragging]); // Add dependencies if necessary
 
 
+
+
     return (
       <>
           <Head>
@@ -188,7 +205,7 @@ export default function Projects() {
                 // console.log(project.coverImage.alt);
 
                 return (
-                  <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}>
+                  <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}  onClick={() => handleProjectClick(project.slug)}>
                     
                     <GalleryItem optimizedSrc={optimizedSrc} project={project} altText={project.coverImage.alt ?? ''}></GalleryItem>
                   </div>
