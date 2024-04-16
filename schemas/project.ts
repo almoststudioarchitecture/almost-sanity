@@ -63,40 +63,40 @@ const project = {
           title: "Does this image have a white background?",
           type: 'boolean',
         },
-        // {
-        //   name: "focalpoint",
-        //   title: "Focal Point",
-        //   type: 'object',
-        //   description: 'Defaults to center/center',
-        //   fields: [
-        //     {
-        //       name: 'x', 
-        //       type: 'string', 
-        //       title: 'X', 
-        //       options: {
-        //         list: [
-        //           {title: 'Left', value: 'xMin'}, 
-        //           {title: 'Middle', value: 'xMid'}, 
-        //           {title: 'Right', value: 'xMax'}
-        //         ],
-        //         layout: 'dropdown'
-        //       },
-        //     },
-        //     {
-        //       name: 'y', 
-        //       type: 'string', 
-        //       title: 'Y', 
-        //       options: {
-        //         list: [
-        //           {title: 'Top', value: 'YMin'}, 
-        //           {title: 'Center', value: 'YMid'}, 
-        //           {title: 'Bottom', value: 'YMax'}
-        //         ],
-        //         layout: 'dropdown',
-        //       },
-        //     },
-        //   ]
-        // }
+        {
+          name: "focalpoint",
+          title: "Focal Point",
+          type: 'object',
+          description: 'Defaults to center/center',
+          fields: [
+            {
+              name: 'x', 
+              type: 'string', 
+              title: 'X', 
+              options: {
+                list: [
+                  {title: 'Left', value: 'xMin'}, 
+                  {title: 'Middle', value: 'xMid'}, 
+                  {title: 'Right', value: 'xMax'}
+                ],
+                layout: 'dropdown'
+              },
+            },
+            {
+              name: 'y', 
+              type: 'string', 
+              title: 'Y', 
+              options: {
+                list: [
+                  {title: 'Top', value: 'YMin'}, 
+                  {title: 'Center', value: 'YMid'}, 
+                  {title: 'Bottom', value: 'YMax'}
+                ],
+                layout: 'dropdown',
+              },
+            },
+          ]
+        }
       ],
     },
     {

@@ -23,14 +23,14 @@ return (
                             <defs>
                                 <pattern id={`img${index}`} patternUnits="userSpaceOnUse" width="100%" height="100%">
                                     {/* <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice"></image> */}
-                                    {/* {project.coverImage.focalpoint ? (
+                                    {project.coverImage.focalpoint ? (
                                       <>
                                         <image href={project.coverImage.image} data-focalpoint={project.coverImage.focalpoint.y} x="0" y="0" width="100%" height="100%" preserveAspectRatio={`${project.coverImage.focalpoint.x}${project.coverImage.focalpoint.y.charAt(0).toUpperCase() + project.coverImage.focalpoint.y.slice(1)} slice`}></image>
                                       </>
                                     ) : (
                                       <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image>
-                                    )} */}
-                                    <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image>
+                                    )}
+                                    {/* <image href={project.coverImage.image} x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image> */}
                                 </pattern>
                             </defs>
                             <path d=""></path>

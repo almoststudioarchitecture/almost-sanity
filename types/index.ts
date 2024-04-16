@@ -76,14 +76,14 @@ interface TeamMember {
   bio: string;
 }
 
-// export type FocalPoint = {
-//   x: 'xMin' | 'xMid' | 'xMax';
-//   y: 'YMin' | 'YMid' | 'YMax';
-// };
+export type FocalPoint = {
+  x: 'xMin' | 'xMid' | 'xMax';
+  y: 'YMin' | 'YMid' | 'YMax';
+};
 
 export type CoverImage = {
   alt: string | null;
   image: string;
   white: boolean;
-  // focalpoint?: FocalPoint;
+  focalpoint?: FocalPoint;
 };

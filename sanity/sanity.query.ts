@@ -29,7 +29,8 @@ export async function getProjects() {
       coverImage { 
         alt, 
         "image": asset->url,
-        white
+        white,
+        focalpoint
       }
     }`
   );
