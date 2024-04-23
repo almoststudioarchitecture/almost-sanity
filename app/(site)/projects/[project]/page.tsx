@@ -39,25 +39,25 @@ type Props = {
 // const win = Dimensions.get('window');
 
 // Dynamic metadata for SEO
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = params.project;
-  const project: ProjectType = await getSingleProject(slug);
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const slug = params.project;
+//   const project: ProjectType = await getSingleProject(slug);
 
-  console.log(project);
+//   console.log(project);
   
 
-  return {
-    title: `Almost Studio – ${project.name}`,
-    description: project.name,
-    openGraph: {
-      images:
-        project.coverImage?.image ||
-        "https://res.cloudinary.com/victoreke/image/upload/v1689892912/docs/project.png",
-      title: project.name,
-      description: project.name,
-    },
-  };
-}
+//   return {
+//     title: `Almost Studio – ${project.name}`,
+//     description: project.name,
+//     openGraph: {
+//       images:
+//         project.coverImage?.image ||
+//         "https://res.cloudinary.com/victoreke/image/upload/v1689892912/docs/project.png",
+//       title: project.name,
+//       description: project.name,
+//     },
+//   };
+// }
 
 export default async function Project({ params }: Props) {
   const slug = params.project;
