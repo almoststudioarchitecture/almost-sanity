@@ -7,7 +7,7 @@ const config: ClientConfig = {
   projectId: "oogp23sh",
   dataset: "production",
   apiVersion: formattedDate,
-  useCdn: false,
+  useCdn: process.env.revalidateSecret ? false : true,
 };
 
 const client = createClient(config);

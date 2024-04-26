@@ -20,6 +20,8 @@ export default async function Project({ params }: Props) {
   const slug = params.project;
   const project: ProjectType = await getSingleProject(slug);
 
+  // console.log(project)
+
   const builder = imageUrlBuilder({
     projectId: "oogp23sh",
     dataset: "production",
