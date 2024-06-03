@@ -1,5 +1,6 @@
 import * as React from "react";
-import { ReactP5Wrapper, P5CanvasInstance } from "@p5-wrapper/react";
+// import { ReactP5Wrapper, P5CanvasInstance } from "@p5-wrapper/react";
+import { ReactP5Wrapper, P5CanvasInstance } from 'react-p5-wrapper';
 import imageUrlBuilder from '@sanity/image-url';
 import p5, { Image } from "p5";
 
@@ -71,7 +72,7 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
       p.noLoop();
       p.rectMode(p.CENTER)
 
-      // console.log(p.VERSION);
+      console.log(p.VERSION);
 
       // p.pixelDensity(1);
 

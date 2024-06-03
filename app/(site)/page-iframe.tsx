@@ -7,27 +7,17 @@
 // import Draw from "./components/Draw";
 // import Job from "./components/Job";
 import { getProjects } from "@/sanity/sanity.query";
-// import Layout, { siteTitle } from './layout';
 import Head from 'next/head';
 import type { ProjectType } from "@/types";
-// import Script from 'next/script';
 import DrawCursor from './components/DrawCursor';
 import styles from './css/Home.module.css';
-// import { useEffect } from 'react';
 import ProjectListItem from "./components/ProjectListItem";
-// import DrawLayout from './components/global/DrawLayout'; // Adjust the path as needed
-import { useEffect, useState } from 'react';
-// import P5Wrapper from 'p5-wrapper';
-// import p5 from 'p5'
-// import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
-// import { App } from './components/sketches/DrawHome';
+import { useEffect, useState, useRef } from 'react';
 import imageUrlBuilder from '@sanity/image-url';
-import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import Script from 'next/script';
 
-const DynamicApp = dynamic(() => import('./components/sketches/DrawHome').then((mod) => mod.App), {
-  ssr: false, // This will disable server-side rendering for this component
-});
+
 
 
 export default function Home() {
@@ -93,6 +83,7 @@ export default function Home() {
 
   // Initialize cursorRadius with a default value
   const [cursorRadius, setCursorRadius] = useState(200); // default value
+  
 
   // Update the cursor radius based on the client width after component mounts
   useEffect(() => {
@@ -150,6 +141,96 @@ useEffect(() => {
     };
   }
 }, []);
+
+const [linkHref, setLinkHref] = useState('');
+  const [projectName, setProjectName] = useState('');
+  const [projectLocation, setProjectLocation] = useState('');
+
+
+const iframeRef = useRef<HTMLIFrameElement>(null);
+  // Function to add the "drawing" class to the body
+  const startDrawing = () => {
+    document.body.classList.add("drawing");
+  };
+
+  // Function to remove the "drawing" class from the body
+  const stopDrawing = () => {
+    document.body.classList.remove("drawing");
+    // document.body.classList.add("drawn");
+  };
+  useEffect(() => {
+    // Handler for messages from the iframe
+    // const handleMessage = (event: { source: any; data: string; }) => {
+    //   // Check if the message is from the expected iframe
+    //   if (iframeRef.current && event.source === iframeRef.current.contentWindow) {
+    //     console.log(event);
+    //     if (event.data === 'mousedown') {
+    //       startDrawing();
+    //     } else if (event.data.type === 'mouseup') {
+    //       stopDrawing();
+
+    //       // Update the elements with the received data
+    //       const projectLinkElem = document.getElementById('projectLink') as HTMLAnchorElement;
+    //       const projectNameElem = document.getElementById('projectName');
+    //       const projectLocationElem = document.getElementById('projectLocation');
+
+    //       // console.log(event);
+
+    //       if (projectLinkElem) projectLinkElem.href = `/projects/${event.data.data.slug}`;
+    //       if (projectNameElem) projectNameElem.innerHTML = event.data.data.title;
+    //       if (projectLocationElem) projectLocationElem.innerHTML = `, ${event.data.data.location}`;
+          
+    //     }
+    //   }
+    // };
+
+    interface MessageEventData {
+      type: string;
+      data: {
+        slug: string;
+        title: string;
+        location: string;
+      };
+    }
+
+    const handleMessage = (event: { source: any; data: MessageEventData | string }) => {
+      if (iframeRef.current && event.source === iframeRef.current.contentWindow) {
+        const eventData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+
+        if (eventData.type === 'mouseup') {
+          stopDrawing();
+
+            // Step 2: Update state instead of direct DOM manipulation
+            if (eventData.data != null){
+              
+            const newHref = `/projects/${eventData.data.slug}`;
+            const newName = eventData.data.title;
+            const newLocation = `, ${eventData.data.location}`;
+
+            setLinkHref(newHref);
+            setProjectName(newName);
+            setProjectLocation(newLocation);
+          }
+        } else if (eventData.type === 'mousedown') {
+          startDrawing();
+        } 
+      }
+    };
+
+  // Add event listeners for mouse and touch events
+  // Add event listeners for window and message events
+  if (typeof window !== 'undefined') {
+    window.addEventListener('message', handleMessage, false);
+  }
+
+  // Return a cleanup function to remove the event listeners
+  return () => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('message', handleMessage, false);
+    }
+  };
+}, []); // Empty dependency array means this effect runs once on mount and cleanup on unmount
+
 
 
 
@@ -280,42 +361,24 @@ const addRandomProject = () => {
           <div className="verticalLine"></div>
           <div className="canvases">
 
-          {displayedProjects.map((project) => {
-            // Using the slug as a key since it should be unique
-            const imageUrl = builder.image(project.coverImage.image)
-                .width(1500)
-                .height(Math.floor((9 / 16) * 1200))
-                .fit("crop")
-                .auto("format")
-                .url()
-                   
-            return (
-              <div key={project.slug} className="canvas-container" id={`container-${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
-                {typeof window !== 'undefined' && (
-                  <DynamicApp imageUrl={imageUrl} cursorRadius={cursorRadius} />
-                )}
-              </div>
-            );
-          })}
+          <iframe 
+            ref={iframeRef}
+            id="myIFrame"
+            src="https://almost-studio-coming-soon.netlify.app/instagram/" 
+            style={{width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0}} 
+            title="Draw Tool Almost Studio">
+          </iframe>
             
           </div>
 
-          <div className="list-container">
-                <ul className={`home--projectLinks ${styles.projectLinks} ${styles.lined}`}>
-                  {projects && projects.map((project, index) => (
-                      <ProjectListItem key={index} project={project} index={index} />
-                  ))}
-                  {renderAdditionalLines()} {/* Call the function here */}
-                </ul>
-                {/* <ul className={`home--projectLinks ${styles.projectLinks}`} id="projectLinks">
-                  {projects && projects.map((project, index) => (
-                      <ProjectListItem key={index} project={project} index={index} />
-                  ))}
-                </ul> */}
+          <div className={`draw_name ${projectName ? 'visible' : ''}`}>
+            <h2>
+              <Link id="projectLink" href={linkHref}>
+                    <span id="projectName">{projectName}</span><span id="projectLocation">{projectLocation}</span>
+                    <svg width="12" height="12" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M23.1717 4H9V0H30V21H26V6.82858L2.82843 30.0002H0V27.1717L23.1717 4Z" fill="#FF0000"></path></svg>
+                </Link>
+            </h2>
           </div>
-          
-          
-          {showDrawCursor && <DrawCursor cursorSize={cursorRadius} />}
           
           
           </main>
