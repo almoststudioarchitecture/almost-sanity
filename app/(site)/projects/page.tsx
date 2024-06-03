@@ -1,32 +1,21 @@
-'use client'; 
+'use client';
 
-// import * as sanityQuery from "@/sanity/sanity.query";
-// import type { ProfileType } from "@/types";
-// import ShadowFilter from "../icons/ShadowFilter";
 import ArrowTopRight from "../icons/ArrowTopRight";
 import { getProjects } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
-// import Script from 'next/script';
 import Head from 'next/head';
 import Link from 'next/link';
 import DrawCursor from '../components/DrawCursor';
 import GalleryItem from '../components/GalleryItem';
-// import styles from '../css/Home.module.css';
-// import ProjectListItem from "../components/ProjectListItem";
-// import { Sketch } from '../components/sketches/DrawProjects';
 import imageUrlBuilder from '@sanity/image-url';
 import Script from 'next/script';
-
-
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic'
-
+import dynamic from 'next/dynamic';
 
 const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').then((mod) => mod.Sketch), {
-  ssr: false, // This will disable server-side rendering for this component
+  ssr: false,
 });
-
 
 const builder = imageUrlBuilder({
   projectId: "oogp23sh",
@@ -37,189 +26,146 @@ function urlFor(source: string) {
   return builder.image(source);
 }
 
-const TRANSITION_SPEED: number = 400; // Define your transition speed
-
+const TRANSITION_SPEED: number = 400;
 
 export default function Projects() {
   const [projects, setProjects] = useState<ProjectType[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [mouseIsMoving, setIsMoving] = useState(false);
   const [mouseIsDown, setIsDown] = useState(false);
-
   const [windowWidth, setWindowWidth] = useState(0);
+  const [isHoveringProjectName, setIsHoveringProjectName] = useState(false);
 
-  const router = useRouter(); // Type is inferred
+  const router = useRouter();
 
-  const handleProjectClick = (projectSlug: string) => {
-    document.body.classList.add("transitioning");
-
-    setTimeout(() => {
+  const handleProjectClick = (e: React.MouseEvent<HTMLDivElement>, projectSlug: string) => {
+    if (isDragging) {
+      e.preventDefault();
+      setIsDragging(false);
+      setIsDown(false);
+    } else {
+      document.body.classList.add("transitioning");
+      setTimeout(() => {
         document.body.classList.remove("transitioning");
         router.push(`/projects/${projectSlug}`);
-    }, 400); // Transition speed in milliseconds
-};
-
-
-  // Function to update the window width
-  const updateWindowWidth = () => {
-    // if (window.devicePixelRatio < 1.9){
-    //   setWindowWidth(window.innerWidth);
-    // } else if (window.devicePixelRatio < 2.9){
-    //   setWindowWidth(window.innerWidth*2);
-    // } else if (window.devicePixelRatio == 3){
-    //   setWindowWidth(window.innerWidth*3);
-    // } else {
-      setWindowWidth(window.innerWidth);
-    // }
+      }, TRANSITION_SPEED);
+    }
   };
 
+  const updateWindowWidth = () => {
+    setWindowWidth(window.innerWidth);
+  };
 
   useEffect(() => {
-    // Set initial size
     updateWindowWidth();
-
-    // Add resize event listener
     window.addEventListener('resize', updateWindowWidth);
-
-    // Cleanup function
     return () => window.removeEventListener('resize', updateWindowWidth);
   }, []);
+
+  useEffect(() => {
+    async function fetchProjects() {
+      const fetchedProjects = await getProjects();
+      setProjects(fetchedProjects);
+    }
+    fetchProjects();
+  }, []);
+
+  useEffect(() => {
+    let counter = 1;
+    const interval = setInterval(() => {
+      counter++;
+    }, 50);
+    return () => clearInterval(interval);
+  }, [isDragging]);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setDragStart({ x: e.clientX, y: e.clientY });
     setIsDragging(false);
     setIsDown(true);
   };
-  
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (mouseIsDown) {
       const dx = e.clientX - dragStart.x;
       const dy = e.clientY - dragStart.y;
-      if (Math.sqrt(dx * dx + dy * dy) > 10) { // Threshold for dragging
+      if (Math.sqrt(dx * dx + dy * dy) > 10) {
         setIsDragging(true);
       }
     }
   };
-  
-  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+
+  const handleMouseUp = () => {
     setIsDragging(false);
     setIsDown(false);
   };
 
+  const handleMouseEnter = () => {
+    setIsHoveringProjectName(true);
+  };
 
-      // New state for tracking hover
-      const [isHoveringProjectName, setIsHoveringProjectName] = useState(false);
+  const handleMouseLeave = () => {
+    setIsHoveringProjectName(false);
+  };
 
-      // Event handler for mouse enter
-      const handleMouseEnter = () => {
-          setIsHoveringProjectName(true);
-      };
-  
-      // Event handler for mouse leave
-      const handleMouseLeave = () => {
-          setIsHoveringProjectName(false);
-      };
+  return (
+    <>
+      <Head>
+        <title>PROJECTS – ALMOST STUDIO</title>
+      </Head>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-K8S3973D6Y"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-K8S3973D6Y');
+        `}
+      </Script>
 
-  useEffect(() => {
-    async function fetchProjects() {
-      const fetchedProjects = await getProjects();
-      setProjects(fetchedProjects);
-      // shuffleArray(fetchedProjects); // Uncomment if you want to shuffle
-    }
-    fetchProjects();
-  }, []); // Empty dependency array means this effect runs once on mount
+      <main>
+        <div className="verticalLine"></div>
 
- 
-  useEffect(() => {
-    let counter = 1;
-    const interval = setInterval(function(){
-      // console.log(isDragging, counter);
-      counter++;
-    }, 50);
-  
-    // Cleanup function
-    return () => clearInterval(interval);
-  }, [isDragging]); // Add dependencies if necessary
+        <div className="canvases gridded">
+          {projects.map((project, index) => {
+            const originalIndex = projects.findIndex(p => p.slug === project.slug);
+            let sizeX = Math.ceil(windowWidth / 2 * window.devicePixelRatio);
+            if (windowWidth < 450) {
+              sizeX = Math.ceil(windowWidth * window.devicePixelRatio);
+            }
+            const optimizedSrc = urlFor(project.coverImage.image)
+              .width(sizeX)
+              .auto('format')
+              .quality(100)
+              .url();
 
+            return (
+              <div
+                key={index}
+                className="canvas-container"
+                id={`container${originalIndex}`}
+                data-slug={project.slug}
+                data-order={originalIndex}
+                data-href={project.coverImage.image}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                // onMouseUp={handleMouseUp}
+                onClick={(e) => handleProjectClick(e, project.slug)}
+              >
+                <GalleryItem
+                  optimizedSrc={optimizedSrc}
+                  project={project}
+                  altText={project.coverImage.alt ?? ''}
+                />
+              </div>
+            );
+          })}
+        </div>
 
-
-
-    return (
-      <>
-          <Head>
-            <title>PROJECTS – ALMOST STUDIO</title>
-          </Head>
-          <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-K8S3973D6Y"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-K8S3973D6Y');
-          `}
-        </Script>
-          
-        <main>
-            <div className="verticalLine"></div>
-            
-            <div  className="canvases gridded" 
-                  onMouseDown={handleMouseDown}
-                  onMouseMove={handleMouseMove}
-                  onMouseUp={handleMouseUp}
-            >
-            {/* <Sketch cursorRadius={40} /> */}
-            {projects.map((project, index) => {
-
-
-              // Find the original index of the project
-              const originalIndex = projects.findIndex(p => p.slug === project.slug);
-
-
-                
-              let sizeX = Math.ceil(windowWidth/2*window.devicePixelRatio);
-              if (windowWidth < 450){
-                sizeX = Math.ceil(windowWidth*window.devicePixelRatio);
-              }
-
-              // console.log(sizeX);
-
-                // Generate optimized image URL
-                const optimizedSrc = urlFor(project.coverImage.image)
-                .width(sizeX)  // Set desired width
-                .auto('format')
-                .quality(100) // Automatic format selection (e.g., WebP)
-                .url();
-
-                // const srcSet = `
-                //   ${urlFor(project.coverImage.image).width(400).url()} 400w, 
-                //   ${urlFor(project.coverImage.image).width(800).url()} 800w,
-                //   ${urlFor(project.coverImage.image).width(1200).url()} 1200w,
-                //   ${urlFor(project.coverImage.image).width(1600).url()} 1600w,
-                // `;
-
-                // console.log(project.coverImage.alt);
-
-                return (
-                  <div key={index} className="canvas-container" id={`container${originalIndex}`} data-slug={project.slug} data-order={originalIndex} data-href={project.coverImage.image}  onClick={() => handleProjectClick(project.slug)}>
-                    
-                    <GalleryItem optimizedSrc={optimizedSrc} project={project} altText={project.coverImage.alt ?? ''}></GalleryItem>
-                  </div>
-                );
-
-
-
-
-              })}
-            </div>
-
-            {/* {!isHoveringProjectName && <DrawCursor cursorSize={30} />}  */}
-
-            </main>         
-        </>
-    )
+        {!isHoveringProjectName && <DrawCursor cursorSize={30} />}
+      </main>
+    </>
+  );
 }

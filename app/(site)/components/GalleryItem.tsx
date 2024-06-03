@@ -136,7 +136,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, altTex
                 sizes="(max-width: 450px) 100dvw, 50dvw"
                 className={project.coverImage.white ? 'white' : ''}>
             </Image>
-            {/* {!isTouchScreen && <DynamicApp cursorRadius={30} />} */}
+            {!isTouchScreen && <DynamicApp cursorRadius={30} />}
             <div className="projectInfo">
             <div className="projectName" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 {project.name}<ArrowTopRight></ArrowTopRight>

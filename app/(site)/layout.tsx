@@ -18,17 +18,38 @@ export const metadata: Metadata = {
 
 export const siteTitle = 'ALMOST STUDIO';
 
+async function fetchData() {
+  // Fetch dynamic data
+  const dynamicRes = await fetch('https://api.vercel.app/products', {
+    cache: 'no-store',
+  });
+  const products = await dynamicRes.json();
 
-export default function RootLayout({
+  // Fetch static data with revalidation
+  const staticRes = await fetch('https://api.vercel.app/blog', {
+    next: {
+      revalidate: 3600, // 1 hour
+    },
+  });
+  const blog = await staticRes.json();
+
+  return { products, blog };
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { products, blog } = await fetchData();
+
   return (
     <html lang="en">
       <body>
         <Navbar />
-        {children}
+        <main>
+          {children}
+        </main>
       </body>
     </html>
   );

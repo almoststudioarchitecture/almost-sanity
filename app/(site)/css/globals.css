@@ -471,7 +471,7 @@ body{
 }
 .canvases.gridded .projectInfo .projectLocation{
   animation-delay: 800ms;
-  z-index:0;
+  z-index:1;
 }
 
 .canvas-container img{

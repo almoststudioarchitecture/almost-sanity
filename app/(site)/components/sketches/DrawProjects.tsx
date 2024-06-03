@@ -1,6 +1,7 @@
 import * as React from "react";
-import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
+// import { P5CanvasInstance, ReactP5Wrapper } from "@p5-wrapper/react";
 import p5, { Image, Element, Framebuffer } from "p5";
+import { ReactP5Wrapper, P5CanvasInstance } from 'react-p5-wrapper';
 
 // Define an interface for the props
 interface SketchProps {
@@ -42,7 +43,7 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
 
     p.noLoop();
 
-    p.pixelDensity(1);
+    // p.pixelDensity(1);
 
    
     // maskGraphics.pixelDensity(2);
@@ -84,6 +85,7 @@ function enableLink(element: HTMLElement) {
         mousePressedOverCanvas = true;
         p.loop();
 
+        path = [];
         
         // Get the actual DOM element of the canvas
         // let canvasDomElement = cnv.elt;
@@ -116,87 +118,89 @@ function enableLink(element: HTMLElement) {
         p.strokeWeight(1);
 
         let determiner = p.random();
+        // let determiner = 0.999
 
-        // console.log(determiner);
+        
 
         if (determiner < 0.1){
             const gap = 30;
             for (let x=0;x<p.width;x+=gap){
                 p.line(x, 0, x, p.height)
             }
+            // p.text("type 1", 50,50);
         } else if (determiner < 0.2){
             const gap = 30;
-            for (let x=0;x<p.width;x+=gap){
+            for (let x=0;x<p.width*p.height;x+=gap){
                 p.line(x, 0, x, p.height)
             }
-            for (let y=0;y<p.height;y+=gap){
-              p.line(0, y, p.height, y)
+            for (let y=0;y<p.width*p.height;y+=gap){
+              p.line(0, y, p.width, y)
           }
+          // p.text("type 2", 50,50);
         } else if (determiner < 0.3){
           const gap = 30;
-          for (let x = 0; x <= p.width; x += gap) {
+          for (let x = 0; x <= p.width * p.height; x += gap) {
             p.line(x, 0, 0, x);
           }
+          // p.text("type 3", 50,50);
         } else if (determiner < 0.4){
           const gap = 30;
-          for (let x = 0; x <= p.width; x += gap) {
+          for (let x = 0; x <= p.width*p.height; x += gap) {
             p.line(x, 0, 0, x);
           }
-          for (let y = 0; y <= p.height; y += gap) {
+          for (let y = 0; y <= p.height*p.width; y += gap) {
             p.line(0, y, y, 0);
           }
+          // p.text("type 4", 50,50);
         } else if (determiner < 0.5){
           const gap = 60;
             for (let x=0;x<p.width;x+=gap){
                 p.line(x, 0, x, p.height)
             }
+            // p.text("type 5", 50,50);
         } else if (determiner < 0.6){
           const gap = 20;
           for (let y=0;y<p.height;y+=gap){
-            p.line(0, y, p.height, y)
+            p.line(0, y, p.width, y)
           }
+          // p.text("type 6", 50,50);
         } else if (determiner < 0.7){
-          for (let y = 0; y <= p.height; y += 10) {
+          for (let y = 0; y <= p.height*p.width; y += 10) {
             p.line(0, y, y, 0);
           }
+          // p.text("type 7", 50,50);
         } else if (determiner < 0.8){
           const gap = 30;
           const diagonalLength = Math.sqrt(p.width * p.width + p.height * p.height);
 
-          // 60-degree lines
-          // for (let x = 0; x <= diagonalLength; x += gap) {
-          //     // Calculate the y-coordinate for the 60-degree angle
-          //     let y60 = x * Math.tan(Math.PI / 3); // 60 degrees in radians
-
-          //     // Draw the line from (x, 0) to (0, p.height - y60)
-          //     p.line(x, 0, 0, p.height - y60);
-          // }
-
-          // -60-degree lines
           for (let x = 0; x <= diagonalLength; x += gap) {
-              // Calculate the y-coordinate for the -60-degree angle
-              let yMinus60 = x * Math.tan(-Math.PI / 3); // -60 degrees in radians
-
-              // Draw the line from (x, p.height) to (0, yMinus60)
-              p.line(x, p.height, 0, yMinus60);
-          }
+            // Calculate the y-coordinate for the -60-degree angle
+            let yMinus60 = x * Math.tan(-Math.PI / 3); // -60 degrees in radians
+    
+            // Draw the line from (x, height) to (x - diagonalLength * cos(PI / 3), height - diagonalLength * sin(PI / 3))
+            p.line(x, p.height, x - diagonalLength * Math.cos(Math.PI / 3), p.height - diagonalLength * Math.sin(Math.PI / 3));
+        }
+          // p.text("type 8", 50,50);
 
         } else if (determiner < 0.9){
           const gap = 16;
-          for (let x=0;x<p.width;x+=gap){
+          for (let x=0;x<p.width*p.height;x+=gap){
               p.line(x, 0, x, p.height)
           }
-          for (let y=0;y<p.height;y+=gap){
-            p.line(0, y, p.height, y)
+          for (let y=0;y<p.height*p.width;y+=gap){
+            p.line(0, y, p.width, y)
           }
+          // p.text("type 9");
+          // p.text("type 9", 50,50);
         } else {
           const gap = 30;
-          for (let x=0;x<p.width;x+=gap){
+          for (let x=0;x<p.width*p.height;x+=gap){
               p.line(x, 0, x, p.height)
           }
-          for (let y=0;y<p.height;y+=gap){
-            p.line(0, y, p.height, y)
+          for (let y=0;y<p.height*p.width;y+=gap){
+            p.line(0, y, p.width, y)
           }
+          // p.text("type 10", 50,50);
 
         } 
 
@@ -227,8 +231,8 @@ function enableLink(element: HTMLElement) {
                 
                 p.push();
                 // Create a new p5.Image from maskGraphics
-                let maskImage: p5.Image = p.createImage(p.width/2, p.height/2);
-                maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0, 0, p.width/2, p.height/2); 
+                let maskImage: p5.Image = p.createImage(p.width, p.height);
+                maskImage.copy(maskGraphics, 0, 0, maskGraphics.width, maskGraphics.height, 0, 0, p.width, p.height); 
                 // maskImage.copy(maskGraphics, 0, 0, p.width, p.height, 0, 0, maskImage.width, maskImage.height); 
                 // maskImage.resize(p.width*4, p.height*4);
 
@@ -276,8 +280,8 @@ p.touchEnded = function() {
   
     function drawPathsOnMask(graphics: p5.Graphics, path: Point[], weight: number) {
         graphics.clear();
-        drawNonLinearShadows(graphics, path, weight, shadowHeightLight, 127, 80, -1);
-        drawNonLinearShadows(graphics, path, weight, shadowHeightDark, 127, 80, 1);
+        drawNonLinearShadows(graphics, path, weight, shadowHeightLight/2, 127, 80, -1);
+        drawNonLinearShadows(graphics, path, weight, shadowHeightDark/2, 127, 80, 1);
         drawPathWithOffset(graphics, path, weight, 127, 0);
     }
 
