@@ -1,10 +1,7 @@
-import Head from 'next/head';
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import styles from './css/layout.module.css';
 import Navbar from "./components/global/Navbar";
 import './css/globals.css';
-import Footer from "./components/global/Footer";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: "Almost Studio",
@@ -31,6 +28,7 @@ export default async function RootLayout({
           {children}
         </main>
       </body>
+      <GoogleAnalytics gaId="G-K8S3973D6Y" />
     </html>
   );
 }

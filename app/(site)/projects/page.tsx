@@ -13,10 +13,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
-const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').then((mod) => mod.Sketch), {
-  ssr: false,
-});
-
 const builder = imageUrlBuilder({
   projectId: "oogp23sh",
   dataset: "production",
@@ -112,19 +108,6 @@ export default function Projects() {
       <Head>
         <title>PROJECTS – ALMOST STUDIO</title>
       </Head>
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-K8S3973D6Y"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-K8S3973D6Y');
-        `}
-      </Script>
-
       <main>
         <div className="verticalLine"></div>
 
