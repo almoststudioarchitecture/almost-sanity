@@ -3,13 +3,12 @@
 // import React from 'react';
 // import React, { useEffect } from 'react';
 import ArrowTopRight from '../icons/ArrowTopRight';
-import styles from '../css/Home.module.css';
 import Link from 'next/link';
 import type { ProjectType } from "@/types";
 import ProjectGalleryImage from "./ProjectGalleryImage";
 import ProjectInfoModule from "./ProjectInfoModule";
 import InteractiveLogo from "./global/InteractiveLogo";
-import Image from "next/image";
+import { Image } from "@unpic/react";
 import React, { useRef, useEffect, useState } from 'react';
 
 
@@ -76,27 +75,19 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
         <div className="projectInner" ref={projectInnerRef} style={scrollStyle}>
                     <div id="after"></div>
             <div className="section hero fixed">
-                {project.coverImage?.white ?
-                    <Image
-                    className="hero-image WHITE"
-                    width='0'
-                    height='0'
-                    sizes='100dvw'
+                <Image
+                    layout='fullWidth'
+                    objectFit={project.coverImage?.white ? "contain" : "cover"}
                     src={project.coverImage?.image}
                     alt={project.coverImage?.alt || project.name}
-                    style={{ background: 'white', objectFit: 'contain', width: '100%', height: '100%' }}
+                    background={project.coverImage?.white ? "white" : undefined}
                     priority
-                    />
-                    :
-                    <Image
-                    className="hero-image"
-                    layout='fill'
-                    objectFit='cover'
-                    src={project.coverImage?.image}
-                    alt={project.coverImage?.alt || project.name}
-                    priority
-                    />
-                }
+                    // @ts-ignore
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                    }}
+                />
                 <svg width="100%" height="100%" id="svg">
                     <mask id="mask">
                         <rect x="0" y="0" width="100%" height="100%" fill="black" />
@@ -145,9 +136,9 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                 </svg>
             </div>
                 <ProjectInfoModule 
-                name={project.name} 
-                metadata={project.metadata} 
-                description={project.description} 
+                    name={project.name} 
+                    metadata={project.metadata} 
+                    description={project.description} 
                 />
 
                     {project.gallery && project.gallery.map((item, index) => {
@@ -158,19 +149,14 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
 
                     if (item._type === 'image'){
                         
-
                         if (item.caption){
                         
                             return (
                             <div key={index} className="image-container-outer relative">
                                 <div className={`image-container-inner relative style${randomStyleNumber}`} data-width="500" data-height="100">
-                                <ProjectGalleryImage
-                                    key={index}
-                                    // src={optimizedSrc} 
-                                    image={item.image} 
-                                    alt={item.alt || project.name}
-                                    fit={item.fit}
-                                />
+                                    <ProjectGalleryImage
+                                        item={item}
+                                    />
                                 </div>
                                 <div className="caption">
                                     {item.caption}
@@ -182,13 +168,9 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                             <div key={index} className="image-container-outer relative">
                                 <div className={`image-container-inner relative style${randomStyleNumber}`}>
                                 { item.image &&  
-                                <ProjectGalleryImage
-                                    key={index}
-                                    // src={optimizedSrc} 
-                                    image={item.image} 
-                                    alt={item.alt || project.name}
-                                    fit={item.fit}
-                                />
+                                    <ProjectGalleryImage
+                                        item={item}
+                                    />
                                 }
                                 </div>
                             </div>
@@ -214,7 +196,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                     })}
 
 
-      <InteractiveLogo />
+        <InteractiveLogo />
         </div>
         </>
     );

@@ -1,6 +1,6 @@
 'use client'
 
-import Image from "next/image";
+import { Image } from "@unpic/react";
 import Link from "next/link";
 import LogoGif from "../../icons/almost-favicon-1.gif";
 import InfoIcon from "../../icons/info-icon.png";

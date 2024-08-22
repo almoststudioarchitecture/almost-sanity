@@ -5,8 +5,24 @@ import styles from '../../css/InteractiveLogo.module.css';
 import { getProjects } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
 import Link from 'next/link';
-import Image from 'next/image';
-import project from '@/schemas/project';
+import { Image } from "@unpic/react";
+
+function LogoImage({project}: {project: ProjectType}){
+  return (
+    <Image
+      className={styles.heroImage}
+      layout="fullWidth"
+      src={project.coverImage.image}
+      alt={project.name}
+      background="white"
+      // @ts-ignore
+      style={{
+          width: "100%",
+          height: "100%",
+      }}
+    />
+  )
+}
 
 export default function InteractiveLogo() {
   // const [isClient, setIsClient] = useState(false);
@@ -245,77 +261,41 @@ export default function InteractiveLogo() {
                   <Link href={`/projects/${projects[0].slug}`} className={styles.a}>
                       <div></div>
                       <div className={styles.bottom}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[0].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[0]}
                       />
                   </Link>
                   <Link href={`/projects/${projects[1].slug}`} className={styles.l}>
                       <div className={`${styles.top} ${styles.right}`}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[1].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[1]}
                       />
                   </Link>
                   <Link href={`/projects/${projects[2].slug}`} className={styles.m}>
                       <div className={styles.bottom}></div>
                       <div className={styles.bottom}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[2].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[2]}
                       />
                   </Link>
                   <Link href={`/projects/${projects[3].slug}`} className={styles.o}>
                       <div className={styles.center}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[3].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[3]}
                       />
                   </Link>
                   <Link href={`/projects/${projects[4].slug}`} className={styles.s}>
                       <div className={styles.right}></div>
                       <div className={styles.left}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[4].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[4]}
                       />
                   </Link>
                   <Link href={`/projects/${projects[5].slug}`} className={`${styles.t} ${styles.end}`}>
                       <div className={`${styles.bottom} ${styles.left}`}></div>
                       <div className={`${styles.bottom} ${styles.right}`}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[5].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[5]}
                       />
                   </Link>
                   <div className={styles.gap}></div>
@@ -323,78 +303,42 @@ export default function InteractiveLogo() {
                   <Link href={`/projects/${projects[6].slug}`} className={styles.s}>
                       <div className={styles.right}></div>
                       <div className={styles.left}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[6].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[6]}
                       />
                   </Link>
                   <Link href={`/projects/${projects[7].slug}`} className={styles.t}>
                       <div className={`${styles.bottom} ${styles.left}`}></div>
                       <div className={`${styles.bottom} ${styles.right}`}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[7].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[7]}
                       />
                   </Link>
                   <Link href={`/projects/${projects[8].slug}`} className={styles.u}>
                       <div className={styles.top}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[8].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[8]}
                       />
                   </Link>
                   <Link href={`/projects/${projects[9].slug}`} className={styles.d}>
                       <div className={`${styles.right} ${styles.top}`}></div>
                       <div className={`${styles.right} ${styles.bottom}`}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[9].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[9]}
                       />
                       <div></div>
                   </Link>
                   <Link href={`/projects/${projects[10].slug}`} className={styles.i}>
                       <div className={styles.left}></div>
                       <div className={styles.right}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[10].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[10]}
                       />
                   </Link>
                   <Link href={`/projects/${projects[11].slug}`} className={styles.o}>
                       <div className={styles.center}></div>
-                      <Image
-                              className={styles.heroImage}
-                              width='0'
-                              height='0'
-                              sizes='100dvw'
-                              src={projects[11].coverImage.image}
-                              alt='test'
-                              style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                      <LogoImage
+                        project={projects[11]}
                       />
                   </Link>
               </div>
@@ -406,83 +350,47 @@ export default function InteractiveLogo() {
                 <div className={`letter ${styles.a}`}>
                     <div></div>
                     <div className={styles.bottom}></div>
-                    <Image
-                            className={styles.heroImage}
-                            width='0'
-                            height='0'
-                            sizes='100dvw'
-                            src={projects[0].coverImage.image}
-                            alt='test'
-                            style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                    />
+                    <LogoImage
+                        project={projects[0]}
+                      />
                     <Link href={`/projects/${projects[0].slug}`}></Link>
                 </div>
                 <div className={`letter ${styles.l}`}>
                     <div className={`${styles.top} ${styles.right}`}></div>
-                    <Image
-                            className={styles.heroImage}
-                            width='0'
-                            height='0'
-                            sizes='100dvw'
-                            src={projects[1].coverImage.image}
-                            alt='test'
-                            style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                    />
+                    <LogoImage
+                        project={projects[1]}
+                      />
                     <Link href={`/projects/${projects[1].slug}`}></Link>
                 </div>
                 <div className={`letter ${styles.m}`}>
                     <div className={styles.bottom}></div>
                     <div className={styles.bottom}></div>
-                    <Image
-                            className={styles.heroImage}
-                            width='0'
-                            height='0'
-                            sizes='100dvw'
-                            src={projects[2].coverImage.image}
-                            alt='test'
-                            style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                    />
+                    <LogoImage
+                        project={projects[2]}
+                      />
                     <Link href={`/projects/${projects[2].slug}`}></Link>
                 </div>
                 <div className={`letter ${styles.o}`}>
                     <div className={styles.center}></div>
-                    <Image
-                            className={styles.heroImage}
-                            width='0'
-                            height='0'
-                            sizes='100dvw'
-                            src={projects[3].coverImage.image}
-                            alt='test'
-                            style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                    />
+                    <LogoImage
+                        project={projects[3]}
+                      />
                     <Link href={`/projects/${projects[3].slug}`}></Link>
                 </div>
                 <div className={`letter ${styles.s}`}>
                     <div className={styles.right}></div>
                     <div className={styles.left}></div>
-                    <Image
-                            className={styles.heroImage}
-                            width='0'
-                            height='0'
-                            sizes='100dvw'
-                            src={projects[4].coverImage.image}
-                            alt='test'
-                            style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                    />
+                    <LogoImage
+                        project={projects[4]}
+                      />
                     <Link href={`/projects/${projects[4].slug}`}></Link>
                 </div>
                 <div className={`letter ${styles.t} ${styles.end}`}>
                     <div className={`${styles.bottom} ${styles.left}`}></div>
                     <div className={`${styles.bottom} ${styles.right}`}></div>
-                    <Image
-                            className={styles.heroImage}
-                            width='0'
-                            height='0'
-                            sizes='100dvw'
-                            src={projects[5].coverImage.image}
-                            alt='test'
-                            style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                    />
+                    <LogoImage
+                        project={projects[5]}
+                      />
                     <Link href={`/projects/${projects[5].slug}`}></Link>
                 </div>
             </div>
@@ -491,85 +399,49 @@ export default function InteractiveLogo() {
               <div className={`letter ${styles.s}`}>
                   <div className={styles.right}></div>
                   <div className={styles.left}></div>
-                  <Image
-                          className={styles.heroImage}
-                          width='0'
-                          height='0'
-                          sizes='100dvw'
-                          src={projects[6].coverImage.image}
-                          alt='test'
-                          style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                  />
+                  <LogoImage
+                        project={projects[6]}
+                      />
                   <Link href={`/projects/${projects[6].slug}`}></Link>
               </div>
               <div className={`letter ${styles.t}`}>
                   <div className={`${styles.bottom} ${styles.left}`}></div>
                   <div className={`${styles.bottom} ${styles.right}`}></div>
-                  <Image
-                          className={styles.heroImage}
-                          width='0'
-                          height='0'
-                          sizes='100dvw'
-                          src={projects[7].coverImage.image}
-                          alt='test'
-                          style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                  />
+                  <LogoImage
+                        project={projects[7]}
+                      />
                   <Link href={`/projects/${projects[7].slug}`} ></Link>
               </div>
               <div className={`letter ${styles.u}`}>
                   <div className={styles.top}></div>
-                  <Image
-                          className={styles.heroImage}
-                          width='0'
-                          height='0'
-                          sizes='100dvw'
-                          src={projects[8].coverImage.image}
-                          alt='test'
-                          style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                  />
+                  <LogoImage
+                      project={projects[8]}
+                    />
                   <Link href={`/projects/${projects[8].slug}`} ></Link>
               </div>
               <div className={`letter ${styles.d}`}>
                   <div className={`${styles.right} ${styles.top}`}></div>
                   <div className={`${styles.right} ${styles.bottom}`}></div>
                   <div className={`${styles.center}`}></div>
-                  <Image
-                          className={styles.heroImage}
-                          width='0'
-                          height='0'
-                          sizes='100dvw'
-                          src={projects[9].coverImage.image}
-                          alt='test'
-                          style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
-                  />
+                  <LogoImage
+                      project={projects[9]}
+                    />
                   <Link href={`/projects/${projects[9].slug}`} ></Link>
               </div>
               <div className={`letter ${styles.i}`}>
                   <div className={styles.left}></div>
                   <div className={styles.right}></div>
-                  <Image
-                          className={styles.heroImage}
-                          width='0'
-                          height='0'
-                          sizes='100dvw'
-                          src={projects[10].coverImage.image}
-                          alt='test'
-                          style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                  <LogoImage
+                    project={projects[10]}
                   />
                   <Link href={`/projects/${projects[10].slug}`} ></Link>
               </div>
              <div className={`letter ${styles.o}`}>
                   <div className={styles.center}></div>
-                  <Image
-                          className={styles.heroImage}
-                          width='0'
-                          height='0'
-                          sizes='100dvw'
-                          src={projects[11].coverImage.image}
-                          alt='test'
-                          style={{ background: 'white', objectFit: 'cover', width: '100%', height: '100%' }}
+                  <LogoImage
+                    project={projects[11]}
                   />
-                   <Link href={`/projects/${projects[11].slug}`} ></Link>
+                  <Link href={`/projects/${projects[11].slug}`} ></Link>
               </div>
           </div>
         </div>

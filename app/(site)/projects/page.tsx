@@ -1,26 +1,12 @@
 'use client';
 
-import ArrowTopRight from "../icons/ArrowTopRight";
 import { getProjects } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
 import Head from 'next/head';
-import Link from 'next/link';
 import DrawCursor from '../components/DrawCursor';
 import GalleryItem from '../components/GalleryItem';
-import imageUrlBuilder from '@sanity/image-url';
-import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
-
-const builder = imageUrlBuilder({
-  projectId: "oogp23sh",
-  dataset: "production",
-});
-
-function urlFor(source: string) {
-  return builder.image(source);
-}
 
 const TRANSITION_SPEED: number = 400;
 
@@ -114,15 +100,6 @@ export default function Projects() {
         <div className="canvases gridded">
           {projects.map((project, index) => {
             const originalIndex = projects.findIndex(p => p.slug === project.slug);
-            let sizeX = Math.ceil(windowWidth / 2 * window.devicePixelRatio);
-            if (windowWidth < 450) {
-              sizeX = Math.ceil(windowWidth * window.devicePixelRatio);
-            }
-            const optimizedSrc = urlFor(project.coverImage.image)
-              .width(sizeX)
-              .auto('format')
-              .quality(100)
-              .url();
 
             return (
               <div
@@ -138,7 +115,7 @@ export default function Projects() {
                 onClick={(e) => handleProjectClick(e, project.slug)}
               >
                 <GalleryItem
-                  optimizedSrc={optimizedSrc}
+                  src={project.coverImage.image}
                   project={project}
                   altText={project.coverImage.alt ?? ''}
                 />

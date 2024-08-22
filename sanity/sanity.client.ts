@@ -7,11 +7,9 @@ const config: ClientConfig = {
   projectId: "oogp23sh",
   dataset: "production",
   apiVersion: formattedDate,
-  useCdn: process.env.revalidateSecret ? false : true,
+  useCdn: true
 };
 
 const client = createClient(config);
-
-export const revalidate = 10;
 
 export default client;

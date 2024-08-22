@@ -1,30 +1,11 @@
 'use client';
 
-// import React from 'react';
-// import React, { useEffect } from 'react';
 import ArrowTopRight from '../icons/ArrowTopRight';
-import styles from '../css/Home.module.css';
 import Link from 'next/link';
 import type { ProjectType } from "@/types";
-import ProjectGalleryImage from "./ProjectGalleryImage";
-import ProjectInfoModule from "./ProjectInfoModule";
-import Image from "next/image";
+import { Image } from "@unpic/react"
 import React, { useRef, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router';
-
-import imageUrlBuilder from '@sanity/image-url';
-
-
-const builder = imageUrlBuilder({
-  projectId: "oogp23sh",
-  dataset: "production",
-});
-
-function urlFor(source: string) {
-  return builder.image(source);
-}
-
 
 
 const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').then((mod) => mod.Sketch), {
@@ -32,15 +13,13 @@ const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').t
 });
 
 type GalleryItemProps = {
-    // src: string;
     project: ProjectType;
-    optimizedSrc: string;
+    src: string;
     altText: string;
 };
 
-const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, altText }) => {
+const GalleryItem: React.FC<GalleryItemProps> = ({ project, src, altText }) => {
 
-    // console.log("GalleryItem Props:", { project, optimizedSrc, srcSet });
 
     // const router = useRouter();
     const [isDragging, setIsDragging] = useState(false);
@@ -125,17 +104,19 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, optimizedSrc, altTex
             //     e.preventDefault();
             // }}
             >
-            <Image 
-                // src={optimizedSrc} 
-                src={optimizedSrc} 
-                // srcSet={srcSet}
-                width="0"
-                height="0"
-                alt={altText}
-                // style={{width: '50dvw', height:'50vh'}}
-                sizes="(max-width: 450px) 100dvw, 50dvw"
-                className={project.coverImage.white ? 'white' : ''}>
-            </Image>
+            <Image
+              layout='fullWidth'
+              objectFit={project.coverImage?.white ? "contain" : "cover"}
+              src={project.coverImage?.image}
+              alt={project.coverImage?.alt || project.name}
+              background={project.coverImage?.white ? "white" : undefined}
+              sizes="(max-width: 450px) 100vw, 50vw"
+              // @ts-ignore
+              style={{
+                  width: "100%",
+                  height: "100%",
+              }}
+            />
             {!isTouchScreen && <DynamicApp cursorRadius={30} />}
             <div className="projectInfo">
             <div className="projectName" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

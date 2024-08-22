@@ -220,10 +220,6 @@
     overflow: hidden;
 }
 
-.image-container-inner img{
-    background: black;
-}
-
 .image-container-inner.style1{
     background: repeating-linear-gradient(
         -45deg,

@@ -1,7 +1,6 @@
 import * as React from "react";
 // import { ReactP5Wrapper, P5CanvasInstance } from "@p5-wrapper/react";
 import { ReactP5Wrapper, P5CanvasInstance } from 'react-p5-wrapper';
-import imageUrlBuilder from '@sanity/image-url';
 import p5, { Image } from "p5";
 
 // Define an interface for the props
@@ -37,13 +36,6 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
     
     // maskGraphics.resizeCanvas(p.windowWidth, p.windowHeight);
   }
-
-
-
-  const builder = imageUrlBuilder({
-    projectId: "oogp23sh",
-    dataset: "production",
-  });
 
   p.preload = function() {
     if (imageUrl) {

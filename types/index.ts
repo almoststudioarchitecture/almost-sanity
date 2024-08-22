@@ -52,12 +52,18 @@ export type ProjectType = {
 };
 
 // Define interfaces for gallery items
-interface GalleryImage {
+export type GalleryImage = {
   alt: string;
   _type: 'image'; // This indicates it's an image item
   image: string;
   caption?: string; // Since caption is optional
   fit?: 'cover' | 'contain'; // Since fit is optional
+  dimensions: {
+    width: number;
+    height: number;
+    "_type": "sanity.imageDimensions";
+    aspectRatio: number;
+  }
 }
 
 // export type ImageFit = 'cover' | 'contain';
@@ -86,4 +92,10 @@ export type CoverImage = {
   image: string;
   white: boolean;
   focalpoint?: FocalPoint;
+  dimensions: {
+    width: number;
+    height: number;
+    "_type": "sanity.imageDimensions";
+    aspectRatio: number;
+  }
 };
