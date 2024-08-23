@@ -29,8 +29,8 @@ export async function getProjects() {
         alt, 
         "image": asset->url,
         "dimensions": asset->metadata.dimensions,
-        white,
-        focalpoint
+        hotspot,
+        white
       }
     }`
   );
@@ -43,13 +43,14 @@ export async function getSingleProject(slug: string) {
       name,
       shareDescription,
       location,
-      coverImage { alt, "image": asset->url, "dimensions": asset->metadata.dimensions, white },
+      coverImage { alt, "image": asset->url, hotspot, "dimensions": asset->metadata.dimensions, white },
       metadata,
       description,
       "gallery": gallery.images[] {
         _type,
         alt,
         "image": asset->url,
+        hotspot,
         "dimensions": asset->metadata.dimensions,
         caption,
         vimeo,

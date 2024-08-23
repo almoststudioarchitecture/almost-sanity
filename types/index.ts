@@ -59,10 +59,17 @@ export type GalleryImage = {
   caption?: string; // Since caption is optional
   fit?: 'cover' | 'contain'; // Since fit is optional
   dimensions: {
+    "_type": "sanity.imageDimensions";
     width: number;
     height: number;
-    "_type": "sanity.imageDimensions";
     aspectRatio: number;
+  }
+  hotspot?: {
+    "_type": "sanity.imageHotspot";
+    x: number;
+    y: number;
+    width: number;
+    height: number;
   }
 }
 
@@ -97,5 +104,12 @@ export type CoverImage = {
     height: number;
     "_type": "sanity.imageDimensions";
     aspectRatio: number;
+  }
+  hotspot?: {
+    "_type": "sanity.imageHotspot";
+    x: number;
+    y: number;
+    width: number;
+    height: number;
   }
 };
