@@ -6,7 +6,7 @@ import { getProjects } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
 import Link from 'next/link';
 import { Image } from "@unpic/react";
-import { objectPositionFromHotspot } from '../../lib/objectPosition';
+import { objectPositionFromHotspot, RESOLUTIONS } from '../../lib/image';
 
 function LogoImage({project}: {project: ProjectType}){
   return (
@@ -16,12 +16,14 @@ function LogoImage({project}: {project: ProjectType}){
       src={project.coverImage.image}
       alt={project.name}
       background="white"
+      objectFit="cover"
       // @ts-ignore
       style={{
           width: "100%",
           height: "100%",
           objectPosition: objectPositionFromHotspot(project.coverImage?.hotspot),
       }}
+      breakpoints={RESOLUTIONS}
     />
   )
 }

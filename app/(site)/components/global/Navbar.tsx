@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import styles from '../../css/Navbar.module.css';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState, useRef } from 'react';
+import { RESOLUTIONS } from "../../lib/image";
 
 
 const TRANSITION_SPEED = 400;
@@ -272,6 +273,7 @@ const getLinkIndexFromPath = (path: string) => {
                         width={25} 
                         height={25} 
                         alt="logo" 
+                        breakpoints={RESOLUTIONS}
                     />
                 </button>
             </li>

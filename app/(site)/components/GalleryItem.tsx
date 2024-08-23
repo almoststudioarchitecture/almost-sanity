@@ -6,7 +6,7 @@ import type { ProjectType } from "@/types";
 import { Image } from "@unpic/react"
 import React, { useRef, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic'
-import { objectPositionFromHotspot } from '../lib/objectPosition';
+import { objectPositionFromHotspot, RESOLUTIONS } from '../lib/image';
 
 
 const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').then((mod) => mod.Sketch), {
@@ -116,8 +116,9 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, src, altText }) => {
               style={{
                   width: "100%",
                   height: "100%",
-                  objectPosition: objectPositionFromHotspot(project.coverImage?.hotspot),
+                  objectPosition: project.coverImage?.white ? undefined : objectPositionFromHotspot(project.coverImage?.hotspot),
               }}
+              breakpoints={RESOLUTIONS}
             />
             {!isTouchScreen && <DynamicApp cursorRadius={30} />}
             <div className="projectInfo">

@@ -10,7 +10,7 @@ import ProjectInfoModule from "./ProjectInfoModule";
 import InteractiveLogo from "./global/InteractiveLogo";
 import { Image } from "@unpic/react";
 import React, { useRef, useEffect, useState } from 'react';
-import { objectPositionFromHotspot } from '../lib/objectPosition';
+import { objectPositionFromHotspot, RESOLUTIONS } from '../lib/image';
 
 
 
@@ -87,9 +87,10 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                     style={{
                         width: "100%",
                         height: "100%",
-                        objectPosition: objectPositionFromHotspot(project.coverImage?.hotspot),
+                        objectPosition: project.coverImage?.white ? undefined : objectPositionFromHotspot(project.coverImage?.hotspot),
 
                     }}
+                    breakpoints={RESOLUTIONS}
                 />
                 <svg width="100%" height="100%" id="svg">
                     <mask id="mask">

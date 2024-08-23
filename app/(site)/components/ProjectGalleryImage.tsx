@@ -3,7 +3,7 @@
 import { Image } from '@unpic/react';
 import React, { useEffect, useState } from 'react';
 import { GalleryImage } from '@/types';
-import { objectPositionFromHotspot } from '../lib/objectPosition';
+import { objectPositionFromHotspot, RESOLUTIONS } from '../lib/image';
 
 function ProjectGalleryImage({ item }: {item: GalleryImage}) {
     const [windowAspectRatio, setWindowAspectRatio] = useState<number>(1);
@@ -39,9 +39,9 @@ function ProjectGalleryImage({ item }: {item: GalleryImage}) {
               width: "100%",
               height: "100%",
               position: "relative",
-              objectPosition: objectPositionFromHotspot(item.hotspot),
+              objectPosition: fit === "contain" ? undefined : objectPositionFromHotspot(item.hotspot),
           }}
-          on
+          breakpoints={RESOLUTIONS}
       />
   );
 }
