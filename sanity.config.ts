@@ -4,7 +4,6 @@ import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 // import { defineConfig } from "sanity";
 // import { deskTool } from "sanity/desk";
 import { schemaTypes } from "./schemas";
-import { vercelDeployTool } from 'sanity-plugin-vercel-deploy'
 
 export default defineConfig({
   name: "almost-studio",
@@ -14,7 +13,6 @@ export default defineConfig({
   basePath: "/edit",
   // plugins: [deskTool()],
   plugins: [
-    vercelDeployTool(),
     structureTool({
       structure: (S, context) => {
         return S.list()
