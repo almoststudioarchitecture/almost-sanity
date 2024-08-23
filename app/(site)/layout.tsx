@@ -13,7 +13,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const siteTitle = 'ALMOST STUDIO';
 export const dynamic = 'force-dynamic'
 
 export default async function RootLayout({

@@ -355,7 +355,7 @@ body.mousedown .list-container{
 } */
 
 body{
-  user-select: none;
+  /* user-select: none; */
 }
 
 .canvases.path-projects .canvas-container,
