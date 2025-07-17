@@ -12,8 +12,6 @@ import { Image } from "@unpic/react";
 import React, { useRef, useEffect, useState } from 'react';
 import { objectPositionFromHotspot, RESOLUTIONS } from '../lib/image';
 
-
-
 const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
    
     const projectInnerRef = useRef<HTMLDivElement>(null);
@@ -184,14 +182,18 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                     } else if (item.vimeo != null) {
                         if (item.videoType == "mood"){
                             return (
-                            <div key={index} className="vimeo-container image-container-outer relative">
-                                <iframe src={`https://player.vimeo.com/video/${item.vimeo}?portrait=0&autoplay=1&muted=1&loop=1&portrait=0&byline=0&title=0&muted=1&background=1&controls=0`} frameBorder="0" style={{width:"100%", height:"100%"}} allow="autoplay"></iframe>
+                            <div key={index} className="image-container-outer relative">
+                                <div className={`image-container-inner relative style${randomStyleNumber}`}>
+                                    <iframe src={`https://player.vimeo.com/video/${item.vimeo}?portrait=0&autoplay=1&muted=1&loop=1&portrait=0&byline=0&title=0&muted=1&background=1&controls=0`} frameBorder="0" style={{width:"100%", height:"100%"}} allow="autoplay"></iframe>
+                                </div>
                             </div>
                             );
                         } else if (item.videoType == "functional"){
                             return (
-                            <div key={index} className="vimeo-container image-container-outer relative">
-                                <iframe src={`https://player.vimeo.com/video/${item.vimeo}?portrait=0&autoplay=0&muted=0&loop=1&portrait=0&byline=0&title=0&muted=1&background=0&controls=1`} frameBorder="0" style={{width:"100%", height:"100%"}} allow="autoplay"></iframe>
+                            <div key={index} className="image-container-outer relative">
+                                <div className={`image-container-inner relative style${randomStyleNumber}`}>
+                                    <iframe src={`https://player.vimeo.com/video/${item.vimeo}?portrait=0&autoplay=0&muted=0&loop=1&portrait=0&byline=0&title=0&muted=1&background=0&controls=1`} frameBorder="0" style={{width:"100%", height:"100%"}} allow="autoplay"></iframe>
+                                </div>
                             </div>
                             );
                         } 
