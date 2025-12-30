@@ -9,8 +9,8 @@ import dynamic from 'next/dynamic'
 import { objectPositionFromHotspot, RESOLUTIONS } from '../lib/image';
 
 
-const DynamicApp = dynamic(() => import('./sketches/DrawHome').then((mod) => mod.Sketch), {
-    ssr: false, // This will disable server-side rendering for this component
+const DynamicApp = dynamic(() => import('./sketches/DrawHome').then((mod) => mod.App), {
+  ssr: false,
 });
 
 type GalleryItemProps = {
@@ -120,7 +120,12 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, src, altText }) => {
               }}
               breakpoints={RESOLUTIONS}
             />
-            {!isTouchScreen && <DynamicApp cursorRadius={30} />}
+            {!isTouchScreen && (
+              <DynamicApp
+                imageUrl={project.coverImage.image} // Make sure this is the string URL
+                cursorRadius={30}
+              />
+            )}
             <div className="projectInfo">
             <div className="projectName" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 {project.name}<ArrowTopRight></ArrowTopRight>
