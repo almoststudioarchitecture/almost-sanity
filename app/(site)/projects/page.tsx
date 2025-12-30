@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import imageUrlBuilder from '@sanity/image-url';
 import dynamic from 'next/dynamic';
 
-const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').then((mod) => mod.App), {
+const DynamicApp = dynamic(() => import('../components/sketches/DrawHome').then((mod) => mod.App), {
     ssr: false, // This will disable server-side rendering for this component
 });
 
@@ -110,7 +110,7 @@ export default function Home() {
         }
 
         loadProjects();
-    }, []);
+    }, [currentIndex]);
 
     useEffect(() => {
         const checkIfOverCanvas = (e: MouseEvent) => {
@@ -221,7 +221,7 @@ export default function Home() {
         }
 
 
-    }, [currentIndex, displayedProjects]); // Now dependent on currentIndex and displayedProjects
+    }, [currentIndex, displayedProjects, addRandomProject]); // Now dependent on currentIndex and displayedProjects
     // }, [projects]);
 
     const renderAdditionalLines = () => {
