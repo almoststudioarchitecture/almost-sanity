@@ -1,18 +1,15 @@
-// 'use client';
-
-
 import { getSingleProject, getProjects } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
 import ProjectScrollSnap from "../../components/ProjectScrollSnap";
 import Script from 'next/script';
-
+import { Metadata, ResolvingMetadata } from 'next';
 import './project.css'
 
 export async function generateStaticParams() {
   const projects = await getProjects();
 
   return projects.map((p: any) => ({
-    project: p.slug, // This MUST match the folder name [project]
+    project: p.slug,
   }));
 }
 
@@ -35,4 +32,20 @@ export default async function Project({ params }: Props) {
     
     </>
   );
+}
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = params.project;
+
+  // fetch data
+  const project: ProjectType = await getSingleProject(slug);
+
+  // return the metadata object
+  return {
+    title: project ? `${project.name} | Almost Studio` : 'Project Not Found',
+  };
 }

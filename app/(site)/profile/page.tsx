@@ -1,4 +1,3 @@
-// 'use client'
 import Link from "next/link";
 import { getProfile } from "@/sanity/sanity.query";
 import type { ProfileType } from "@/types";
@@ -9,8 +8,12 @@ import { BiEnvelope, BiFile } from "react-icons/bi";
 import Script from 'next/script';
 import './profile.css'
 import  CopyEmailBtn from "../components/Email"; 
-// import Layout, { siteTitle } from '../layout';
-import Head from 'next/head';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Profile | Almost Studio',
+  description: 'Information about Almost Studio',
+};
 
 export default async function About() {
   const profile: ProfileType[] = await getProfile();
@@ -18,10 +21,6 @@ export default async function About() {
 
   return (
     <>
-        <Head>
-          <title>ALMOST STUDIO</title>
-          {/* <script src="../scripts/draw.js"></script> */}
-        </Head>
         <main>
           {profile &&
             profile.map((data) => (

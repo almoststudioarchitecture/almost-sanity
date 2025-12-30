@@ -102,7 +102,7 @@ const ProjectScrollSnap = ({ project }: { project: ProjectType }) => {
                         <path></path>
                     </mask>  
                     <defs>
-                        <filter id="shadowFilter" x="0" y="0" width="100%" height="100%" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <filter id="shadowFilter" x="0" y="0" width="100%" height="100%" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
                             <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
                             <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
