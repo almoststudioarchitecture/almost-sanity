@@ -59,7 +59,6 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
       p.rectMode(p.CENTER)
 
     }
-
   }
 
 

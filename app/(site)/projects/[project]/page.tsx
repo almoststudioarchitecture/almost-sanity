@@ -34,18 +34,17 @@ export default async function Project({ params }: Props) {
   );
 }
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  // read route params
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.project;
+  try {
+    const project = await getSingleProject(slug);
+    if (!project) return { title: "Project Not Found" };
 
-  // fetch data
-  const project: ProjectType = await getSingleProject(slug);
-
-  // return the metadata object
-  return {
-    title: project ? `${project.name} | Almost Studio` : 'Project Not Found',
-  };
+    return {
+      title: `${project.name} | Almost Studio`,
+      description: project.excerpt || "Project Page",
+    };
+  } catch (e) {
+    return { title: "Almost Studio" };
+  }
 }

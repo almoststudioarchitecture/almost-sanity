@@ -4,7 +4,7 @@ import { getProjects } from "@/sanity/sanity.query";
 import type { ProjectType } from "@/types";
 import DrawCursor from '../components/DrawCursor';
 import styles from '../css/Home.module.css';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import imageUrlBuilder from '@sanity/image-url';
 import dynamic from 'next/dynamic';
 import ProjectListItem from "../components/ProjectListItem";
@@ -17,7 +17,6 @@ const minRadius = 30;
 const initialRadius = 200;
 const radiusChange = 20;
 
-// Move shuffleArray outside to keep component clean
 function shuffleArray<T>(array: T[]): T[] {
     let currentIndex = array.length, randomIndex;
     while (currentIndex !== 0) {
@@ -28,14 +27,12 @@ function shuffleArray<T>(array: T[]): T[] {
     return array;
 }
 
-export default function Draw() {
+export default function DrawInterface() {
     const [projects, setProjects] = useState<ProjectType[]>([]);
     const [displayedProjects, setDisplayedProjects] = useState<ProjectType[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [showDrawCursor, setShowDrawCursor] = useState(false);
     const [cursorRadius, setCursorRadius] = useState(200);
-
-    // 1. Mobile & Hydration States
     const [isMobile, setIsMobile] = useState<boolean | null>(null);
     const [hasMounted, setHasMounted] = useState(false);
 
@@ -44,12 +41,9 @@ export default function Draw() {
         dataset: "production",
     });
 
-    // 2. Handle Resize & Mounting
     useEffect(() => {
-        setHasMounted(true); // Signal that we are now on the client
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
-        };
+        setHasMounted(true);
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
         handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
@@ -61,19 +55,17 @@ export default function Draw() {
                 const loadedProjects = await getProjects();
                 if (loadedProjects && loadedProjects.length > 0) {
                     const shuffledProjects = shuffleArray([...loadedProjects]);
-                    // Set both states at once to prevent multiple re-renders
                     setProjects(shuffledProjects);
-                    setDisplayedProjects([shuffledProjects[0]]); // Start with the first one
+                    setDisplayedProjects([shuffledProjects[0]]);
                 }
             } catch (error) {
                 console.error('Failed to load projects:', error);
             }
         }
         loadProjects();
-    }, []); // Runs once on mount
+    }, []);
 
     const addRandomProject = useCallback(() => {
-        console.log('Adding random project');
         if (currentIndex < projects.length - 1) {
             setDisplayedProjects(prev => [...prev, projects[currentIndex + 1]]);
             setCurrentIndex(prev => prev + 1);
@@ -85,103 +77,74 @@ export default function Draw() {
         }
     }, [currentIndex, projects]);
 
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const handleMouseUp = () => {
-                // 1. Trigger the state update for the next project
-                addRandomProject();
+    // Optimized Handler: Handles the logic when the user finishes a "draw" action
+    const handleInteractionEnd = useCallback(() => {
+        addRandomProject();
 
-                // 2. Original Logic: Reveal the project in the list
-                if (displayedProjects.length > 0) {
-                    const lastProject = displayedProjects[displayedProjects.length - 1];
-                    const lastProjectSlug = lastProject.slug;
+        if (displayedProjects.length > 0) {
+            const lastProject = displayedProjects[displayedProjects.length - 1];
+            const lastProjectSlug = lastProject.slug;
 
-                    // Find the specific list items matching this slug
-                    let corresponding_lis = document.querySelectorAll(`.list-container [data-slug="${lastProjectSlug}"]`);
+            const corresponding_lis = document.querySelectorAll(`.list-container [data-slug="${lastProjectSlug}"]`);
+            document.querySelectorAll(".home--mostRecent").forEach(el => el.classList.remove("home--mostRecent"));
 
-                    // Remove 'mostRecent' from others
-                    document.querySelectorAll(".home--mostRecent").forEach(mostRecent => {
-                        if (mostRecent instanceof HTMLElement) {
-                            mostRecent.classList.remove("home--mostRecent");
-                        }
-                    });
-
-                    // Add visibility and order to the current project
-                    corresponding_lis.forEach(li => {
-                        if (li instanceof HTMLElement) {
-                            li.classList.add("home--visible");
-                            li.classList.add("home--mostRecent");
-                            // This forces the newest drawn items to the top of the list visually
-                            li.style.order = (99999 - currentIndex).toString();
-                        }
-                    });
+            corresponding_lis.forEach(li => {
+                if (li instanceof HTMLElement) {
+                    li.classList.add("home--visible", "home--mostRecent");
+                    li.style.order = (99999 - currentIndex).toString();
                 }
-
-                // 3. Clean up body classes and update cursor
-                document.body.classList.remove("mousedown");
-
-                setCursorRadius(prevRadius => {
-                    if (prevRadius - radiusChange >= minRadius) {
-                        return prevRadius - radiusChange;
-                    }
-                    return initialRadius;
-                });
-            };
-
-            const canvasesElem = document.querySelector(".canvases");
-            if (canvasesElem) {
-                canvasesElem.addEventListener('mouseup', handleMouseUp);
-                canvasesElem.addEventListener('touchend', handleMouseUp);
-                canvasesElem.addEventListener('touchcancel', handleMouseUp);
-                return () => {
-                    canvasesElem.removeEventListener('mouseup', handleMouseUp);
-                    canvasesElem.removeEventListener('touchend', handleMouseUp);
-                    canvasesElem.removeEventListener('touchcancel', handleMouseUp);
-                };
-            }
+            });
         }
-    }, [currentIndex, displayedProjects, projects, addRandomProject]);
 
-    // 3. The Hydration Guard
-    // On the server and the very first client render, hasMounted is false.
-    // We return a "neutral" shell to keep React happy.
-    if (!hasMounted || isMobile === null) {
-        return null;
-    }
+        document.body.classList.remove("mousedown");
+        setCursorRadius(prev => (prev - radiusChange >= minRadius ? prev - radiusChange : initialRadius));
+    }, [addRandomProject, currentIndex, displayedProjects]);
+
+    // Prevent canvases from re-rendering unless a new project is added to the stack
+    const memoizedCanvases = useMemo(() => {
+        return displayedProjects.map((project) => {
+            const imageUrl = builder.image(project.coverImage.image)
+                .width(1500)
+                .height(Math.floor((9 / 16) * 1200))
+                .fit("crop")
+                .auto("format")
+                .url();
+
+            return (
+                <div key={project.slug} className="canvas-container" id={`container-${project.slug}`}>
+                    <DynamicApp imageUrl={imageUrl} cursorRadius={cursorRadius} />
+                </div>
+            );
+        });
+    }, [displayedProjects]); // cursorRadius is intentionally excluded to prevent p5 restart on movement
+
+    if (!hasMounted || isMobile === null) return null;
 
     return (
-        <>
-            <main onMouseEnter={() => setShowDrawCursor(true)} onMouseLeave={() => setShowDrawCursor(false)}>
-                <div className="verticalLine"></div>
+        <main
+            onMouseEnter={() => setShowDrawCursor(true)}
+            onMouseLeave={() => setShowDrawCursor(false)}
+        >
+            <div className="verticalLine"></div>
 
-                {/* Ensure the canvases div is always present so the event listener finds it */}
-                <div className="canvases" style={{ cursor: 'none' }}>
-                    {displayedProjects.map((project) => {
-                        const imageUrl = builder.image(project.coverImage.image)
-                            .width(1500)
-                            .height(Math.floor((9 / 16) * 1200))
-                            .fit("crop")
-                            .auto("format")
-                            .url()
-                        return (
-                            <div key={project.slug} className="canvas-container" id={`container-${project.slug}`}>
-                                <DynamicApp imageUrl={imageUrl} cursorRadius={cursorRadius} />
-                            </div>
-                        );
-                    })}
-                </div>
+            <div
+                className="canvases"
+                style={{ cursor: 'none' }}
+                onMouseUp={handleInteractionEnd}
+                onTouchEnd={handleInteractionEnd}
+            >
+                {memoizedCanvases}
+            </div>
 
-                <div className="list-container">
-                    <ul className={`home--projectLinks ${styles.projectLinks} ${styles.lined}`}>
-                        {projects && projects.map((project, index) => (
-                            <ProjectListItem key={index} project={project} index={index} />
-                        ))}
-                    </ul>
-                </div>
+            <div className="list-container">
+                <ul className={`home--projectLinks ${styles.projectLinks} ${styles.lined}`}>
+                    {projects.map((project, index) => (
+                        <ProjectListItem key={project.slug || index} project={project} index={index} />
+                    ))}
+                </ul>
+            </div>
 
-                {/* Logic to show cursor on Desktop */}
-                {!isMobile && showDrawCursor && <DrawCursor cursorSize={cursorRadius} />}
-            </main>
-        </>
+            {!isMobile && showDrawCursor && <DrawCursor cursorSize={cursorRadius} />}
+        </main>
     );
 }
