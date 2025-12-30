@@ -25,7 +25,7 @@
     --grey: #c6c6c6;
   
     --logo-width: 142.836px;
-    --projects-width: 91.141px;
+    --draw-width: 57px;
     --profile-width: 75.352px;
   
     --pad_x: 0.4em;
@@ -94,21 +94,12 @@ body {
     --main-color: white;
   }
 
-  /* body.path-other main, */
   body.path-other img{
     touch-action: pan-y;
   }
 
-  body.path-other.scrolled .projectInner{
-    /* scroll-snap-type: y mandatory; */
-  }
-
   body.path-other .interactiveLogo{
     margin-top:0px !important;
-  }
-
-  body.path-other main{
-    /* margin-top:var(--nav-height); */
   }
   
   * {
@@ -116,13 +107,8 @@ body {
   }
   
   a {
-    /* color: #0070f3; */
     text-decoration: none;
   }
-  
-  /* a:hover {
-    text-decoration: none;
-  } */
   
   img {
     max-width: 100%;
@@ -148,10 +134,6 @@ body {
   z-index:0;
 }
 
-/* body.drawing #drawInHere {
-  z-index:99;
-} */
-
 body.drawing nav,
 body.drawing .draw_name{
   z-index:-1 !important;
@@ -171,7 +153,6 @@ body.drawing .draw_name{
       transform: scale(1.015)
   }
 }
-
 
 /* Styles */
 #drawInHere .drawnSvg path{
@@ -195,20 +176,10 @@ body.drawing .draw_name{
   z-index:2;
 }
 
-/* #drawInHere .svgWrapper.hidden {
-  opacity: 0;
-}
-.grid #drawInHere .svgWrapper.hidden {
-  opacity: 1;
-} */
-
 #drawInHere .shadow path{
   stroke: #8C8C8C;
 }
 
-/* body:not(.grid) #drawInHere .shadow {
-  mix-blend-mode: hard-light;
-} */
 #drawInHere .shadow {
   mix-blend-mode: hard-light;
 }
@@ -247,7 +218,6 @@ left: -1000px;
 li.home--visible:hover, li.home--mostRecent{
   width: calc(100% - 1px);
   overflow: visible !important;
-  /* background: var(--bg); */
 }
 
 .home--visible a, .home--mostRecent a{
@@ -255,25 +225,15 @@ li.home--visible:hover, li.home--mostRecent{
   opacity: 1;
   pointer-events:inherit !important;
   user-select: none;
-  /* background: var(--bg); */
 }
 
 .home--mostRecent a, .home--visible:hover a{
   width: calc(100% - 1px);
-  /* background: var(--bg); */
 }
 
-.home--visible{
-  /* width:calc(100% - 2px); */
-  /* transform:translateX(1px); */
-  /* background: var(--bg); */
+.home--visible {
   border-bottom: 1px dotted var(--grey) !important;
-  /* border-left: 1px solid var(--grey) !important; */
   color: grey;
-}
-
-#projectLinks:hover .home--mostRecent:not(:hover) svg{
-  /* display:none !important; */
 }
 
 .home--mostRecent a svg,
@@ -297,11 +257,15 @@ h1{
   top:-1px;
   left:-1px;
   transition: width 500ms, height 500ms, left 500ms, top 500ms, transform 400ms;
-  /* border-left:1px solid black; */
-  /* border-bottom:1px solid black; */
-  /* border: 1px solid black; */
+  /* pointer-events: none;
+  touch-action: none; */
 }
 
+.canvas-container:last-child {
+  pointer-events: auto;
+  touch-action: auto;
+  /* Only the most recent canvas captures the mouse */
+}
 
 
 
@@ -358,7 +322,7 @@ body{
   /* user-select: none; */
 }
 
-.canvases.path-projects .canvas-container,
+.canvases.path-draw .canvas-container,
 .canvases.gridded .canvas-container{
   width: 50%;
   height: 50dvh;
@@ -396,7 +360,7 @@ body{
 }
 
 @media screen and (max-width: 450px){
-  .canvases.path-projects .canvas-container,
+  .canvases.path-draw .canvas-container,
   .canvases.gridded .canvas-container{
     width: 100dvw;
   }
@@ -511,11 +475,11 @@ body{
 }
 
 
-.path-projects .verticalLine{
+.path-home .verticalLine{
   height: calc(100% - var(--nav-height));
 }
 
-.path-projects nav{
+.path-draw nav{
   z-index:100;
 }
 
@@ -532,10 +496,6 @@ a{
   }
 }
 
-/* .canvas-container img:nth-child(odd){
-  border-right:1px solid var(--main-color);
-} */
-
 @keyframes projectName{
   0%{
     opacity:0;
@@ -547,7 +507,7 @@ a{
   }
 }
 
-.canvases.path-projects .canvas-container img,
+.canvases.path-draw .canvas-container img,
 .canvases.gridded .canvas-container img{
   display: block;
 }
@@ -558,7 +518,7 @@ a{
 
 @media screen and (max-width: 450px){
 
-  .path-projects #cursor{
+  .path-draw #cursor{
       display:none !important;
   }
 
@@ -570,7 +530,7 @@ a{
     z-index:99;
     top: var(--nav-height);
     height: calc(100vh - var(--nav-height));
-    width: calc(var(--profile-width) + var(--projects-width) + calc(var(--pad_x)*4) + 2px);
+    width: calc(var(--profile-width) + var(--draw-width) + calc(var(--pad_x)*4) + 2px);
     overflow-y:scroll;
     mix-blend-mode:multiply;
     transition: background 300ms;
@@ -589,19 +549,13 @@ a{
   transition: color 300ms;
   fill: var(--main-color);
 }
-.list-container li:last-child{
-  background:black;
-}
-.list-container:hover{
-  /* background: var(--bg); */
-}
 
-body.path- .list-container{
+body.path-.list-container{
   animation: moveIn 300ms 1s ease-out both;
 }
 
 @media screen and (max-width: 450px){
-  body.path- .list-container{
+  body.path-.list-container{
       animation:none;
       /* transform:translateX(100%); */
       /* display: none; */
@@ -634,17 +588,17 @@ body.path- .list-container{
   }
 }
 
-body.transition-home-projects .verticalLine,
-body.transition-profile-projects .verticalLine{
+body.transition-draw-home .verticalLine,
+body.transition-profile-home .verticalLine{
   animation: verticalLine 600ms linear both;
 }
 
-body.transition-home-projects .list-container,
-body.transition-home-profile .list-container{
+body.transition-draw-home .list-container,
+body.transition-draw-profile .list-container{
   animation: moveIn 300ms ease-out reverse both;
 }
 
-body.path-projects .verticalLine{
+body.path- .verticalLine{
   animation: verticalLine 600ms linear both;
 }
 
@@ -679,64 +633,33 @@ body.path-projects .verticalLine{
     display: none;
   }
   
-.path-projects .list-container{
+.path- .list-container{
   transform:translateX(100%);
-  /* transform:translateX(100%); */
-  /* display:none; */
 }
 
-
-  /* NAVBAR INITIAL LOAD */
-
-/* .initial-load nav:after {
-  animation: lineExpand 800ms ease-in-out both;
-}
-
-.initial-load nav li {
-  animation: navItemAppear 500ms linear both;
-}
-
-.initial-load nav li .link{
-  transition-delay: 1s;
-}
-
-@keyframes lineExpand{
-  0%{ width: 0px;}
-  100%{ width: 100dvw;}
-}
-@keyframes navItemAppear{
-  0%{ opacity: 0;}
-  100%{ opacity: 1;}
-} */
-
-
-body.path- .list-container ul,
+body.path-.list-container ul,
 body:not(.gridded) .list-container ul{
   transform: translateX(0%);
   transition-delay: 800ms;
 }
 
-
-
-body.path-projects,
+body.path-,
 body.gridded {
-  /* --main-color: grey; */
   --main-color: black;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-body.path-projects::-webkit-scrollbar {
+body.path-::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-body.path-projects {
+body.path-draw {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
 
 html, body {
-  /* overflow-y: scroll; */
   scrollbar-width: none;
 }
 
@@ -745,19 +668,8 @@ body::-webkit-scrollbar {
   height: 0;
 }
 
-body.path-projects nav{
+body.path- nav{
   position:sticky;
-}
-
-body.path-projects .canvas-container{
-    /* border-left:1px solid black; */
-    /* border-bottom:1px solid black; */
-    /* position:static; */
-}
-body.path-projects .canvas-container:nth-child(odd){
-  /* border-left:1px solid black; */
-  /* border-bottom:1px solid black; */
-  /* position:static; */
 }
 
 /* Navbar active classes */
@@ -769,11 +681,6 @@ nav li {
 nav.active-3{
   position:sticky;
   top:0;
-}
-
-nav.active-4 li{
-  /* background: transparent; */
-  /* transform:translateY(-1px); */
 }
 
 nav.active-4 li:first-child{
@@ -811,7 +718,7 @@ nav li:first-child a{
 }
 nav li:nth-child(2) button,
 nav li:nth-child(2) a{
-  width: calc(var(--projects-width) + var(--pad_x)*2);
+  width: calc(var(--draw-width) + var(--pad_x)*2);
 }
 nav li:nth-child(3) button,
 nav li:nth-child(3) a{
@@ -824,7 +731,7 @@ nav.active-4 li:first-child:hover a{
 }
 nav.active-4 li:nth-child(2):hover button,
 nav.active-4 li:nth-child(2):hover a{
-  width: calc(var(--projects-width) + var(--pad_x)*2 + var(--hoverGap));
+  width: calc(var(--draw-width) + var(--pad_x)*2 + var(--hoverGap));
 }
 nav.active-4 li:nth-child(3):hover button,
 nav.active-4 li:nth-child(3):hover a{
@@ -860,7 +767,7 @@ body.loading nav.active-1 li:first-child button{
  /* After Loaded */
 nav.active-1 li:first-child button{
   transition: width 100ms linear;
-  width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
+  width: calc(100dvw - var(--draw-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
 }
 
 body.transitioning nav.active-1 li:first-child button{
@@ -868,7 +775,7 @@ body.transitioning nav.active-1 li:first-child button{
 }
 
 nav.active-1.hoveringOthers li:first-child button{
-  width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
+  width: calc(100dvw - var(--draw-width) - var(--profile-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
 }
 
 nav.active-2.hoveringOthers li:nth-child(2) button{
@@ -876,7 +783,7 @@ nav.active-2.hoveringOthers li:nth-child(2) button{
 }
 
 nav.active-3.hoveringOthers li:nth-child(3) button{
-  width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
+  width: calc(100dvw - var(--logo-width) - var(--draw-width) - var(--pad_x)*4 - 2px - var(--hoverGap)) !important;
 }
 
 
@@ -886,7 +793,7 @@ nav.active-3.hoveringOthers li:nth-child(3) button{
 
     nav.active-1 li:nth-child(2):hover button,
     nav.active-3 li:nth-child(2):hover button{
-      width: calc(var(--projects-width) + var(--hoverGap) + var(--pad_x)*2);
+      width: calc(var(--draw-width) + var(--hoverGap) + var(--pad_x)*2);
     }
     nav.active-1 li:nth-child(3):hover button,
     nav.active-2 li:nth-child(3):hover button{
@@ -966,7 +873,7 @@ body.transition-profile-projects nav li:nth-child(2) button{
 
 nav.active-3 li:nth-child(3) button{
   transition: width 100ms linear;
-  width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px);
+  width: calc(100dvw - var(--logo-width) - var(--draw-width) - var(--pad_x)*4 - 2px);
 }
 
 body.transitioning nav.active-3 li:nth-child(3) button{
@@ -984,18 +891,6 @@ body.transition-profile-home nav li:nth-child(3) button{
   animation: expandProfile 600ms ease-in-out reverse both;
 }
 
-
-nav.active-2 li:first-child a{
-  /* width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px); */
-  /* animation: expandLogo 600ms 100ms ease-in-out reverse both; */
-  /* width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px) */
-}
-nav li:nth-child(3) .active,
-nav.active-3 li:nth-child(3) a{
-  /* animation: expandProfile 600ms 1s ease-in-out both; */
-  /* width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*4 - 2px) */
-}
-
 body.loading .listItem:first-child button.active{
   width: var(--logo-width);
   animation: expandLogo 800ms 1s ease-in-out both;
@@ -1004,13 +899,13 @@ body.loading .listItem:first-child button.active{
 @keyframes expandLogo{
   0%{ width: calc(var(--logo-width) + var(--pad_x)*2)}
   100%{ 
-    width: calc(100dvw - var(--projects-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
+    width: calc(100dvw - var(--draw-width) - var(--profile-width) - var(--pad_x)*4 - 2px);
   }
 }
 
 @keyframes expandProjects{
-  /* 0%{ width: var(--projects-width);} */
-  0%{ width: calc(var(--projects-width) + var(--pad_x)*2)}
+  /* 0%{ width: var(--draw-width);} */
+  0%{ width: calc(var(--draw-width) + var(--pad_x)*2)}
   100%{
     width: calc(100dvw - var(--logo-width) - var(--profile-width) - var(--pad_x)*4 - 2px)
   }
@@ -1018,7 +913,7 @@ body.loading .listItem:first-child button.active{
 }
 @keyframes expandProfile{
   0%{ width: var(--profile-width);}
-  100%{ width: calc(100dvw - var(--logo-width) - var(--projects-width) - var(--pad_x)*2 - 2px);}
+  100%{ width: calc(100dvw - var(--logo-width) - var(--draw-width) - var(--pad_x)*2 - 2px);}
 }
 
 
@@ -1036,7 +931,7 @@ body.loading .listItem:first-child button.active{
     }
   }
   @keyframes expandProjects{
-    0% { width: calc(var(--projects-width) + var(--pad_x)*2)}
+    0% { width: calc(var(--draw-width) + var(--pad_x)*2)}
     100% { width: 100%; }
   }
   @keyframes expandProfile{

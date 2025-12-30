@@ -93,8 +93,6 @@ export default function DrawCursor({ cursorSize }: DrawCursorProps) {
         }
     }, [cursorSize]);
 
-    // console.log(defaultSize);
-
     const cursorStyle = {
         left: `${cursorPosition.x}px`,
         top: `${cursorPosition.y}px`,

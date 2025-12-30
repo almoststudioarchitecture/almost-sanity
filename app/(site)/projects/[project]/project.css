@@ -148,33 +148,19 @@
 
 .projectInner{
     scroll-snap-type: y mandatory;
-    /* scroll-snap-type: y proximity; */
     max-height:calc(100vh - var(--nav-height));
     max-height: calc(100vh - var(--nav-height) + 1px);
-    /* max-height:calc(100vh); */
-    /* overflow-y: auto; */
     overflow:hidden;
-    /* margin-top:calc(100vh - 160px); */
-    /* animation: heroMargin 600ms 1s ease-out both; */
-
-    /* position: sticky;
-    top: var(--nav-height);
-    overflow-y: hidden; */
 }
 
 .projectInner.scrollable{
     overflow-y:auto;
 }
 
-/* .projectInner > .image-container-outer{
-    scroll-snap-align: start;
-} */
 .projectInner > *{
     scroll-snap-align: start;
 }
-.projectInner > .image-container-inner:first-of-type{
-    /* scroll-snap-align: unset; */
-}
+
 .info{
     /* scroll-snap-align: none; */
     /* max-height: calc(100vh - var(--pad)); */

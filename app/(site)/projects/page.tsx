@@ -1,131 +1,287 @@
 'use client';
 
 import { getProjects } from "@/sanity/sanity.query";
-import type { ProjectType } from "@/types";
 import Head from 'next/head';
+import type { ProjectType } from "@/types";
 import DrawCursor from '../components/DrawCursor';
-import GalleryItem from '../components/GalleryItem';
+import styles from '../css/Home.module.css';
+import ProjectListItem from "../components/ProjectListItem";
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import imageUrlBuilder from '@sanity/image-url';
+import dynamic from 'next/dynamic';
 
-const TRANSITION_SPEED: number = 400;
+const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').then((mod) => mod.App), {
+    ssr: false, // This will disable server-side rendering for this component
+});
 
-export default function Projects() {
-  const [projects, setProjects] = useState<ProjectType[]>([]);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [mouseIsDown, setIsDown] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
-  const [isHoveringProjectName, setIsHoveringProjectName] = useState(false);
+export default function Home() {
 
-  const router = useRouter();
+    const [projects, setProjects] = useState<ProjectType[]>([]);
+    const [displayedProjects, setDisplayedProjects] = useState<ProjectType[]>([]);
+    const [showDrawCursor, setShowDrawCursor] = useState(false);
 
-  const handleProjectClick = (e: React.MouseEvent<HTMLDivElement>, projectSlug: string) => {
-    if (isDragging) {
-      e.preventDefault();
-      setIsDragging(false);
-      setIsDown(false);
-    } else {
-      document.body.classList.add("transitioning");
-      setTimeout(() => {
-        document.body.classList.remove("transitioning");
-        router.push(`/projects/${projectSlug}`);
-      }, TRANSITION_SPEED);
+    // State for managing cursor radius
+    // const [cursorRadius, setCursorRadius] = useState(getInitialCursorRadius());
+    const minRadius = 30; // Set the minimum radius size
+    const initialRadius = 200; // Set the minimum radius size
+    const radiusChange = 20; // The change in radius per mouseup event
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const builder = imageUrlBuilder({
+        projectId: "oogp23sh",
+        dataset: "production",
+    });
+
+    const getStoredProjects = () => {
+        const storedProjects: ProjectType[] = [];
+        projects.forEach(project => {
+            const storedProjectData = sessionStorage.getItem(project.slug);
+            if (storedProjectData) {
+                storedProjects.push(project);
+            }
+        });
+        return storedProjects;
+    };
+
+    useEffect(() => {
+        // Your existing code that runs on component mount
+
+        // Your new window.onload functionality
+        if (typeof window !== "undefined") {
+            window.onload = function () {
+                if (window.location.href === sessionStorage.getItem("origin")) {
+                    sessionStorage.clear();
+                }
+            };
+
+
+            window.onbeforeunload = function () {
+                sessionStorage.setItem("origin", window.location.href);
+            }
+
+            // Return a cleanup function to remove event listeners
+            return () => {
+                // Clean up your event listeners if any
+            };
+        }
+    }, []);
+
+
+    // Initialize cursorRadius with a default value
+    const [cursorRadius, setCursorRadius] = useState(200); // default value
+
+    // Update the cursor radius based on the client width after component mounts
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const updateCursorRadius = () => {
+                const newRadius = document.documentElement.clientWidth >= 500 ? 200 : 150;
+                setCursorRadius(newRadius);
+            };
+
+            updateCursorRadius();
+
+            // Also update on resize
+            window.addEventListener('resize', updateCursorRadius);
+
+            return () => {
+                window.removeEventListener('resize', updateCursorRadius);
+            };
+        };
+    }, []);
+
+    // function urlFor(source) {
+    //   return builder.image(source);
+    // }
+
+    // Asynchronously load projects from Sanity and shuffle them
+    useEffect(() => {
+        async function loadProjects() {
+            try {
+                const loadedProjects = await getProjects();
+                if (loadedProjects.length > 0) {
+                    const shuffledProjects = shuffleArray([...loadedProjects]);
+                    setProjects(shuffledProjects);
+                    // Initially display the first project in the shuffled list
+                    setDisplayedProjects([shuffledProjects[currentIndex]]);
+                }
+            } catch (error) {
+                console.error('Failed to load projects:', error);
+            }
+        }
+
+        loadProjects();
+    }, []);
+
+    useEffect(() => {
+        const checkIfOverCanvas = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            setShowDrawCursor(target.tagName === 'CANVAS');
+        };
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener('mousemove', checkIfOverCanvas);
+
+            return () => {
+                window.removeEventListener('mousemove', checkIfOverCanvas);
+            };
+        }
+    }, []);
+
+
+
+    function shuffleArray<T>(array: T[]): T[] {
+        let currentIndex = array.length, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (currentIndex !== 0) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+        }
+
+        return array;
     }
-  };
 
-  const updateWindowWidth = () => {
-    setWindowWidth(window.innerWidth);
-  };
+    // Function to add a random project from the shuffled list
+    const addRandomProject = () => {
+        // If we haven't shown all projects yet
+        if (currentIndex < projects.length - 1) {
+            // Show the next project
+            setDisplayedProjects([...displayedProjects, projects[currentIndex + 1]]);
+            // Increment the index
+            setCurrentIndex(currentIndex + 1);
+        } else {
+            // If all projects have been shown, reshuffle and start over
+            const reshuffledProjects = shuffleArray([...projects]);
+            setProjects(reshuffledProjects);
+            // Reset the displayed projects and index
+            setDisplayedProjects([reshuffledProjects[0]]);
+            setCurrentIndex(0);
+        }
+    };
 
-  useEffect(() => {
-    updateWindowWidth();
-    window.addEventListener('resize', updateWindowWidth);
-    return () => window.removeEventListener('resize', updateWindowWidth);
-  }, []);
+    // Event listener for adding a random project and changing the cursor size on mouseup
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const handleMouseUp = () => {
 
-  useEffect(() => {
-    async function fetchProjects() {
-      const fetchedProjects = await getProjects();
-      setProjects(fetchedProjects);
-    }
-    fetchProjects();
-  }, []);
+                addRandomProject();
 
-  useEffect(() => {
-    let counter = 1;
-    const interval = setInterval(() => {
-      counter++;
-    }, 50);
-    return () => clearInterval(interval);
-  }, [isDragging]);
+                if (displayedProjects.length > 0) {
+                    const lastProject = displayedProjects[displayedProjects.length - 1];
+                    const lastProjectSlug = lastProject.slug; // Get the slug of the last project
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setDragStart({ x: e.clientX, y: e.clientY });
-    setIsDragging(false);
-    setIsDown(true);
-  };
+                    let corresponding_lis = document.querySelectorAll(`.list-container [data-slug="${lastProjectSlug}"]`);
+                    document.querySelectorAll(".home--mostRecent").forEach(mostRecent => {
+                        if (mostRecent instanceof HTMLElement) {
+                            mostRecent.classList.remove("home--mostRecent");
+                        }
+                    });
+                    corresponding_lis.forEach(li => {
+                        if (li instanceof HTMLElement) {
+                            li.classList.add("home--visible");
+                            li.classList.add("home--mostRecent");
+                            li.style.order = (99999 - currentIndex).toString();
+                        }
+                    });
+                    // Perform any actions needed with lastProjectSlug
+                    // console.log("Last picked project slug:", lastProjectSlug);
+                }
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (mouseIsDown) {
-      const dx = e.clientX - dragStart.x;
-      const dy = e.clientY - dragStart.y;
-      if (Math.sqrt(dx * dx + dy * dy) > 10) {
-        setIsDragging(true);
-      }
-    }
-  };
+                document.body.classList.remove("mousedown");
+                // Update the cursor radius
+                setCursorRadius(prevRadius => {
+                    // Check if the radius is greater than the minimum size
+                    if (prevRadius - radiusChange >= minRadius) {
+                        return prevRadius - radiusChange; // Decrease radius
+                    }
+                    return initialRadius; // Reset to initial size when it reaches the minimum
+                });
+            };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    setIsDown(false);
-  };
 
-  const handleMouseEnter = () => {
-    setIsHoveringProjectName(true);
-  };
+            // Attach the event listener
+            const canvasesElem = document.querySelector(".canvases")
+            if (canvasesElem) {
 
-  const handleMouseLeave = () => {
-    setIsHoveringProjectName(false);
-  };
+                canvasesElem.addEventListener('mouseup', handleMouseUp);
+                canvasesElem.addEventListener('touchend', handleMouseUp);
+                canvasesElem.addEventListener('touchcancel', handleMouseUp);
+                return () => {
+                    canvasesElem.removeEventListener('mouseup', handleMouseUp);
+                    canvasesElem.removeEventListener('touchend', handleMouseUp);
+                    canvasesElem.removeEventListener('touchcancel', handleMouseUp);
+                };
+            }
+        }
 
-  return (
-    <>
-      <Head>
-        <title>PROJECTS – ALMOST STUDIO</title>
-      </Head>
-      <main>
-        <div className="verticalLine"></div>
 
-        <div className="canvases gridded">
-          {projects.map((project, index) => {
-            const originalIndex = projects.findIndex(p => p.slug === project.slug);
+    }, [currentIndex, displayedProjects]); // Now dependent on currentIndex and displayedProjects
+    // }, [projects]);
 
-            return (
-              <div
-                key={index}
-                className="canvas-container"
-                id={`container${originalIndex}`}
-                data-slug={project.slug}
-                data-order={originalIndex}
-                data-href={project.coverImage.image}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                // onMouseUp={handleMouseUp}
-                onClick={(e) => handleProjectClick(e, project.slug)}
-              >
-                <GalleryItem
-                  src={project.coverImage.image}
-                  project={project}
-                  altText={project.coverImage.alt ?? ''}
-                />
-              </div>
-            );
-          })}
-        </div>
+    const renderAdditionalLines = () => {
+        const additionalLines = [];
+        for (let i = 0; i < 20; i++) {
+            additionalLines.push(<div key={i} className={styles.additionalLine}></div>);
+        }
+        return additionalLines;
+    };
 
-        {!isHoveringProjectName && <DrawCursor cursorSize={30} />}
-      </main>
-    </>
-  );
+
+    return (
+        <>
+            <Head>
+                <title>ALMOST STUDIO</title>
+            </Head>
+            <main>
+                <div className="verticalLine"></div>
+                <div className="canvases">
+
+                    {displayedProjects.map((project) => {
+                        // Using the slug as a key since it should be unique
+                        const imageUrl = builder.image(project.coverImage.image)
+                            .width(1500)
+                            .height(Math.floor((9 / 16) * 1200))
+                            .fit("crop")
+                            .auto("format")
+                            .url()
+
+                        return (
+                            <div key={project.slug} className="canvas-container" id={`container-${project.slug}`} data-slug={project.slug} data-order={projects.findIndex(p => p.slug === project.slug)} data-href={imageUrl}>
+                                {typeof window !== 'undefined' && (
+                                    <DynamicApp imageUrl={imageUrl} cursorRadius={cursorRadius} />
+                                )}
+                            </div>
+                        );
+                    })}
+
+                </div>
+
+                <div className="list-container">
+                    <ul className={`home--projectLinks ${styles.projectLinks} ${styles.lined}`}>
+                        {projects && projects.map((project, index) => (
+                            <ProjectListItem key={index} project={project} index={index} />
+                        ))}
+                        {renderAdditionalLines()} {/* Call the function here */}
+                    </ul>
+                    {/* <ul className={`home--projectLinks ${styles.projectLinks}`} id="projectLinks">
+                  {projects && projects.map((project, index) => (
+                      <ProjectListItem key={index} project={project} index={index} />
+                  ))}
+                </ul> */}
+                </div>
+
+
+                {showDrawCursor && <DrawCursor cursorSize={cursorRadius} />}
+
+
+            </main>
+
+        </>
+    )
 }

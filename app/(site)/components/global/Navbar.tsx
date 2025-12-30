@@ -46,12 +46,6 @@ export default function Navbar() {
         return () => clearTimeout(timer);
     }, []);
 
-
-    // const [isNavOpen, setIsNavOpen] = useState(false);
-    // const closeNav = () => setIsNavOpen(false);
-
-    // Existing useEffect hooks remain the same
-
     // Add useEffect for scroll event listener
     useEffect(() => {
         const handleScroll = () => {
@@ -91,7 +85,7 @@ export default function Navbar() {
         const formattedPath = pathname.replace(/\//g, '');
     
         // Check if the path is one of the specified paths
-        const isSpecifiedPath = formattedPath === "" || formattedPath === "projects" || formattedPath === "profile";
+        const isSpecifiedPath = formattedPath === "" || formattedPath === "draw" || formattedPath === "profile";
     
         // Set 'other' if it's not one of the specified paths
         const pathToUse = isSpecifiedPath ? formattedPath : "other";
@@ -114,7 +108,7 @@ export default function Navbar() {
             case '/':
                 setActiveLinkIndex(1);
                 break;
-            case '/projects':
+            case '/draw':
                 setActiveLinkIndex(2);
                 break;
             case '/profile':
@@ -193,8 +187,8 @@ const handleNavClick = (newPath: string) => {
             case 'home':
                 url = '/';
                 break;
-            case 'projects':
-                url = '/projects';
+            case 'draw':
+                url = '/draw';
                 break;
             case 'profile':
                 url = '/profile';
@@ -233,7 +227,7 @@ const getLinkIndexFromPath = (path: string) => {
     switch (path) {
         case '':
             return 1;
-        case 'projects':
+        case 'draw':
             return 2;
         case 'profile':
             return 3;
@@ -241,22 +235,6 @@ const getLinkIndexFromPath = (path: string) => {
             return -1; // Or another default index, as appropriate
     }
 };
-
-    
-
-    // Function to be called when Projects tab is clicked
-    const onProjectsClick = () => {
-        setActiveLinkIndex(2);
-    };
-
-    const onProfileClick = () => {
-        setActiveLinkIndex(3);
-    }
-    const getActiveClass = (path: string) => {
-        return pathname === path ? 'active' : '';
-    };
-
-    // const navClass = activeLinkIndex !== -1 ? `active-${activeLinkIndex}` : '';
 
     // Calculate class for <nav> based on active link index
     const navClass = activeLinkIndex !== -1 ? `active-${activeLinkIndex}` : '';
@@ -267,21 +245,20 @@ const getLinkIndexFromPath = (path: string) => {
             <li className={`${styles.listItem} ${isNavOpen ? styles.open : ''}`}> {/* Toggle class here */}
                 <button className={`${styles.link}`} onClick={() => handleNavClick('')}>
                     <div className={styles.inner}><span>A</span><span>l</span><span>m</span><span>o</span><span>s</span><span>t</span><span> </span><span>S</span><span>t</span><span>u</span><span>d</span><span>i</span><span>o</span></div>
-                    <Image 
-                        className={`${styles.icon} ${styles.iconDraw}`}
-                        src="/img/draw-icon.gif"
-                        width={25} 
-                        height={25} 
-                        alt="logo" 
-                        breakpoints={RESOLUTIONS}
-                    />
+                    <span className={`${styles.icon} ${styles.iconGrid}`}></span>
                 </button>
             </li>
             <li className={styles.listItem}>
-                    {/* <button className={`${styles.link}`} onClick={onProjectsClick}> */}
-                    <button className={`${styles.link}`} onClick={() => handleNavClick('projects')}>
-                            <div className={styles.inner}><span>P</span><span>r</span><span>o</span><span>j</span><span>e</span><span>c</span><span>t</span><span>s</span></div>
-                            <span className={`${styles.icon} ${styles.iconGrid}`}></span>
+                    <button className={`${styles.link}`} onClick={() => handleNavClick('draw')}>
+                        <div className={styles.inner}><span>D</span><span>r</span><span>a</span><span>w</span></div>
+                        <Image
+                            className={`${styles.icon} ${styles.iconDraw}`}
+                            src="/img/draw-icon.gif"
+                            width={25}
+                            height={25}
+                            alt="logo"
+                            breakpoints={RESOLUTIONS}
+                        />
                     </button>
                     {/* </Link> */}
             </li>

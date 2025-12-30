@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import { objectPositionFromHotspot, RESOLUTIONS } from '../lib/image';
 
 
-const DynamicApp = dynamic(() => import('../components/sketches/DrawProjects').then((mod) => mod.Sketch), {
+const DynamicApp = dynamic(() => import('./sketches/DrawProjects').then((mod) => mod.Sketch), {
     ssr: false, // This will disable server-side rendering for this component
 });
 
