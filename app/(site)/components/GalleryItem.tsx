@@ -33,7 +33,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ project, src, altText }) => {
       className="galleryItemWrapper"
       onMouseEnter={() => !isTouchScreen && setIsHovered(true)}
       onMouseLeave={() => !isTouchScreen && setIsHovered(false)}
-      style={{ position: 'relative' }}
+      style={{ position: 'relative', width: '100%', height: '100%' }}
     >
       <Link href={`/projects/${project.slug}`}>
         <Image
