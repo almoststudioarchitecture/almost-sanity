@@ -65,23 +65,22 @@
   }
 
   @media screen and (max-width: 450px){
-    .a{
+    .a {
       color: var(--main-color);
     }
-  }
   
-  .a svg{
-    display:none;
-    margin-right:3px;
-    vertical-align: inherit;
-    height: 11px;
-  }
-  
-  @media screen and (max-width: 450px){
+    .a svg{
+      display:none;
+      margin-right:3px;
+      vertical-align: inherit;
+      height: 11px;
+    }
+
     .projectLinks{
       width:100%;
       z-index:0;
     }
+    
     .li{
       /* border-bottom: 1px solid var(--main-color); */
       border-bottom: 0px;

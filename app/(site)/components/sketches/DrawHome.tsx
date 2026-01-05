@@ -64,14 +64,21 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
 
   function handleCanvasInteraction(event: MouseEvent | TouchEvent) {
     if (typeof window !== "undefined" && typeof document !== "undefined") {
-      if (event.cancelable) event.preventDefault();
-      event.stopPropagation();
-      const target = 'target' in event ? event.target : null; // Extract target based on event type
-      if (cnv && (target === cnv || cnv.canvas === target)) {
+
+      const target = event.target as HTMLElement;
+
+      const isCanvas = (cnv && (target === cnv || target === cnv.elt || cnv.canvas === target));
+
+      if (isCanvas) {
+        if (event.cancelable) event.preventDefault();
+        event.stopPropagation();
+
         mousePressedOverCanvas = true;
         p.loop();
-        // Add drawing class to body
         document.body.classList.add("mousedown");
+      } else {
+        mousePressedOverCanvas = false;
+        return;
       }
     }
   }
@@ -88,7 +95,6 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
   }
   p.touchStarted = function (event: TouchEvent) {
     handleCanvasInteraction(event);
-    // console.log("device pixel ratio:" + window.devicePixelRatio);
   }
 
 

@@ -237,8 +237,13 @@ li.home--visible:hover, li.home--mostRecent{
 }
 
 .home--mostRecent a svg,
-.home--visible:hover a svg{
+a svg{
   display:inline-block !important;
+}
+
+.list-container a svg{
+  display:inline-block !important;
+  margin-right: 3px;
 }
 
 
@@ -551,19 +556,25 @@ a{
   fill: var(--main-color);
 }
 
-body.path-.list-container{
+body.path-draw .list-container{
   animation: moveIn 300ms 1s ease-out both;
 }
 
 @media screen and (max-width: 450px){
-  body.path-.list-container{
+  main {
+    height: 100%;
+  }
+  body.path-draw .list-container{
       animation:none;
       /* transform:translateX(100%); */
       /* display: none; */
       width: 100%;
-      top:0;
+      top: var(--nav-height);
       height:calc(var(--nav-height)*2 + 1px);
       z-index: 1;
+  }
+  body.path-draw .list-container ul{
+    border-left: 0px;
   }
   .home--visible{
     border-bottom: 1px solid var(--main-color) !important;
@@ -571,12 +582,18 @@ body.path-.list-container{
   li.home--mostRecent{
     z-index:0;
     animation: dropIn 300ms linear both;
+    background-color: white;
+    margin-left: 0;
   }
   .home--mostRecent a svg{
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+    margin-right: 6px;
+  }
+  body.path-draw .list-container li:not(.home--mostRecent){
+    display: none;
   }
 }
 

@@ -20,13 +20,12 @@ export default function DrawCursor({ cursorSize }: DrawCursorProps) {
     useEffect(() => {
         if (!isMounted) return;
 
-        const updatePosition = (x: number, y: number, target: EventTarget | null) => {
+        const updatePosition = (x: number, y: number, target: EventTarget | null, pointerType: string) => {
             setCursorPosition({ x, y });
 
             // Check if the current element (or any parent) has the data-hide attribute
             const isOverHideElement = (target as HTMLElement)?.closest?.('[data-hide-cursor]');
-            
-            if (isOverHideElement) {
+            if (isOverHideElement || pointerType === 'touch') {
                 setIsCursorVisible(false);
             } else {
                 setIsCursorVisible(true);
@@ -34,23 +33,15 @@ export default function DrawCursor({ cursorSize }: DrawCursorProps) {
         };
 
         const handleMouseMove = (e: PointerEvent) => {
-            if (e.pointerType === 'mouse') {
-                updatePosition(e.clientX, e.clientY, e.target);
-            }
+            updatePosition(e.clientX, e.clientY, e.target, e.pointerType);
         };
 
-        const handleTouchMove = (e: TouchEvent) => {
-            const touch = e.touches[0];
-            updatePosition(touch.clientX, touch.clientY, touch.target);
-        };
 
         // Standard event listeners
         document.addEventListener('pointermove', handleMouseMove);
-        document.addEventListener('touchmove', handleTouchMove);
 
         return () => {
             document.removeEventListener('pointermove', handleMouseMove);
-            document.removeEventListener('touchmove', handleTouchMove);
         };
     }, [isMounted]); // Re-run when mounted
 

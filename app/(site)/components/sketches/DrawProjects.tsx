@@ -115,8 +115,6 @@ function enableLink(element: HTMLElement) {
         p.noLoop(); // Optional: Additional safety to ensure noLoop is called if mouse is not pressed
     }
 
-    // console.log(dragged);
-
 
     if (!imageDrawn) {
         p.background('#F8F8F8');
