@@ -271,7 +271,7 @@ h1{
 
 .p5Canvas{
   transition: 500ms;
-  cursor: none;
+  cursor: none !important;
 }
 .canvases{
   position: relative;
@@ -466,6 +466,7 @@ body{
   top:var(--nav-height);
   z-index:2;
   transition: height 400ms;
+  cursor: none;
 }
 
 @media screen and (max-width: 450px){

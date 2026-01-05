@@ -1,5 +1,9 @@
 /* PROJECT PAGE */
 
+:root {
+    --main-color: black;
+}
+
 .section{
     border-bottom: 1px solid var(--main-color);
     width:100dvw;

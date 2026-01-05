@@ -11,7 +11,7 @@ interface DrawCursorProps {
 
 export default function DrawCursor({ cursorSize }: DrawCursorProps) {
 
-    const [isCursorVisible, setIsCursorVisible] = useState(true);
+    const [isCursorVisible, setIsCursorVisible] = useState(false);
 
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
@@ -29,6 +29,7 @@ export default function DrawCursor({ cursorSize }: DrawCursorProps) {
             // Function to update the cursor position
             const updateCursorPosition = (e: MouseEvent) => {
                 setCursorPosition({ x: e.clientX, y: e.clientY });
+                showCursor();
             };
 
             // Function to update the cursor position for touch events
