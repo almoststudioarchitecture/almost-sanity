@@ -64,7 +64,8 @@ function sketch(p: P5CanvasInstance, imageUrl: string, cursorRadius: number) {
 
   function handleCanvasInteraction(event: MouseEvent | TouchEvent) {
     if (typeof window !== "undefined" && typeof document !== "undefined") {
-      // Assuming 'cnv' is your canvas element or p5.js canvas object
+      if (event.cancelable) event.preventDefault();
+      event.stopPropagation();
       const target = 'target' in event ? event.target : null; // Extract target based on event type
       if (cnv && (target === cnv || cnv.canvas === target)) {
         mousePressedOverCanvas = true;

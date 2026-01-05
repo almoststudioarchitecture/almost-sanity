@@ -20,7 +20,7 @@
 }
 
 .information .box {
-    border: 1px solid red;
+    border: 1px solid var(--main-color);
     font-family: var(--primary-type);
     font-weight: 400;
     padding: 0.5rem var(--pad);

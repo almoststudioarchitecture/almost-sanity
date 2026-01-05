@@ -240,7 +240,7 @@ const getLinkIndexFromPath = (path: string) => {
     const navClass = activeLinkIndex !== -1 ? `active-${activeLinkIndex}` : '';
 
     return (
-        <nav className={`${styles.nav} ${navClass} ${initialLoadRef.current ? 'initial-load' : ''}`} data-hide-cursor='true'>
+        <nav className={`${styles.nav} ${navClass} ${initialLoadRef.current ? 'initial-load' : ''}`} data-hide-cursor >
         <ul className={styles.list}>
             <li className={`${styles.listItem} ${isNavOpen ? styles.open : ''}`}> {/* Toggle class here */}
                 <button className={`${styles.link}`} onClick={() => handleNavClick('')}>

@@ -19,7 +19,7 @@
   }
   
   :root{
-    --main-color: red;
+    --main-color: black;
     --nav-height: 28px;
     --bg-color: #F8F8F8;
     --grey: #c6c6c6;
@@ -276,9 +276,9 @@ h1{
 .canvases{
   position: relative;
 }
-body.mousedown .canvases{
+/* body.mousedown .canvases{
     z-index: 99;
-}
+} */
 @media screen and (pointer:coarse){
   body.mousedown main{
     position: fixed;

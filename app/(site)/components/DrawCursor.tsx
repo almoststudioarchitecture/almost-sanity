@@ -3,105 +3,67 @@
 import { useEffect, useState } from 'react';
 import styles from '../css/Cursor.module.css';
 
-// Define an interface for the props
 interface DrawCursorProps {
-    cursorSize: number; // Assuming size is a number
+    cursorSize: number;
 }
 
-
 export default function DrawCursor({ cursorSize }: DrawCursorProps) {
-
     const [isCursorVisible, setIsCursorVisible] = useState(false);
-
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+    const [isMounted, setIsMounted] = useState(false);
 
+    // 1. Fix Hydration: Only signal "mounted" after first client-side render
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setCursorPosition({ 
-                x: document.documentElement.clientWidth / 2, 
-                y: document.documentElement.clientHeight / 2 
-            });
-        }
+        setIsMounted(true);
     }, []);
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            // Function to update the cursor position
-            const updateCursorPosition = (e: MouseEvent) => {
-                setCursorPosition({ x: e.clientX, y: e.clientY });
-                showCursor();
-            };
+        if (!isMounted) return;
 
-            // Function to update the cursor position for touch events
-            const updateTouchPosition = (e: TouchEvent) => {
-                const touch = e.touches[0];
-                setCursorPosition({ x: touch.clientX, y: touch.clientY });
-            };
+        const updatePosition = (x: number, y: number, target: EventTarget | null) => {
+            setCursorPosition({ x, y });
 
-            // Set initial cursor position based on window size
-            const setInitialCursor = () => {
-                setCursorPosition({
-                    x: document.documentElement.clientWidth / 2,
-                    y: document.documentElement.clientHeight / 2
-                });
-            };
-
-            // Other event handlers
-            const hideCursor = () => setIsCursorVisible(false);
-            const showCursor = () => setIsCursorVisible(true);
-            const clearCursorText = () => {
-                const cursorSpan = document.querySelector('#cursor span');
-                if (cursorSpan) cursorSpan.innerHTML = "";
-            };
-
-            // Adding event listeners
-        
-            document.addEventListener('mousemove', updateCursorPosition);
-            document.addEventListener('touchmove', updateTouchPosition);
-            document.addEventListener('load', setInitialCursor);  // Set initial position on window load
-
-        
-            const cursorElem = document.getElementById('cursor');
-            if (cursorElem) {
-                document.addEventListener('mousedown', clearCursorText);
+            // Check if the current element (or any parent) has the data-hide attribute
+            const isOverHideElement = (target as HTMLElement)?.closest?.('[data-hide-cursor]');
+            
+            if (isOverHideElement) {
+                setIsCursorVisible(false);
+            } else {
+                setIsCursorVisible(true);
             }
+        };
 
-            const hideCursorElems = document.querySelectorAll('[data-hide-cursor]');
-            hideCursorElems.forEach(elem => {
-                elem.addEventListener('mouseenter', hideCursor);
-                elem.addEventListener('mouseleave', showCursor);
-            });
+        const handleMouseMove = (e: PointerEvent) => {
+            if (e.pointerType === 'mouse') {
+                updatePosition(e.clientX, e.clientY, e.target);
+            }
+        };
 
+        const handleTouchMove = (e: TouchEvent) => {
+            const touch = e.touches[0];
+            updatePosition(touch.clientX, touch.clientY, touch.target);
+        };
 
-            // Cleanup function
-            return () => {
-                if (typeof window !== 'undefined') {
-                    document.removeEventListener('mousemove', updateCursorPosition);
-                    document.removeEventListener('touchmove', updateTouchPosition);
-                    document.removeEventListener('load', setInitialCursor);
-                }
+        // Standard event listeners
+        document.addEventListener('pointermove', handleMouseMove);
+        document.addEventListener('touchmove', handleTouchMove);
 
-                if (cursorElem) {
-                    cursorElem.removeEventListener('mousedown', clearCursorText);
-                }
+        return () => {
+            document.removeEventListener('pointermove', handleMouseMove);
+            document.removeEventListener('touchmove', handleTouchMove);
+        };
+    }, [isMounted]); // Re-run when mounted
 
-                hideCursorElems.forEach(elem => {
-                    elem.removeEventListener('mouseenter', hideCursor);
-                    elem.removeEventListener('mouseleave', showCursor);
-                });
-            };
-
-        }
-    }, [cursorSize]);
+    // 2. Prevent rendering anything until mounted to ensure SSR matches Client
+    if (!isMounted) return null;
 
     const cursorStyle = {
         left: `${cursorPosition.x}px`,
         top: `${cursorPosition.y}px`,
         display: isCursorVisible ? 'block' : 'none',
-        width: `${cursorSize}px`,  // Use cursorSize state here
-        height: `${cursorSize}px`, // Use cursorSize state here
+        width: `${cursorSize}px`,
+        height: `${cursorSize}px`,
     };
-
 
     return (
         <div id="cursor" className={`${styles.cursor} cursor`} style={cursorStyle}>

@@ -7,6 +7,8 @@ import { ReactP5Wrapper, P5CanvasInstance } from 'react-p5-wrapper';
 interface SketchProps {
     imageUrl?: string;  // make it optional if it's not always required
     cursorRadius: number;
+    isHovered?: boolean;
+    inView?: boolean;
 }
 
 function sketch(p: P5CanvasInstance, cursorRadius: number) {
@@ -44,6 +46,7 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
     p.noLoop();
 
     // p.pixelDensity(1);
+    p.frameRate(30);
 
    
     // maskGraphics.pixelDensity(2);
@@ -52,6 +55,15 @@ function sketch(p: P5CanvasInstance, cursorRadius: number) {
     // p.pixelDensity(window.devicePixelRatio); 
 
   }
+
+  p.updateWithProps = (props: any) => {
+    // If off-screen OR not being hovered, stop the loop to save CPU
+    if (props.isHovered && props.inView) {
+      p.loop();
+    } else {
+      p.noLoop();
+    }
+  };
 
   function disableLink(element: { closest: (arg0: string) => any; }) {
     // Find the closest parent <a> tag
@@ -82,16 +94,10 @@ function enableLink(element: HTMLElement) {
   function handleCanvasInteraction(event: MouseEvent | TouchEvent) {
     const target = 'target' in event ? event.target : null;
     if (target === cnv || cnv.canvas === target) {
-        mousePressedOverCanvas = true;
-        p.loop();
-
-        path = [];
-        
-        // Get the actual DOM element of the canvas
-        // let canvasDomElement = cnv.elt;
-
-        enableLink(cnvParent);
-        document.body.classList.add("mousedown");
+      mousePressedOverCanvas = true;
+      p.loop();
+      path = [];
+      document.body.classList.add("mousedown");
     }
   }
 
@@ -252,19 +258,21 @@ function enableLink(element: HTMLElement) {
   };
   p.mouseDragged = function() {
     dragged = true;
-    // Disable the link
-    // console.log("dragging");
-    disableLink(cnvParent);
+    if (typeof window !== 'undefined') {
+      (window as any).isDrawingNow = true;
+    }
   }
-  p.mouseReleased = function() {
+  p.mouseReleased = function () {
     p.noLoop();
     document.body.classList.remove("mousedown");
-    // dragged = false;
 
-    // Re-enable the link
-    enableLink(cnvParent);
-    
-}
+    setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        (window as any).isDrawingNow = false;
+      }
+      dragged = false;
+    }, 150);
+  }
 
 p.touchEnded = function() {
   p.noLoop();
