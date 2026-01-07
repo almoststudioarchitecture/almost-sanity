@@ -647,7 +647,7 @@ body.path- .verticalLine{
   }
 
   .list-container a:hover:before,
-  .list-container a.home--mostRecent:before {
+  .list-container li.home--mostRecent a:before {
     display: none;
   }
   
