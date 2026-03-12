@@ -53,6 +53,13 @@ export default async function About() {
                       <Link href={`https://www.instagram.com/${data.socialMedia}`} target="_blank">
                         <strong>@</strong>{data.socialMedia}
                       </Link>
+                      {data?.phone && (
+                        <div className="box">
+                          <Link href={`tel:+1${data.phone.replace(/\D/g, "")}`}>
+                            {data.phone}
+                          </Link>
+                        </div>
+                      )}
                     </div>
                 </div>
                 <div className="cols">

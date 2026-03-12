@@ -166,6 +166,12 @@ const profile = {
       of: [{ type: "string" }],
     },
     {
+      name: "phone",
+      title: "Phone Number",
+      type: "string",
+      description: "Add a phone number for contact.",
+    },
+    {
       name: "socialMedia",
       title: "Social Media Handle",
       type: "string",

@@ -20,6 +20,7 @@ export type ProfileType = {
   team: Array<TeamMember>
   teamOld: string[];
   contact: string[];
+  phone: string;
   socialMedia: string;
 };
 

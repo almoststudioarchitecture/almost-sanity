@@ -11,6 +11,7 @@ export async function getProfile() {
       "team": *[_type == "teamMember"]{title, bio},
       teamOld,
       contact,
+      phone,
       socialMedia
     }`
   );
