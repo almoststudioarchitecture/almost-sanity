@@ -49,18 +49,19 @@ export default async function About() {
                     ))}
                 </div>
                 <div className="cols inline">
+                  {data?.phone && (
                     <div className="box">
-                      <Link href={`https://www.instagram.com/${data.socialMedia}`} target="_blank">
-                        <strong>@</strong>{data.socialMedia}
+                      <Link href={`tel:+1${data.phone.replace(/\D/g, "")}`}>
+                        <strong>phone @</strong>
+                        {'+1-' + data.phone}
                       </Link>
-                      {data?.phone && (
-                        <div className="box">
-                          <Link href={`tel:+1${data.phone.replace(/\D/g, "")}`}>
-                            {data.phone}
-                          </Link>
-                        </div>
-                      )}
                     </div>
+                  )}
+                  <div className="box">
+                    <Link href={`https://www.instagram.com/${data.socialMedia}`} target="_blank">
+                      <strong>@</strong>{data.socialMedia}
+                    </Link>
+                  </div>
                 </div>
                 <div className="cols">
                     <div className="box one-third">
