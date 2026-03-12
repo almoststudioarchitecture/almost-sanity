@@ -51,9 +51,9 @@ export default async function About() {
                 <div className="cols inline">
                   {data?.phone && (
                     <div className="box">
-                      <Link href={`tel:+1${data.phone.replace(/\D/g, "")}`}>
-                        <strong>phone @</strong>
-                        {'+1-' + data.phone}
+                      <Link href={`tel:+${data.phone.replace(/\D/g, "")}`}>
+                        <strong>phone @ </strong>
+                        {data.phone}
                       </Link>
                     </div>
                   )}
