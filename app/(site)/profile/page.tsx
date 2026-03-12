@@ -52,7 +52,7 @@ export default async function About() {
                   {data?.phone && (
                     <div className="box">
                       <Link href={`tel:+${data.phone.replace(/\D/g, "")}`}>
-                        <strong>phone @ </strong>
+                        <strong>phone </strong>
                         {data.phone}
                       </Link>
                     </div>
